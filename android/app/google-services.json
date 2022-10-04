@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1035169561953",
+    "project_id": "flock-dock",
+    "storage_bucket": "flock-dock.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035169561953:android:125becdedb21dddff75920",
+        "android_client_info": {
+          "package_name": "com.flockdock.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035169561953-okbs5mevi3mq1l997pp5j1m6ef4o792m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flockdock.app",
+            "certificate_hash": "7b4b877f2767bf7dcb7f16d965b4cb4b1e9a8e8d"
+          }
+        },
+        {
+          "client_id": "1035169561953-dku0ghtfl8ggv8jalj5vm2d91mf24s2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjmO-IZdF30f9G5YZddTi_Mcytag9uGFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035169561953-dku0ghtfl8ggv8jalj5vm2d91mf24s2r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1035169561953-m70a7rgl4ksv5k1r64484e4s1fcvaiut.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flockdock.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
