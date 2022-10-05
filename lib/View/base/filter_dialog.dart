@@ -112,7 +112,7 @@ class _FilterDialogState extends State<FilterDialog> {
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  color: KDullBlack,
+                                  color: KWhite,
                                   height: 200,
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -223,7 +223,7 @@ class _EditProfileState extends State<EditProfile> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return Container(
-                                      color: KDullBlack,
+                                      color: KWhite,
                                       height: 200,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,7 +243,7 @@ class _EditProfileState extends State<EditProfile> {
                                                 onSelectedItemChanged: (int index) {
                                                   val = genders[index];
                                                 },
-                                                children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                             ),
                                           ),
                                           CupertinoButton(
@@ -276,7 +276,7 @@ class _EditProfileState extends State<EditProfile> {
                     context: context,
                     builder: (BuildContext context) {
                       return Container(
-                        color: KDullBlack,
+                        color: KWhite,
                         height: 200,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -482,7 +482,7 @@ class _EditProfileState extends State<EditProfile> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return Container(
-                                      color: KDullBlack,
+                                      color: KWhite,
                                       height: 200,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,7 +502,7 @@ class _EditProfileState extends State<EditProfile> {
                                                 onSelectedItemChanged: (int index) {
                                                   val = hightInCentimeter[index];
                                                 },
-                                                children:  hightInCentimeter.map((e) => Center(child: Text(e+" cm",style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                children:  hightInCentimeter.map((e) => Center(child: Text(e+" cm",style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                             ),
                                           ),
                                           CupertinoButton(
@@ -558,7 +558,7 @@ class _EditProfileState extends State<EditProfile> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return Container(
-                                      color: KDullBlack,
+                                      color: KWhite,
                                       height: 200,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -578,7 +578,7 @@ class _EditProfileState extends State<EditProfile> {
                                                 onSelectedItemChanged: (int index) {
                                                   val = weightInKg[index];
                                                 },
-                                                children:  weightInKg.map((e) => Center(child: Text(e+" kg",style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                children:  weightInKg.map((e) => Center(child: Text(e+" kg",style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                             ),
                                           ),
                                           CupertinoButton(
@@ -633,7 +633,7 @@ class _EditProfileState extends State<EditProfile> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Container(
-                                          color: KDullBlack,
+                                          color: KWhite,
                                           height: 200,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -653,7 +653,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.ethnicities![index].ethnicityId!;
                                                     },
-                                                    children:  profileDetail.ethnicities!.map((e) => Center(child: Text(e.ethnicity??'',style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                    children:  profileDetail.ethnicities!.map((e) => Center(child: Text(e.ethnicity??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -741,7 +741,7 @@ class _EditProfileState extends State<EditProfile> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Container(
-                                          color: KDullBlack,
+                                          color: KWhite,
                                           height: 200,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -761,7 +761,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.bodyTypes![index].bodyTypeId!;
                                                     },
-                                                    children:  profileDetail.bodyTypes!.map((e) => Center(child: Text(e.bodyType??'',style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                    children:  profileDetail.bodyTypes!.map((e) => Center(child: Text(e.bodyType??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -847,7 +847,7 @@ class _EditProfileState extends State<EditProfile> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Container(
-                                          color: KDullBlack,
+                                          color: KWhite,
                                           height: 200,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -867,7 +867,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.positions![index].positionId!;
                                                     },
-                                                    children:  profileDetail.positions!.map((e) => Center(child: Text(e.position??'',style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                    children:  profileDetail.positions!.map((e) => Center(child: Text(e.position??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -952,7 +952,7 @@ class _EditProfileState extends State<EditProfile> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Container(
-                                          color: KDullBlack,
+                                          color: KWhite,
                                           height: 200,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -972,7 +972,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.relationships![index].relationshipId!;
                                                     },
-                                                    children:  profileDetail.relationships!.map((e) => Center(child: Text(e.relationship??'',style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                    children:  profileDetail.relationships!.map((e) => Center(child: Text(e.relationship??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -1144,7 +1144,7 @@ class _EditProfileState extends State<EditProfile> {
                     context: context,
                     builder: (BuildContext context) {
                       return Container(
-                        color: KDullBlack,
+                        color: KWhite,
                         height: 200,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,

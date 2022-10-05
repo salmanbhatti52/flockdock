@@ -201,7 +201,7 @@ class _BasicInfoState extends State<BasicInfo> {
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  color: KDullBlack,
+                                  color: KWhite,
                                   height: 200,
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -290,7 +290,7 @@ class _BasicInfoState extends State<BasicInfo> {
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  color: KDullBlack,
+                                  color: KWhite,
                                   height: 200,
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,

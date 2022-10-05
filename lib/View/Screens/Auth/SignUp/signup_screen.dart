@@ -168,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return Container(
-                                            color: KDullBlack,
+                                            color: KWhite,
                                             height: 200,
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,12 +180,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     },
                                                     mode: CupertinoDatePickerMode.date,
                                                     initialDateTime: selectedDate,
+                                                    //backgroundColor: Colors.grey,
+
                                                     minimumDate: DateTime(1970),
                                                     maximumDate: DateTime.now(),
+                                                    
+
+
                                                   ),
+
                                                 ),
                                                 CupertinoButton(
-                                                  child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
+                                                  child: Text("Ok",style: proximaBold.copyWith(color: KBlue)),
+
+                                                 // child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
                                                   onPressed: () {
                                                     if (selected!=null && selected != selectedDate) {
                                                       print(selected);
@@ -297,7 +305,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         context: context,
                                         builder: (BuildContext context){
                                           return Container (
-                                            color:KDullBlack,
+                                            color:KWhite,
                                             height: 200,
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,7 +326,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       onSelectedItemChanged: (int index) {
                                                         val = genders[index];
                                                       },
-                                                      children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KWhite)),),).toList()
+                                                      children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                                   ),
                                                 ),
                                                 CupertinoButton(
@@ -357,7 +365,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                         ),
                                         spaceHorizontal(10),
-                                        Icon(Icons.arrow_drop_down_rounded,color: KWhite,),
+                                        Icon(Icons.arrow_drop_down_rounded,color: KWhite.withOpacity(0.5),),
                                         // Container(
                                         //   height: 30,
                                         //   width: 15,
