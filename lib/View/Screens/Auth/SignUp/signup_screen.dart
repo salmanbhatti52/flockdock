@@ -35,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Profile profile=Profile();
   bool _value = false;
   final gender = ['Male','Female','Other','Unspecified'];
-  String? value;
+  String value = "Gender";
   String birthday="Birthday";
   String date="";
   DateTime selectedDate=DateTime.now();
@@ -200,7 +200,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       selectedDate = selected!;
                                                       DOB=DateFormat("dd MMM, yyyy").format(selectedDate);
                                                       userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
+                                                      //birthday = selected;
                                                       print(DOB);
+                                                      print(userDetail.birthday);
+                                                      birthday = userDetail.birthday.toString();
                                                       setState(() {});
                                                     }
                                                     Navigator.pop(context);
@@ -324,7 +327,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       ),
                                                       itemExtent: 50.0,
                                                       onSelectedItemChanged: (int index) {
-                                                        val = genders[index];
+                                                        value = genders[index];
                                                       },
                                                       children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack)),),).toList()
                                                   ),
@@ -332,7 +335,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 CupertinoButton(
                                                   child: Text("Ok",style: proximaBold.copyWith(color: KBlue)),
                                                   onPressed: () {
-                                                    userDetail.gender=val;
+                                                    userDetail.gender=value;
                                                     setState(() {
 
                                                     });
@@ -358,7 +361,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(left:5.0),
-                                          child: Text(val,style: TextStyle(color: KWhite.withOpacity(0.5),
+                                          child: Text(value.toString(),style: TextStyle(color: KWhite.withOpacity(0.5),
                                               fontFamily: "Proxima",
                                               fontSize: 16)),
 
@@ -499,12 +502,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     else if (_emailController.text.isEmpty) {
       showCustomSnackBar('Enter Email');
     }
-    else if (birthday=="Birthday") {
+    else if (birthday.isEmpty) {
       showCustomSnackBar('Select Birthday');
     }
-    else if (DateTime.now().difference(checkInDate).inDays<6574) {
-      showCustomSnackBar('You are UnderAge');
-    }
+    // else if (DateTime.now().difference(checkInDate).inDays<6574) {
+    //   showCustomSnackBar('You are UnderAge');
+    // }
     else if (value==null) {
       showCustomSnackBar('Select Gender');
     }
