@@ -56,7 +56,8 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       body: SlidingUpPanel(
-         color: KPureBlack,
+
+        color: KPureBlack,
         borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
         isDraggable: true,
         backdropEnabled: true,

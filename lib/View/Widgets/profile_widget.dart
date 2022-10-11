@@ -15,8 +15,10 @@ Widget ProfileWidget({
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
           fit: BoxFit.cover,
+          
           image: NetworkImage(
-              img.isNotEmpty?img:AppConstants.placeholder
+              img.isNotEmpty?img:AppConstants.placeholder,
+            
           ),
         ),
       ),
@@ -34,11 +36,30 @@ Widget ProfileWidget({
               stops: [
                 0.0,
                 1.0
-              ])
+              ]),
+
       ),
-      child: Padding(
-        padding:  EdgeInsets.symmetric(vertical:2,horizontal: Dimensions.PADDING_SIZE_SMALL),
-        child: Column(
+       child: Container(
+         decoration: BoxDecoration(
+         //color: Colors.transparent,
+           borderRadius: BorderRadius.circular(10),
+            gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Colors.black.withOpacity(0.96),
+              Colors.grey.withOpacity(0.0),
+            ],
+              stops: [
+                0.0,
+                1.0
+            ]),
+
+          ),
+
+        child: Padding(
+          padding:  EdgeInsets.symmetric(vertical:2,horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+          child: Column(
           crossAxisAlignment:
           CrossAxisAlignment.start,
           mainAxisAlignment:
@@ -81,6 +102,7 @@ Widget ProfileWidget({
           ],
         ),
       ),
+    ),
     )
   ]);
 }
@@ -107,7 +129,22 @@ Widget GroupWidget({double? width, required String img, required String groupNam
                   0.0,
                   1.0
                 ])),
-        child: Padding(
+
+        child: Container(
+                  decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                    Colors.black.withOpacity(0.96),
+                    Colors.grey.withOpacity(0.0),
+                ],
+                stops: [
+                    0.0,
+                    1.0
+                ])),
+          child: Padding(
           padding: const EdgeInsets.only(right: 5, left: 5, bottom: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,6 +197,7 @@ Widget GroupWidget({double? width, required String img, required String groupNam
             ],
           ),
         ),
+      ),
       ),
     ],
   );
@@ -245,3 +283,4 @@ Widget ProfileContainer({required String img,required String profileName,
     )
   ]);
 }
+
