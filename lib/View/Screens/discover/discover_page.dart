@@ -23,12 +23,16 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+
+import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
+
 
 class DiscoverPage extends StatefulWidget {
 
   DiscoverPage({Key? key,}) : super(key: key);
+
 
 
   @override
@@ -39,6 +43,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
   Position position=Position(longitude: AppData().userdetail!.longitude??0, latitude: AppData().userdetail!.latitude??0,
       timestamp: DateTime.now(), accuracy: 1, altitude: 1, heading: 1, speed: 1, speedAccuracy: 1);
   bool isMap =false;
+
+  LatLng? _currentPosition;
   TextEditingController searchController=TextEditingController();
   List<ProfileGroupDetail>? profileGroup=[];
   int users=0,groups=0;
@@ -49,11 +55,74 @@ class _DiscoverPageState extends State<DiscoverPage> {
   late GoogleMapController mapController;
   PlacesService  placesService = PlacesService();
   List<PlacesAutoCompleteResult>  autoCompleteResult=[];
+  Location currentLocation = Location();
+  GoogleMapController? _controller;
+  Set<Marker> _markers={};
+  var postlati;
+  var postlong;
+  bool _isLoading = true;
+
+
+  static final CameraPosition _kGoogle = const CameraPosition(
+    target: LatLng(20.42796133580664, 80.885749655962),
+    zoom: 14.4746,
+  );
+
+
+  final List<Marker> mmarkers = <Marker>[
+    Marker(
+        markerId: MarkerId('1'),
+        position: LatLng(20.42796133580664, 75.885749655962),
+        infoWindow: InfoWindow(
+          title: 'My Position',
+        )
+    ),
+  ];
+
+
+
+ // getLocation() async{
+ //    var location = await currentLocation.getLocation();
+ //    currentLocation.onLocationChanged.listen((LocationData loc){
+ //
+ //      _controller?.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
+ //        target: LatLng(loc.latitude ?? 0.0,loc.longitude?? 0.0),
+ //        zoom: 12.0,
+ //      )));
+ //      postlati = loc.latitude;
+ //      postlong = loc.longitude;
+ //      print(loc.latitude);
+ //      print(loc.longitude);
+ //      setState(() {
+ //        position: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0);
+ //      });
+ //
+ //    });
+ //  }
+
+  // getLocation() async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.requestPermission();
+  //
+  //   Position position = await Geolocator.getCurrentPosition(
+  //      // desiredAccuracy: LocationAccuracy.high
+  //     );
+  //   double lat = position.latitude;
+  //   double long = position.longitude;
+  //
+  //   LatLng location = LatLng(lat, long);
+  //
+  //   setState(() {
+  //     _currentPosition = location;
+  //     _isLoading = false;
+  //   });
+  // }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     placesService.initialize(apiKey: AppConstants.apiKey);
+    //getLocation();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       getDiscoverUserGroup();
     });
@@ -141,12 +210,21 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 isMap?Expanded(
                   child: GoogleMap(
                     markers: markers,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(position.latitude,position.longitude),
+
+                    initialCameraPosition:
+                    //_kGoogle, //getLocation(),
+                    CameraPosition(
+                      target:
+                      //_currentPosition!,
+                      LatLng(position.latitude,position.longitude),
+                      //target: LatLng(30.3753,100.3451),
+                      //target: LatLng(getLocation(),postlong),
                       zoom: 10,
                     ),
+
                     onMapCreated: (GoogleMapController mapController) {
                       this.mapController = mapController;
+                      //getLocation();
                     },
                     zoomControlsEnabled: false,
                     onCameraMove: (CameraPosition cameraPosition) async {
@@ -169,7 +247,11 @@ class _DiscoverPageState extends State<DiscoverPage> {
                       //await convertToAddress(_cameraPosition!.target.latitude, _cameraPosition!.target.longitude, "AIzaSyBqdGZNfHhamM_6gbqPCDpJ7H44xEst37A");
                     },
                   ),
+
+
                 ):
+
+
                 Expanded(
                   child: SingleChildScrollView(
                     child: Wrap(
