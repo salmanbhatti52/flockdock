@@ -1,4 +1,5 @@
 import 'package:flocdock/View/Screens/inbox/widget/inbox_list.dart';
+import 'package:flocdock/View/Screens/inbox/widget/slideactionmodel.dart';
 import 'package:flocdock/View/Screens/inbox/widget/taps.dart';
 import 'package:flocdock/View/Screens/menu/drawer.dart';
 import 'package:flocdock/View/base/bottom_navbar.dart';
@@ -26,6 +27,8 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
   List<TapDetail> tapDetail=[];
   List<InboxDetail> inboxMessages=[];
   TabController? _tabController;
+  void Function()? onTapAccept;
+  void Function()? onTapIgnore;
   @override
   void initState() {
     // TODO: implement initState
@@ -78,6 +81,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                         return Column(
                           children: [
                             Slidable(
+
                               actionPane: SlidableScrollActionPane(),
                               secondaryActions: [
                                 IconSlideAction(
@@ -85,6 +89,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                                   color: KbgBlack,
                                   icon: Icons.check_box_outlined,
                                   foregroundColor: Colors.green,
+                                  onTap: ()=>setState(() =>inboxMessages.removeAt(index)),
                                   //onTap: onTapAccept,
 
                                 ),
@@ -93,6 +98,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                                   color: KbgBlack,
                                   icon: Icons.highlight_remove,
                                   foregroundColor: Colors.red,
+                                  onTap: ()=>setState(() =>inboxMessages.removeAt(index)),
                                   //onTap: onTapIgnore,
                                 )
                               ],
@@ -125,12 +131,14 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                           return Column(
                             children: [
                               Slidable(
-                                actionPane: SlidableScrollActionPane(),
+                                actionPane: SlidableScrollActionPane(
+                                ),
                                 secondaryActions: [
                                   IconSlideAction(
                                     caption: 'Ignore',
                                     color: KbgBlack,
                                     icon: Icons.delete,
+                                    onTap: ()=>setState(() =>tapDetail.removeAt(index)),
                                     )
                                     ],
                                   child:Tap(
@@ -149,21 +157,19 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                                 ),
                               ),
                             ],
-
                           );
-
                         }
-
                   ),
                 ],
               ),
             ),
           ),
-
         ],
       ),
     );
+
   }
+
   void getAllTaps() async {
     var response;
     response = await DioService.post('get_all_taps', {
@@ -177,7 +183,6 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
       print(response['message']);
       //showCustomSnackBar(response['message']);
     }
-
   }
 
   void getInboxList() async {
@@ -280,3 +285,4 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
     }
   }
 }
+

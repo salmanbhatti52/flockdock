@@ -43,7 +43,8 @@ class _BasicInfoState extends State<BasicInfo> {
   DateTime endDatePicked=DateTime.now();
   final TextEditingController _addressController=TextEditingController();
   final TextEditingController _additionalController=TextEditingController();
-  String DOB=DateFormat("dd MMM, yyyy").format(DateTime.now());
+  String start_date=DateFormat("dd MMM, yyyy").format(DateTime.now());
+  String end_date=DateFormat("dd MMM, yyyy").format(DateTime.now());
   DateTime selectedDate=DateTime.now();
   PickedFile pickedFile=PickedFile("");
   UserDetail userDetail=UserDetail(userSeeking: [],userTribes: []);
@@ -214,7 +215,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                           mode: CupertinoDatePickerMode.date,
                                           initialDateTime: selectedDate,
                                           minimumDate: DateTime(1970),
-                                          maximumDate: DateTime.now(),
+                                          maximumDate: DateTime(2050),
                                         ),
                                       ),
                                       CupertinoButton(
@@ -223,9 +224,12 @@ class _BasicInfoState extends State<BasicInfo> {
                                           if (selected!=null && selected != selectedDate) {
                                             print(selected);
                                             selectedDate = selected!;
-                                            DOB=DateFormat("dd MMM, yyyy").format(selectedDate);
-                                            userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
-                                            print(DOB);
+                                            start_date=DateFormat("dd MMM, yyyy").format(selectedDate);
+                                            eventDetail.startingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
+
+                                            print(eventDetail.startingDate.toString());
+                                            print(start_date);
+
                                             setState(() {});
                                           }
                                           Navigator.pop(context);
@@ -249,7 +253,7 @@ class _BasicInfoState extends State<BasicInfo> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left:5.0),
-                                child: Text(DOB,
+                                child: Text(start_date,
 
                                   style: TextStyle(
                                       color: KWhite.withOpacity(0.5),
@@ -303,7 +307,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                           mode: CupertinoDatePickerMode.date,
                                           initialDateTime: selectedDate,
                                           minimumDate: DateTime(1970),
-                                          maximumDate: DateTime.now(),
+                                          maximumDate: DateTime(2050),
                                         ),
                                       ),
                                       CupertinoButton(
@@ -312,9 +316,13 @@ class _BasicInfoState extends State<BasicInfo> {
                                           if (selected!=null && selected != selectedDate) {
                                             print(selected);
                                             selectedDate = selected!;
-                                            DOB=DateFormat("dd MMM, yyyy").format(selectedDate);
-                                            userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
-                                            print(DOB);
+                                            end_date=DateFormat("dd MMM, yyyy").format(selectedDate);
+                                            eventDetail.endingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
+
+                                            print(eventDetail.endingDate.toString());
+                                            //userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
+
+                                            print(end_date);
                                             setState(() {});
                                           }
                                           Navigator.pop(context);
@@ -338,7 +346,7 @@ class _BasicInfoState extends State<BasicInfo> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left:5.0),
-                                child: Text(DOB,
+                                child: Text(end_date,
 
                                   style: TextStyle(
                                       color: KWhite.withOpacity(0.5),
