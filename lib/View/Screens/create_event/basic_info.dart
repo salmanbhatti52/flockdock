@@ -225,10 +225,13 @@ class _BasicInfoState extends State<BasicInfo> {
                                             print(selected);
                                             selectedDate = selected!;
                                             start_date=DateFormat("dd MMM, yyyy").format(selectedDate);
+                                            //List<String> datetime=dateTime.toString().split(" ");
+                                            String start_time = DateFormat("HH:mm:ss").format(DateTime.now());
                                             eventDetail.startingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
+                                            eventDetail.startingTime= start_time;
 
                                             print(eventDetail.startingDate.toString());
-                                            print(start_date);
+                                            print(start_time);
 
                                             setState(() {});
                                           }
@@ -316,13 +319,15 @@ class _BasicInfoState extends State<BasicInfo> {
                                           if (selected!=null && selected != selectedDate) {
                                             print(selected);
                                             selectedDate = selected!;
+                                            String end_time = DateFormat("HH:mm:ss").format(selectedDate);
                                             end_date=DateFormat("dd MMM, yyyy").format(selectedDate);
                                             eventDetail.endingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
+                                            eventDetail.endingTime= end_time;
 
                                             print(eventDetail.endingDate.toString());
                                             //userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
 
-                                            print(end_date);
+                                            print(end_time);
                                             setState(() {});
                                           }
                                           Navigator.pop(context);

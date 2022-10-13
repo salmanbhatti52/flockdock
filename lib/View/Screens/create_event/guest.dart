@@ -304,6 +304,27 @@ class _GuestState extends State<Guest> {
         ],
         "features": eventDetail.features
       });
+
+      print(eventDetail.usersId.toString());
+    print(eventDetail.groupCategoryId.toString());
+    print(eventDetail.title);
+    print(eventDetail.coverPhoto);
+    print(eventDetail.startingTime);
+    print(eventDetail.startingDate);
+    print(eventDetail.endingDate);
+    print(eventDetail.endingTime);
+    print(eventDetail.address);
+    print(eventDetail.groupLong.toString());
+    print(eventDetail.groupLat.toString());
+    print(eventDetail.additionalInstructions);
+    print(eventDetail.cover);
+    print(eventDetail.cost);
+    print(eventDetail.guests);
+    print(eventDetail.maxGroupSize);
+    print(eventDetail.topToBottomRatio);
+    print(eventDetail.inviteOtherGuests);
+    print(eventDetail.tribes);
+
       if(response['status']=='success'){
         print(response['data']);
         Navigator.pop(context);

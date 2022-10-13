@@ -470,7 +470,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ),
               ),
             if(isMap)Positioned(
-              top: 240,
+              top: 288,
               child: Container(
                 height: 100,
                 width: 100,
@@ -572,7 +572,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
     markers.clear();
     markers.add(Marker(
       markerId: const MarkerId('marker'),
-      position: LatLng(position.latitude,position.longitude),
+      position: LatLng(position.latitude-0.035,position.longitude),
       icon: BitmapDescriptor.fromBytes(destinationImageData),
     ));
     setState(() {});
@@ -588,7 +588,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
     ));
     setState(() {});
   }
-  Future<Uint8List> convertAssetToUnit8List(String imagePath, {int width = 400}) async {
+  Future<Uint8List> convertAssetToUnit8List(String imagePath, {int width = 350}) async {
     ByteData data = await rootBundle.load(imagePath);
     Codec codec = await instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
     FrameInfo fi = await codec.getNextFrame();

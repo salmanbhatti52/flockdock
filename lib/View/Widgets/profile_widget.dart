@@ -28,10 +28,10 @@ Widget ProfileWidget({
           borderRadius: BorderRadius.circular(10),
           gradient: LinearGradient(
               begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+              end: Alignment.center,
               colors: [
-                Colors.black.withOpacity(0.96),
-                Colors.grey.withOpacity(0.0),
+                Colors.black.withOpacity(1),
+                Colors.transparent,
               ],
               stops: [
                 0.0,
@@ -45,11 +45,12 @@ Widget ProfileWidget({
            borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(
             begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
+            end: Alignment.center,
             colors: [
-              Colors.black.withOpacity(0.96),
-              Colors.grey.withOpacity(0.0),
+              Colors.black.withOpacity(1),
+              Colors.transparent,
             ],
+                //tileMode: TileMode.mirror,
               stops: [
                 0.0,
                 1.0
@@ -120,10 +121,10 @@ Widget GroupWidget({double? width, required String img, required String groupNam
             borderRadius: BorderRadius.circular(8),
             gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
+                end: Alignment.center,
                 colors: [
-                  Colors.black.withOpacity(0.96),
-                  Colors.grey.withOpacity(0.0),
+                  Colors.black.withOpacity(1),
+                  Colors.transparent,
                 ],
                 stops: [
                   0.0,
@@ -135,10 +136,10 @@ Widget GroupWidget({double? width, required String img, required String groupNam
                 borderRadius: BorderRadius.circular(8),
                 gradient: LinearGradient(
                 begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+                end: Alignment.center,
                 colors: [
-                    Colors.black.withOpacity(0.96),
-                    Colors.grey.withOpacity(0.0),
+                  Colors.black.withOpacity(1),
+                  Colors.transparent,
                 ],
                 stops: [
                     0.0,
