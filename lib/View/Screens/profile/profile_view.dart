@@ -69,7 +69,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
             Image.network(
               url.isNotEmpty?url:"https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
               height: MediaQuery.of(context).size.height,
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
             Align(
               alignment: Alignment.topCenter,
@@ -202,7 +202,9 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
             child: Column(
               children: [
                 PreviewCard(userDetail: userDetail,onTapUser: tapUser,),
-                SizedBox(height: 33,),
+                SizedBox(height: 20,),
+                Align(alignment: Alignment.topLeft,child: Text('DESCRIPTION',style: proximaSemiBold.copyWith(color: KBlue,),)),
+                SizedBox(height: 10,),
                 Align(alignment:Alignment.topLeft,child: Text(userDetail.description??'',style: proximaSemiBold.copyWith(color: KWhite,))),
                 SizedBox(height: 15,),
                 ProfileItem(title: "HEIGHT",value: userDetail.height??'',),

@@ -7,8 +7,14 @@ import 'package:flocdock/models/inbox/inbox_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../../../models/user_model/signup_model.dart';
+import '../../chat/chat.dart';
 
 class InboxList extends StatelessWidget {
+  UserDetail? userDetail;
   InboxDetail? inboxDetail=InboxDetail();
   void Function()? onTapAccept;
   void Function()? onTapIgnore;
@@ -65,24 +71,27 @@ class InboxList extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width*0.70,
-                padding: EdgeInsets.only(left:Dimensions.PADDING_SIZE_SMALL,top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width*0.67,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(inboxDetail!.userName??'',style: proximaBold.copyWith(color: KBlue,)),
-                          Text(inboxDetail!.formattedTime??'',style: proximaRegular.copyWith(color: KDullBlack,),),
-                        ],
+              GestureDetector(
+                onTap: () => Get.to(Chat(name: inboxDetail!.userName??'',id: inboxDetail!.senderId!,)),
+                child: Container(
+                  width: MediaQuery.of(context).size.width*0.70,
+                  padding: EdgeInsets.only(left:Dimensions.PADDING_SIZE_SMALL,top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*0.67,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(inboxDetail!.userName??'',style: proximaBold.copyWith(color: KBlue,)),
+                            Text(inboxDetail!.formattedTime??'',style: proximaRegular.copyWith(color: KDullBlack,),),
+                          ],
+                        ),
                       ),
-                    ),
-                    Text(inboxDetail!.message??'',style: proximaRegular.copyWith(color: KWhite.withOpacity(0.5),),),
-                  ],
+                      Text(inboxDetail!.message??'',style: proximaRegular.copyWith(color: KWhite.withOpacity(0.5),),),
+                    ],
+                  ),
                 ),
               ),
             ],

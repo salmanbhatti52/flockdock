@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'package:flocdock/View/Screens/edit_profile/widget/update_dialog.dart';
 import 'package:flocdock/View/base/custom_snackbar.dart';
@@ -340,11 +341,11 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
       image=response['data'];
       Navigator.pop(context);
       uploadUserPictureDetail(type);
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
     }
     else{
       Navigator.pop(context);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
   }
   void uploadUserPictureDetail(String type) async {
@@ -358,12 +359,12 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
     if(response['status']=='success'){
       Navigator.pop(context);
       getUserPictures();
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
     }
     else{
       Navigator.pop(context);
       print(response['message']);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
 
   }
@@ -376,12 +377,12 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
     if(response['status']=='success'){
       Navigator.pop(context);
       getUserPictures();
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
     }
     else{
       Navigator.pop(context);
       print(response['message']);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
 
   }
@@ -401,7 +402,7 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
     else{
       Navigator.pop(context);
       print(response['message']);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
 
   }
@@ -419,11 +420,11 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
       image=response['data'];
       Navigator.pop(context);
       uploadProfilePictureDetail();
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
     }
     else{
       Navigator.pop(context);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
   }
   void uploadProfilePictureDetail() async {
@@ -437,13 +438,13 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
       AppData().userdetail!.profilePicture=response['data'];
       AppData().update();
       Navigator.pop(context);
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
       setState(() {});
     }
     else{
       Navigator.pop(context);
       print(response['message']);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
 
   }
@@ -457,13 +458,13 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
       AppData().userdetail!.profilePicture="";
       AppData().update();
       Navigator.pop(context);
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
       setState(() {});
     }
     else{
       Navigator.pop(context);
       print(response['message']);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
 
   }

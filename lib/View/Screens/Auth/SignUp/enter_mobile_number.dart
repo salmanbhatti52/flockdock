@@ -80,7 +80,7 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
                     textInputType: TextInputType.text,
                     controller: _mobileNumberController,
                     isObSecure: false,
-                    hintText: "Enter Mobile Number",
+                    hintText: "+13017995969",
                   ),
                   spaceVertical(28),
                   MyButton(

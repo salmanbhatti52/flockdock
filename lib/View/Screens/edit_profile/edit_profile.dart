@@ -32,7 +32,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController descriptionController=TextEditingController();
   List<String> genders=['Male','Female','Other','Unspecified'];
   String val="";
-  DateTime selectedDate=DateTime.now();
+  DateTime? selectedDate; //=DateTime.now();
   DateTime vaccinationDate=DateTime.now();
   String vaccination=DateFormat("dd MMM, yyyy").format(DateTime.now());
   String DOB=DateFormat("dd MMM, yyyy").format(DateTime.now());
@@ -40,6 +40,7 @@ class _EditProfileState extends State<EditProfile> {
   bool hive=true;
   bool covid=true;
   bool isLoading=true;
+  TextEditingController birthdayText_Controller = TextEditingController();
 
   int selectedId=1;
   DetailItem detailItem=DetailItem();
@@ -55,6 +56,8 @@ class _EditProfileState extends State<EditProfile> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       getUserProfileDetail();
       getPredefinedProfileDetail();
+      //selectedDate = DateTime.parse(userDetail.birthday.toString());
+     // DOB = userDetail.birthday.toString();
     });
   }
   @override
@@ -124,7 +127,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height*0.03),
             Container(
-              height: 85,
+              height: 100,
               padding: const EdgeInsets.symmetric(
                   horizontal: Dimensions.PADDING_SIZE_DEFAULT,
                   vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -139,6 +142,8 @@ class _EditProfileState extends State<EditProfile> {
                 children: [
                   Text("Description",style: proximaBold.copyWith(color: KBlue)),
                   Expanded(
+
+
                     child: TextFormField(
                         controller: descriptionController,
                         keyboardType: TextInputType.multiline,
@@ -147,6 +152,8 @@ class _EditProfileState extends State<EditProfile> {
                         minLines: 3,
                         autofocus: false,
                         maxLength: 100,
+
+
                         style: const TextStyle(
                             color: KWhite,
                             fontFamily: "Proxima"
@@ -287,7 +294,7 @@ class _EditProfileState extends State<EditProfile> {
                                       selected=date;
                                     },
                                     mode: CupertinoDatePickerMode.date,
-                                    initialDateTime: selectedDate,
+                                    initialDateTime: selectedDate,//DateTime.parse(userDetail.birthday.toString()),
                                     minimumDate: DateTime(1970),
                                     maximumDate: DateTime.now(),
                                   ),
@@ -295,11 +302,17 @@ class _EditProfileState extends State<EditProfile> {
                             CupertinoButton(
                               child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
                               onPressed: () {
+                                selectedDate=DateTime.parse(userDetail.birthday.toString());
+                                print(DateTime.parse(userDetail.birthday.toString()));
                                 if (selected!=null && selected != selectedDate) {
                                   print(selected);
                                   selectedDate = selected!;
-                                  DOB=DateFormat("dd MMM, yyyy").format(selectedDate);
-                                  userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
+                                  print('Selected Date');
+                                  print(selectedDate);
+                                  DOB=DateFormat("dd MMM, yyyy").format(selectedDate!);
+                                  print('user Detail.birthday');
+                                  print(userDetail.birthday);
+                                  userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate!);
                                   print(DOB);
                                   setState(() {});
                                 }
@@ -337,7 +350,14 @@ class _EditProfileState extends State<EditProfile> {
                 //   setState(() {});
                 // }
               },
-              child: EditField(title: "Birthday",isEnabled: false,controller: TextEditingController(text: DOB),),
+              child: EditField(
+                title: "Birthday",
+                isEnabled: false,
+                controller: TextEditingController(
+                    text: DOB
+                )
+                ,
+              ),
             ),
             Container(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: 8),
@@ -460,7 +480,7 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Hight",style: proximaBold.copyWith(color: KBlue)),
+                  Text("Height",style: proximaBold.copyWith(color: KBlue)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -1317,7 +1337,7 @@ class _EditProfileState extends State<EditProfile> {
       hive=userDetail.hivStatus=="True";
       descriptionController.text=userDetail.description??"";
       selectedDate=DateTime.tryParse(userDetail.birthday??'')??selectedDate;
-      DOB=userDetail.birthday==null?"":DateFormat("dd MMM, yyyy").format(selectedDate);
+      DOB=userDetail.birthday==null?"":DateFormat("dd MMM, yyyy").format(selectedDate!);
       vaccinationDate= DateTime.tryParse(userDetail.dateOfLastTest??'')??vaccinationDate;
       vaccination=DateFormat("dd MMM, yyyy").format(vaccinationDate);
       vaccination=userDetail.dateOfLastTest==null?'':vaccination;

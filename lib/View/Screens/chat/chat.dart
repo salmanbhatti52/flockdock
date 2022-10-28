@@ -218,7 +218,9 @@ class _ChatState extends State<Chat> {
                               children: [
                                 messages[index].msgType=="attachment"?Container(
                                   width: MediaQuery.of(context).size.width*0.8,
-                                  height: MediaQuery.of(context).size.width*0.5,
+                                  height: MediaQuery.of(context).size.height*0.4
+
+                                  ,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(messages[index].message??'',),
@@ -280,7 +282,7 @@ class _ChatState extends State<Chat> {
                               children: [
                                 messages[index].msgType=="attachment"?Container(
                                   width: MediaQuery.of(context).size.width*0.8,
-                                  height: MediaQuery.of(context).size.height*0.7,
+                                  height: MediaQuery.of(context).size.height*0.4,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: NetworkImage(messages[index].message??'',),
@@ -425,7 +427,8 @@ class _ChatState extends State<Chat> {
                                   },
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(Images.photo),
+                                      SvgPicture.asset(Images.photo,
+                                      ),
                                       SizedBox(width: 10,),
                                       Text('Send Photos', style: proximaBold.copyWith(color: KWhite),),
                                     ],

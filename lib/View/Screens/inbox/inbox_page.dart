@@ -16,6 +16,7 @@ import 'package:flocdock/models/inbox/tap_model.dart';
 import 'package:flocdock/services/dio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:dio/dio.dart';
 
 class InboxPage extends StatefulWidget {
 
@@ -27,8 +28,9 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
   List<TapDetail> tapDetail=[];
   List<InboxDetail> inboxMessages=[];
   TabController? _tabController;
-  void Function()? onTapAccept;
-  void Function()? onTapIgnore;
+  Dio dio=Dio();
+  // void Function()? onTapAccept;
+  // void Function()? onTapIgnore;
   @override
   void initState() {
     // TODO: implement initState
@@ -85,23 +87,20 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                               actionPane: SlidableScrollActionPane(),
                               secondaryActions: [
                                 IconSlideAction(
-                                  caption: 'Accept',
+                                  caption: 'Delete',
                                   color: KbgBlack,
-                                  icon: Icons.check_box_outlined,
-                                  foregroundColor: Colors.green,
-                                  onTap: ()=>setState(() =>inboxMessages.removeAt(index)),
-                                  //onTap: onTapAccept,
-
-                                ),
-                                IconSlideAction(
-                                  caption: 'Ignore',
-                                  color: KbgBlack,
-                                  icon: Icons.highlight_remove,
-                                  foregroundColor: Colors.red,
-                                  onTap: ()=>setState(() =>inboxMessages.removeAt(index)),
-                                  //onTap: onTapIgnore,
-                                )
-                              ],
+                                  icon: Icons.delete,
+                                  foregroundColor: Colors.white,
+                                  onTap: ()=>setState(() {
+                                    print('into Messages Inbox');
+                                    print('Notification ID : ');
+                                    print(inboxMessages[index].notificationId);
+                                    print('index id: ');
+                                    print(index);
+                                    deleteNotification(inboxMessages[index].notificationId.toString());
+                                    inboxMessages.removeAt(index);
+                                  } ),
+                                )],
                               child: InboxList(
                                 inboxDetail: inboxMessages[index],
                                 onTapAccept: () => inboxMessages[index].notificationType=="GroupJoinRequest"?acceptJoiningRequest(index):acceptInviteRequest(index),
@@ -135,11 +134,23 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                                 ),
                                 secondaryActions: [
                                   IconSlideAction(
-                                    caption: 'Ignore',
+                                    caption: 'Delete',
                                     color: KbgBlack,
                                     icon: Icons.delete,
-                                    onTap: ()=>setState(() =>tapDetail.removeAt(index)),
-                                    )
+                                    onTap: ()=>setState(() {
+                                      tapDetail.removeAt(index);
+                                      print('into Tab');
+                                      print('Notification ID : ');
+                                      deleteTaps(tapDetail[index].tapId.toString());
+                                      print(tapDetail[index].tapId.toString());
+                                      // print(tapDetail[index].userName);
+                                      // print(tapDetail[index].tapId);
+                                      // print('index id: ');
+                                      // print(index);
+
+
+                                    }  //
+                                    ),)
                                     ],
                                   child:Tap(
                                     image: tapDetail[index].profilePicture??'',
@@ -243,6 +254,75 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
       showCustomSnackBar(response['message']);
     }
   }
+ // notifiction/{id}/delete
+ //  Future<void> deleteUser(int index) async {
+ //    try {
+ //      var response;
+ //      response = await DioService.post('notifiction/$id/delete', {
+ //        id = index;
+ //      });
+ //      print('Notification Deleted!');
+ //    } catch (e) {
+ //      print('Error deleting user: $e');
+ //    }
+ //  }
+
+  void deleteNotification(String id)async{
+    print('Into the function');
+    print(id);
+    var response = await dio.delete('https://flockdock.eigix.net/api/notifiction/delete',
+      data: {
+        "notification_id" : id,
+      },
+    );
+    if(response=='success'){
+
+      print('Message Notification Deleted');
+    }
+    else{
+      print('Error. Not Deleted');
+    }
+  }
+
+  void deleteTaps(String id)async{
+    print('Into the Tap function');
+    print(id);
+    var response = await dio.delete('https://flockdock.eigix.net/api/Taps/delete',
+      data: {
+        "tap_id" : id,
+      },
+    );
+    if(response=='success'){
+
+      print('Message Notification Deleted');
+    }
+    else{
+      print('Error. Not Deleted');
+    }
+  }
+
+
+
+  // void deleteNotification(String id) async {
+  //   print('Into the function');
+  //   print(id);
+  //   var response;
+  //   response = await .delete('notifiction/delete', {
+  //     "notification_id" : id.toString(),
+  //   });
+  //   if(response['status']=='success'){
+  //     print(response['data']);
+  //     print('Message Notification Deleted');
+  //   }
+  //   else{
+  //     print(response['message']);
+  //     print('Error. Not Deleted');
+  //   }
+  // }
+
+
+  //
+  // void deletemsg( int index)
 
   void acceptInviteRequest(int index) async {
     print(inboxMessages[index].toJson());

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -29,6 +30,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 
 
+
 class DiscoverPage extends StatefulWidget {
 
   DiscoverPage({Key? key,}) : super(key: key);
@@ -40,6 +42,20 @@ class DiscoverPage extends StatefulWidget {
 }
 
 class _DiscoverPageState extends State<DiscoverPage> {
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Position? _currentPositions;
   Position position=Position(longitude: AppData().userdetail!.longitude??0, latitude: AppData().userdetail!.latitude??0,
       timestamp: DateTime.now(), accuracy: 1, altitude: 1, heading: 1, speed: 1, speedAccuracy: 1);
   bool isMap =false;
@@ -60,63 +76,14 @@ class _DiscoverPageState extends State<DiscoverPage> {
   Set<Marker> _markers={};
   var postlati;
   var postlong;
-  bool _isLoading = true;
 
-
+  // on below line we have specified camera position
   static final CameraPosition _kGoogle = const CameraPosition(
-    target: LatLng(20.42796133580664, 80.885749655962),
-    zoom: 14.4746,
+    target: LatLng(30.2406, 71.4938),
+    zoom: 10,
   );
 
 
-  final List<Marker> mmarkers = <Marker>[
-    Marker(
-        markerId: MarkerId('1'),
-        position: LatLng(20.42796133580664, 75.885749655962),
-        infoWindow: InfoWindow(
-          title: 'My Position',
-        )
-    ),
-  ];
-
-
-
- // getLocation() async{
- //    var location = await currentLocation.getLocation();
- //    currentLocation.onLocationChanged.listen((LocationData loc){
- //
- //      _controller?.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
- //        target: LatLng(loc.latitude ?? 0.0,loc.longitude?? 0.0),
- //        zoom: 12.0,
- //      )));
- //      postlati = loc.latitude;
- //      postlong = loc.longitude;
- //      print(loc.latitude);
- //      print(loc.longitude);
- //      setState(() {
- //        position: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0);
- //      });
- //
- //    });
- //  }
-
-  // getLocation() async {
-  //   LocationPermission permission;
-  //   permission = await Geolocator.requestPermission();
-  //
-  //   Position position = await Geolocator.getCurrentPosition(
-  //      // desiredAccuracy: LocationAccuracy.high
-  //     );
-  //   double lat = position.latitude;
-  //   double long = position.longitude;
-  //
-  //   LatLng location = LatLng(lat, long);
-  //
-  //   setState(() {
-  //     _currentPosition = location;
-  //     _isLoading = false;
-  //   });
-  // }
   @override
   void initState() {
     // TODO: implement initState
@@ -208,49 +175,52 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   ),
                 ),
                 isMap?Expanded(
-                  child: GoogleMap(
-                    markers: markers,
+                  child: Stack(
+                    children: [
+                      // if (_currentPosition != null) Text(
+                      //     "LAT: ${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}"
+                      // ),
+                      GoogleMap(
+                        markers: markers,
 
-                    initialCameraPosition:
-                    //_kGoogle, //getLocation(),
-                    CameraPosition(
-                      target:
-                      //_currentPosition!,
-                      LatLng(position.latitude,position.longitude),
-                      //target: LatLng(30.3753,100.3451),
-                      //target: LatLng(getLocation(),postlong),
-                      zoom: 10,
-                    ),
+                        initialCameraPosition: //_kGoogle,
+                        //_kGoogle, //getLocation(),
+                        CameraPosition(
+                          target:
+                          LatLng(position.latitude,position.longitude),
+                          zoom: 10,
+                        ),
 
-                    onMapCreated: (GoogleMapController mapController) {
-                      this.mapController = mapController;
-                      //getLocation();
-                    },
-                    zoomControlsEnabled: false,
-                    onCameraMove: (CameraPosition cameraPosition) async {
-                      this.cameraPosition=cameraPosition;
-                      position=Position(longitude: cameraPosition.target.longitude, latitude: cameraPosition.target.latitude,
-                          timestamp: DateTime.now(), accuracy: 1, altitude: 1, heading: 1, speed: 1, speedAccuracy: 1);
-                      isLoading=true;
-                      setMarker();
-                      setMarker();
-                      print("cameramove");
-                    },
-                    onCameraMoveStarted: () {
 
-                    },
-                    onCameraIdle: () async {
-                      usersGroupsCountInRadius();
-                      print("cameraIdle");
-                      //plackmark= await placemarkFromCoordinates(_cameraPosition!.target.latitude, _cameraPosition!.target.longitude);
-                      //address="${plackmark!.first.subLocality}${plackmark!.first.locality}";
-                      //await convertToAddress(_cameraPosition!.target.latitude, _cameraPosition!.target.longitude, "AIzaSyBqdGZNfHhamM_6gbqPCDpJ7H44xEst37A");
-                    },
+                        onMapCreated: (GoogleMapController mapController) {
+                          this.mapController = mapController;
+                          //getLocation();
+                        },
+                        zoomControlsEnabled: false,
+                        onCameraMove: (CameraPosition cameraPosition) async {
+                          this.cameraPosition=cameraPosition;
+                          position=Position(longitude: cameraPosition.target.longitude, latitude: cameraPosition.target.latitude,
+                              timestamp: DateTime.now(), accuracy: 1, altitude: 1, heading: 1, speed: 1, speedAccuracy: 1);
+                          isLoading=true;
+                          setMarker();
+                          setMarker();
+                          print("cameramove");
+                        },
+                        onCameraMoveStarted: () {
+
+                        },
+                        onCameraIdle: () async {
+                          usersGroupsCountInRadius();
+                          print("cameraIdle");
+                          //plackmark= await placemarkFromCoordinates(_cameraPosition!.target.latitude, _cameraPosition!.target.longitude);
+                          //address="${plackmark!.first.subLocality}${plackmark!.first.locality}";
+                          //await convertToAddress(_cameraPosition!.target.latitude, _cameraPosition!.target.longitude, "AIzaSyBqdGZNfHhamM_6gbqPCDpJ7H44xEst37A");
+                        },
+                      ),
+
+                    ],
                   ),
-
-
                 ):
-
 
                 Expanded(
                   child: SingleChildScrollView(
@@ -426,7 +396,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     ),
                   ),
                 ),
-                if(!isMap)AdvertisementContainer(context: context)
+                if(!isMap)AdvertisementContainer(context: context),
 
               ],
             ),
@@ -470,7 +440,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ),
               ),
             if(isMap)Positioned(
-              top: 288,
+              top: 277,
               child: Container(
                 height: 100,
                 width: 100,
@@ -523,6 +493,8 @@ class _DiscoverPageState extends State<DiscoverPage> {
       ),
     );
   }
+
+
 
   void getDiscoverUserGroup() async {
     openLoadingDialog(context, "Loading");

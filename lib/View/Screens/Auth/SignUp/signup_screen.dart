@@ -133,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   spaceVertical(50),
                   MyTextField(
-                    textInputType: TextInputType.name,
+                    textInputType: TextInputType.text,
                     controller: _userNameController,
                     isObSecure: false,
                     hintText: "Username",

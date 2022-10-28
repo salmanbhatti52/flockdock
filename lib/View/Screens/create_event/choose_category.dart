@@ -81,7 +81,7 @@ class _ChooseCategoryState extends State<ChooseCategory> {
                         selected=categories[index].categoryId!;
                         eventDetail.groupCategoryId=categories[index].categoryId;
                         eventDetail.groupCategoryName=categories[index].category;
-                        eventDetail.groupCategoryImage=categories[index].categoryImage;
+                        //eventDetail.groupCategoryImage=categories[index].categoryImage;
                         setState(() {
 
                         });
