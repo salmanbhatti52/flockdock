@@ -8,4 +8,4 @@ Podfile.lock
 .packages
 *.zip
 build/
-ios/
+.ios/
