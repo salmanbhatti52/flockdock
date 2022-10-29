@@ -74,52 +74,65 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      //padding: EdgeInsetsGeometry.infinity,
-                      itemCount: inboxMessages.length,
-                      itemBuilder: (context,index){
-                        return Column(
-                          children: [
-                            Slidable(
+              RefreshIndicator(
+                displacement: 250,
+                backgroundColor: Colors.white,
+                color: Colors.grey,
+                strokeWidth: 3,
+                triggerMode: RefreshIndicatorTriggerMode.onEdge,
+                onRefresh: () async {
+                  await Future.delayed(Duration(milliseconds: 1500));
+                  setState(() {
+                    
+                  });
+                },
+                    child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        //padding: EdgeInsetsGeometry.infinity,
+                        itemCount: inboxMessages.length,
+                        itemBuilder: (context,index){
+                          return Column(
+                            children: [
+                              Slidable(
 
-                              actionPane: SlidableScrollActionPane(),
-                              secondaryActions: [
-                                IconSlideAction(
-                                  caption: 'Delete',
-                                  color: KbgBlack,
-                                  icon: Icons.delete,
-                                  foregroundColor: Colors.white,
-                                  onTap: ()=>setState(() {
-                                    print('into Messages Inbox');
-                                    print('Notification ID : ');
-                                    print(inboxMessages[index].notificationId);
-                                    print('index id: ');
-                                    print(index);
-                                    deleteNotification(inboxMessages[index].notificationId.toString());
-                                    inboxMessages.removeAt(index);
-                                  } ),
-                                )],
-                              child: InboxList(
-                                inboxDetail: inboxMessages[index],
-                                onTapAccept: () => inboxMessages[index].notificationType=="GroupJoinRequest"?acceptJoiningRequest(index):acceptInviteRequest(index),
-                                onTapIgnore: () => inboxMessages[index].notificationType=="GroupJoinRequest"?rejectJoiningRequest(index):rejectInviteRequest(index),
+                                actionPane: SlidableScrollActionPane(),
+                                secondaryActions: [
+                                  IconSlideAction(
+                                    caption: 'Delete',
+                                    color: KbgBlack,
+                                    icon: Icons.delete,
+                                    foregroundColor: Colors.white,
+                                    onTap: ()=>setState(() {
+                                      print('into Messages Inbox');
+                                      print('Notification ID : ');
+                                      print(inboxMessages[index].notificationId);
+                                      print('index id: ');
+                                      print(index);
+                                      deleteNotification(inboxMessages[index].notificationId.toString());
+                                      inboxMessages.removeAt(index);
+                                    } ),
+                                  )],
+                                child: InboxList(
+                                  inboxDetail: inboxMessages[index],
+                                  onTapAccept: () => inboxMessages[index].notificationType=="GroupJoinRequest"?acceptJoiningRequest(index):acceptInviteRequest(index),
+                                  onTapIgnore: () => inboxMessages[index].notificationType=="GroupJoinRequest"?rejectJoiningRequest(index):rejectInviteRequest(index),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5.0),
-                              child: Container(
-                                color: Colors.white.withOpacity(0.2),
-                                width: MediaQuery.of(context).size.width*0.9,
-                                height: 1,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                child: Container(
+                                  color: Colors.white.withOpacity(0.2),
+                                  width: MediaQuery.of(context).size.width*0.9,
+                                  height: 1,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
 
-                        );
+                          );
 
-                      }
+                        }
+                    ),
                   ),
                    ListView.builder(
                         physics: BouncingScrollPhysics(),

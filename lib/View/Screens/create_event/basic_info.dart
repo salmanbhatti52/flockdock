@@ -212,7 +212,8 @@ class _BasicInfoState extends State<BasicInfo> {
                                           onDateTimeChanged: (DateTime date) {
                                             selected=date;
                                           },
-                                          mode: CupertinoDatePickerMode.date,
+                                          mode: CupertinoDatePickerMode.dateAndTime,
+                                          use24hFormat: true,
                                           initialDateTime: selectedDate,
                                           minimumDate: DateTime(1970),
                                           maximumDate: DateTime(2050),
@@ -307,7 +308,8 @@ class _BasicInfoState extends State<BasicInfo> {
                                           onDateTimeChanged: (DateTime date) {
                                             selected=date;
                                           },
-                                          mode: CupertinoDatePickerMode.date,
+                                          mode: CupertinoDatePickerMode.dateAndTime,
+                                          use24hFormat: true,
                                           initialDateTime: selectedDate,
                                           minimumDate: DateTime(1970),
                                           maximumDate: DateTime(2050),
