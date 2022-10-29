@@ -83,7 +83,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                 onRefresh: () async {
                   await Future.delayed(Duration(milliseconds: 1500));
                   setState(() {
-                    
+                    getInboxList();
                   });
                 },
                     child: ListView.builder(
