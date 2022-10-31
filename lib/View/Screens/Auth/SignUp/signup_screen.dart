@@ -184,15 +184,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                                                     minimumDate: DateTime(1970),
                                                     maximumDate: DateTime.now(),
-                                                    
-
-
                                                   ),
-
                                                 ),
                                                 CupertinoButton(
                                                   child: Text("Ok",style: proximaBold.copyWith(color: KBlue)),
-
                                                  // child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
                                                   onPressed: () {
                                                     if (selected!=null && selected != selectedDate) {

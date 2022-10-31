@@ -561,7 +561,7 @@ class _ChatState extends State<Chat> {
     if(!fromPhrase&&messageController.text.trim().isEmpty) {
       showCustomSnackBar("Enter message");
     } else {
-      openLoadingDialog(context, "Loading");
+      //openLoadingDialog(context, "Loading");
       var response;
       response = await DioService.post('chat', {
         "userId": AppData().userdetail!.usersId.toString(),
@@ -571,7 +571,7 @@ class _ChatState extends State<Chat> {
         "requestType": "sendMessage"
       });
       if(response['status']=='success'){
-        Navigator.pop(context);
+        //Navigator.pop(context);
         message.userId=AppData().userdetail!.usersId.toString();
         message.name=AppData().userdetail!.userName;
         message.profilePicture=AppData().userdetail!.profilePicture;
@@ -595,7 +595,7 @@ class _ChatState extends State<Chat> {
     String url="https://www.google.com/maps/search/?api=1&query="
         "${AppData().userdetail!.latitude!},${AppData().userdetail!.longitude!}";
     print(url);
-      openLoadingDialog(context, "Loading");
+      //openLoadingDialog(context, "Loading");
       var response;
       response = await DioService.post('chat', {
         "userId": AppData().userdetail!.usersId.toString(),
@@ -615,7 +615,7 @@ class _ChatState extends State<Chat> {
         messages.add(message);
         message=ChatMessages();
         setState(() {});
-        Navigator.pop(context);
+        //Navigator.pop(context);
       }
       else{
         Navigator.pop(context);
@@ -647,14 +647,14 @@ class _ChatState extends State<Chat> {
       'attachment': await MultipartFile.fromFile(pickedFile.path)
     });
 
-    openLoadingDialog(context, "Loading");
+    //openLoadingDialog(context, "Loading");
     var response;
     response = await DioService.post('upload_chat_attachment', data);
     if(response['status']=='success'){
       image=response['data'];
-      Navigator.pop(context);
+      //Navigator.pop(context);
       sendPhoto();
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
     }
     else{
       Navigator.pop(context);
@@ -663,7 +663,7 @@ class _ChatState extends State<Chat> {
     }
   }
   void sendPhoto() async {
-    openLoadingDialog(context, "Loading");
+    //openLoadingDialog(context, "Loading");
     var response;
     response = await DioService.post('chat', {
       "userId": AppData().userdetail!.usersId.toString(),
@@ -685,7 +685,7 @@ class _ChatState extends State<Chat> {
       message=ChatMessages();
       image="";
       setState(() {});
-      Navigator.pop(context);
+      //Navigator.pop(context);
     }
     else{
       Navigator.pop(context);
