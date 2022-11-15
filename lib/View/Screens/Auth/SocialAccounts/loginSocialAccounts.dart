@@ -16,6 +16,11 @@ import 'package:flocdock/services/dio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:the_apple_sign_in/scope.dart';
+
+import '../../../../applesigninavailable.dart';
+import '../../../../auth_services.dart';
 
 
 
@@ -25,9 +30,22 @@ class LoginWithSocial extends StatefulWidget {
 }
 
 class _LoginWithSocialState extends State<LoginWithSocial> {
+  Future<void> _signInWithApple(BuildContext context) async {
+    try {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      final user = await authService.signInWithApple(
+          scopes: [Scope.email, Scope.fullName]);
+      print('uid: ${user.uid}');
+    } catch (e) {
+      // TODO: Show alert here
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // final appleSignInAvailable =
+    // Provider.of<AppleSignInAvailable>(context, listen: false);
     return Scaffold(
       backgroundColor: KbgBlack,
       body: Container(
@@ -47,7 +65,9 @@ class _LoginWithSocialState extends State<LoginWithSocial> {
                 fontFamily: "Proxima",
                 textColor: KPureBlack,
                 buttonColor: KWhite,
-                onPressed: () {},
+                onPressed: () {
+                  _signInWithApple(context);
+                },
                 sizebox: 10,
               ),
               spaceVertical(14),

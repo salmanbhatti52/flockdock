@@ -6,13 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'View/Screens/splash/splash.dart';
+import 'package:provider/provider.dart';
+import 'applesigninavailable.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await AppData.initiate();
-  MyLibrary();
-  runApp(MyApp());
+  // final appleSignInAvailable = await AppleSignInAvailable.check();
+  // MyLibrary();
+  // runApp(Provider<AppleSignInAvailable>.value(
+  //   value: appleSignInAvailable,
+  //   child: MyApp(),
+  // ));
+ runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget{
