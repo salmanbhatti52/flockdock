@@ -567,11 +567,11 @@ class _BasicInfoState extends State<BasicInfo> {
     if(response['status']=='success'){
       eventDetail.coverPhoto=response["data"];
       Navigator.pop(context);
-      showCustomSnackBar(response['data']);
+      //showCustomSnackBar(response['data']);
     }
     else{
       Navigator.pop(context);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
 
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flocdock/Models/event_details/event_deatil.dart';
 import 'package:flocdock/View/Screens/create_event/widget/value_container.dart';
 import 'package:flocdock/View/Screens/edit_profile/profile_picture.dart';
+import 'package:flocdock/View/Screens/edit_profile/widget/mytribe.dart';
 import 'package:flocdock/View/Widgets/edit_field.dart';
 import 'package:flocdock/View/base/custom_snackbar.dart';
 import 'package:flocdock/View/base/loading_dialog.dart';
@@ -27,10 +28,12 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  ProfileDetail profileDetail=ProfileDetail(ethnicities: [],bodyTypes: [],positions: [],relationships: [],seeking: [],tribes: []);
+  ProfileDetail profileDetail=
+  ProfileDetail(ethnicities: [],bodyTypes: [],positions: [],relationships: [],seeking: [],tribes: []);
   UserDetail userDetail=UserDetail(userSeeking: [],userTribes: []);
   TextEditingController descriptionController=TextEditingController();
   List<String> genders=['Male','Female','Other','Unspecified'];
+  List<String> hiv_status=['Do not show','Negative','Negative - on PrEP','Positive','Positive-Undetectable'];
   String val="";
   DateTime? selectedDate; //=DateTime.now();
   DateTime vaccinationDate=DateTime.now();
@@ -42,13 +45,17 @@ class _EditProfileState extends State<EditProfile> {
   bool isLoading=true;
   TextEditingController birthdayText_Controller = TextEditingController();
 
+  late List<String> tribe_tosent;
   int selectedId=1;
+  int i = 100;
   DetailItem detailItem=DetailItem();
   List<String> hightInFeet=["4","4:1","4:2","4:3","4:4","4:5","4:6","4:7","4:8","4:9","4:10","4:11","5",
     "5:1","5:2","5:3","5:4","5:5","5:6","5:7","5:8","5:9","5:10","5:11","6","6:1","6:2","6:3","6:4",
     "6:5","6:6","6:7","6:8","6:9","6:10","6:11","7",];
-  List<String> hightInCentimeter=List.generate(200, (index) => index.toString());
+  //List<String> hightInCentimeter=List.generate(50, (index) => index.toString());
   List<String> weightInKg=List.generate(200, (index) => index.toString());
+  //List<String> hightInCentimeter =['100','101','102','103','104','105','106','107'];
+  List<String> hightInCentimeter = [for(var i=100; i<231; i+=1) i.toString()];
   @override
   void initState() {
     // TODO: implement initState
@@ -231,7 +238,7 @@ class _EditProfileState extends State<EditProfile> {
                                   builder: (BuildContext context) {
                                     return Container(
                                       color: KWhite,
-                                      height: 200,
+                                      height: 400,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
@@ -250,7 +257,7 @@ class _EditProfileState extends State<EditProfile> {
                                                 onSelectedItemChanged: (int index) {
                                                   val = genders[index];
                                                 },
-                                                children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
                                             ),
                                           ),
                                           CupertinoButton(
@@ -503,7 +510,7 @@ class _EditProfileState extends State<EditProfile> {
                                   builder: (BuildContext context) {
                                     return Container(
                                       color: KWhite,
-                                      height: 200,
+                                      height: 400,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
@@ -516,13 +523,14 @@ class _EditProfileState extends State<EditProfile> {
                                           Expanded(
                                             child: CupertinoPicker(
                                                 scrollController: FixedExtentScrollController(
-                                                  initialItem: hightInCentimeter.indexWhere((element) => userDetail.height==element),
+                                                  initialItem: hightInCentimeter.indexOf(150.toString()),
+                                                  //hightInCentimeter.indexWhere((element) => userDetail.height==element),
                                                 ),
                                                 itemExtent: 50.0,
                                                 onSelectedItemChanged: (int index) {
                                                   val = hightInCentimeter[index];
                                                 },
-                                                children:  hightInCentimeter.map((e) => Center(child: Text(e+" cm",style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                children:  hightInCentimeter.map((e) => Center(child: Text(e+" cm",style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
                                             ),
                                           ),
                                           CupertinoButton(
@@ -579,7 +587,7 @@ class _EditProfileState extends State<EditProfile> {
                                   builder: (BuildContext context) {
                                     return Container(
                                       color: KWhite,
-                                      height: 200,
+                                      height: 400,
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
@@ -592,13 +600,14 @@ class _EditProfileState extends State<EditProfile> {
                                           Expanded(
                                             child: CupertinoPicker(
                                                 scrollController: FixedExtentScrollController(
-                                                  initialItem: weightInKg.indexWhere((element) => userDetail.weight==element),
+                                                  initialItem: weightInKg.indexOf(50.toString()),
+                                                  //weightInKg.indexWhere((element) => userDetail.weight==element),
                                                 ),
                                                 itemExtent: 50.0,
                                                 onSelectedItemChanged: (int index) {
                                                   val = weightInKg[index];
                                                 },
-                                                children:  weightInKg.map((e) => Center(child: Text(e+" kg",style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                children:  weightInKg.map((e) => Center(child: Text(e+" kg",style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
                                             ),
                                           ),
                                           CupertinoButton(
@@ -654,7 +663,7 @@ class _EditProfileState extends State<EditProfile> {
                                       builder: (BuildContext context) {
                                         return Container(
                                           color: KWhite,
-                                          height: 200,
+                                          height: 400,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
@@ -673,7 +682,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.ethnicities![index].ethnicityId!;
                                                     },
-                                                    children:  profileDetail.ethnicities!.map((e) => Center(child: Text(e.ethnicity??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                    children:  profileDetail.ethnicities!.map((e) => Center(child: Text(e.ethnicity??'',style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -762,7 +771,7 @@ class _EditProfileState extends State<EditProfile> {
                                       builder: (BuildContext context) {
                                         return Container(
                                           color: KWhite,
-                                          height: 200,
+                                          height: 400,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
@@ -781,7 +790,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.bodyTypes![index].bodyTypeId!;
                                                     },
-                                                    children:  profileDetail.bodyTypes!.map((e) => Center(child: Text(e.bodyType??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                    children:  profileDetail.bodyTypes!.map((e) => Center(child: Text(e.bodyType??'',style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -868,7 +877,7 @@ class _EditProfileState extends State<EditProfile> {
                                       builder: (BuildContext context) {
                                         return Container(
                                           color: KWhite,
-                                          height: 200,
+                                          height: 400,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
@@ -887,7 +896,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.positions![index].positionId!;
                                                     },
-                                                    children:  profileDetail.positions!.map((e) => Center(child: Text(e.position??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                    children:  profileDetail.positions!.map((e) => Center(child: Text(e.position??'',style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -973,7 +982,7 @@ class _EditProfileState extends State<EditProfile> {
                                       builder: (BuildContext context) {
                                         return Container(
                                           color: KWhite,
-                                          height: 200,
+                                          height: 400,
                                           child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: <Widget>[
@@ -992,7 +1001,7 @@ class _EditProfileState extends State<EditProfile> {
                                                     onSelectedItemChanged: (int index) {
                                                       selectedId = profileDetail.relationships![index].relationshipId!;
                                                     },
-                                                    children:  profileDetail.relationships!.map((e) => Center(child: Text(e.relationship??'',style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                    children:  profileDetail.relationships!.map((e) => Center(child: Text(e.relationship??'',style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
                                                 ),
                                               ),
                                               CupertinoButton(
@@ -1050,6 +1059,7 @@ class _EditProfileState extends State<EditProfile> {
                 //     ],
                 //   ),
                 // ),
+
                 Container(
                   width: MediaQuery.of(context).size.width*0.8,
                   padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: 8),
@@ -1084,78 +1094,169 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width*0.8,
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: 8),
-                  margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: KDullBlack
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Tribe",style: proximaBold.copyWith(color: KBlue)),
-                      SizedBox(height: 5,),
-                      Wrap(
-                        spacing: 5,
-                        runSpacing: 8,
-                        children: [
-                          for(int i=0;i<profileDetail.tribes!.length;i++)
-                            InkWell(onTap:(){
-                              if(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)){
-                                userDetail.userTribes?.remove(profileDetail.tribes![i].tribeId);
-                              }
-                              else{
-                                userDetail.userTribes?.add(profileDetail.tribes![i].tribeId!);
-                              }
-                              setState(() {});
-                            },
-                                child: ValueContainer(value: profileDetail.tribes![i].tribe!,isSelected: userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId))
-                            ),
-                        ],
-                      ),
-                    ],
+                GestureDetector(
+
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => mytribe(
+                            length: profileDetail.tribes!.length,
+                            names: profileDetail.tribes)
+                    )
+                    );
+                  },
+                  child: Container(
+                    height: 45,
+                    width: MediaQuery.of(context).size.width*0.8,
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: 8),
+                    margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: KDullBlack
+                    ),
+                    child: Row(
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("My Tribes",style: proximaBold.copyWith(color: KBlue)),
+                        SizedBox(width: 5,),
+                        Icon(Icons.arrow_forward_ios_rounded,color: KWhite,size: 15,),
+                        // Wrap(
+                        //   spacing: 5,
+                        //   runSpacing: 8,
+                        //   children: [
+                        //     for(int i=0;i<profileDetail.tribes!.length;i++)
+                        //       InkWell(onTap:(){
+                        //         print(profileDetail.tribes!.length);
+                        //         print(profileDetail.tribes![i].tribe!);
+                        //         if(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)){
+                        //           userDetail.userTribes?.remove(profileDetail.tribes![i].tribeId);
+                        //         }
+                        //         else{
+                        //           userDetail.userTribes?.add(profileDetail.tribes![i].tribeId!);
+                        //         }
+                        //         print(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId));
+                        //         setState(() {});
+                        //       },
+                        // child: ValueContainer(value: profileDetail.tribes![i].tribe!,isSelected: userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId))
+                        //       ),
+                        //   ],
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
 
             Container(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: 8),
-                margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: KDullBlack
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("HIV Status",style: proximaBold.copyWith(color: KBlue,fontSize: Dimensions.fontSizeDefault),),
-                        SizedBox(height: 4,),
-                        Text(hive?"Yes":"No",style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeDefault),),
-                      ],
-                    ),
-                    FlutterSwitch(
-                      height: 25,
-                      width: 45,
-                      padding: 1,
-                      toggleSize: 24,
-                      activeColor: KBlue,
-                      inactiveToggleColor: KDullBlack,
-                      value: hive,
-                      onToggle: (value) {
-                        setState(() {
-                          hive = value;
-                          userDetail.hivStatus=hive?"True":"False";
-                        });
-                      },
-                    ),
-                  ],
-                )
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  color: KDullBlack
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("HIV Status",style: proximaBold.copyWith(color: KBlue)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(userDetail.hivStatus??'',style: proximaBold.copyWith(color: KWhite)),
+                      //Text(profileDetail.relationships!.where((element) => element.relationshipId==userDetail.relationshipId).first.relationship??'',style: proximaBold.copyWith(color: KWhite)),
+                      SizedBox(
+                        height: 30,
+                        child: CupertinoButton(
+                            alignment: Alignment.topRight,
+                            padding: EdgeInsets.zero,
+                            child: const Icon(Icons.arrow_drop_down_rounded,color: KWhite,),
+                            onPressed: () {
+                              selectedId=userDetail.relationshipId!;
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      color: KWhite,
+                                      height: 400,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          CupertinoButton(
+                                            child: Text("Cancel",style: proximaBold.copyWith(color: KBlue)),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                          Expanded(
+                                            child: CupertinoPicker(
+                                                scrollController: FixedExtentScrollController(
+                                                  initialItem: hiv_status.indexWhere((element) => userDetail.hivStatus==element),
+                                                ),
+                                                itemExtent: 50.0,
+                                                onSelectedItemChanged: (int index) {
+                                                  val = hiv_status[index];
+                                                },
+                                                children:  hiv_status.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack,fontSize: 24)),),).toList()
+                                            ),
+                                          ),
+                                          CupertinoButton(
+                                            child: Text("Ok",style: proximaBold.copyWith(color: KBlue)),
+                                            onPressed: () {
+                                              userDetail.hivStatus=val;
+                                              setState(() {
+
+                                              });
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  });
+                            }),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
+            // Container(
+            //     padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+            //     margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+            //     decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(40),
+            //         color: KDullBlack
+            //     ),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             Text("HIV Status",style: proximaBold.copyWith(color: KBlue,fontSize: Dimensions.fontSizeDefault),),
+            //             SizedBox(height: 4,),
+            //             //Text(hive?"Yes":"No",style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeDefault),),
+            //
+            //           ],
+            //         ),
+            //         // FlutterSwitch(
+            //         //   height: 25,
+            //         //   width: 45,
+            //         //   padding: 1,
+            //         //   toggleSize: 24,
+            //         //   activeColor: KBlue,
+            //         //   inactiveToggleColor: KDullBlack,
+            //         //   value: hive,
+            //         //   onToggle: (value) {
+            //         //     setState(() {
+            //         //       hive = value;
+            //         //       userDetail.hivStatus=hive?"True":"False";
+            //         //     });
+            //         //   },
+            //         // ),
+            //       ],
+            //     )
+            // ),
 
             GestureDetector(
               onTap: () async{

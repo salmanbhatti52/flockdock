@@ -39,7 +39,7 @@ class _ChatState extends State<Chat> {
   Timer? timer;
   PickedFile pickedFile=PickedFile("");
   String image="";
-  ScrollController scrollController=ScrollController();
+  ScrollController _scrollController=ScrollController();
 
 
   @override
@@ -49,6 +49,7 @@ class _ChatState extends State<Chat> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       startChat();
       getMessages();
+
     });
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) =>  updateMessages());
   }
@@ -202,13 +203,27 @@ class _ChatState extends State<Chat> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListView.builder(
-                    controller: scrollController,
+                    controller: _scrollController,
                     padding: EdgeInsets.zero,
-                      physics: BouncingScrollPhysics(),
+                      //physics: BouncingScrollPhysics(),
                       shrinkWrap: true,
                       //padding: EdgeInsetsGeometry.infinity,
-                      itemCount: messages.length,
+                      itemCount: messages.length+1,
                       itemBuilder: (context,index){
+                      print(index);
+
+                        if(index == messages.length){
+                           return Container(
+                            height: 70,
+                          );
+                        }
+                      print('inside builder');
+                        if(index == 0){
+                          print('inside if statement');
+                          _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 1), curve: Curves.easeOut);
+                        }
+                      //if(index == 0){
+                       // scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 1), curve: Curves.easeOut);}
                         return messages[index].userId==AppData().userdetail!.usersId.toString()?
                         Align(
                           alignment: Alignment.topRight,
@@ -497,7 +512,12 @@ class _ChatState extends State<Chat> {
                       hintText: "Write message here...",
                       hintStyle: TextStyle(color: KWhite),
                       suffixIcon:  GestureDetector(
-                          onTap: sendTextMessage,
+                          onTap: (){
+                            print('inside');
+
+                            _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+                            sendTextMessage();
+                            },
                           child: Container(
                               padding: EdgeInsets.only(left: 10,top: 10,bottom: 10),
                               height: 20,
@@ -549,6 +569,8 @@ class _ChatState extends State<Chat> {
       jsonData.forEach((e) => print(e['userId'].runtimeType));
       messages=jsonData.map((e) => ChatMessages.fromJson(e)).toList();
       setState(() {});
+
+      //scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
       Navigator.pop(context);
     }
     else{
@@ -580,9 +602,10 @@ class _ChatState extends State<Chat> {
         message.time=DateFormat.jm().format(DateTime.now());
         message.date="";
         messageController.clear();
+       // _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
         messages.add(message);
         message=ChatMessages();
-        setState(() {});
+                setState(() {});
       }
       else{
         Navigator.pop(context);
@@ -614,6 +637,8 @@ class _ChatState extends State<Chat> {
         message.date="";
         messages.add(message);
         message=ChatMessages();
+        //scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+
         setState(() {});
         //Navigator.pop(context);
       }
@@ -634,6 +659,7 @@ class _ChatState extends State<Chat> {
       var jsonData= response['data'];
       updatedMessages=UpdatedMessages.fromJson(jsonData);
       updatedMessages.unreadMessages!.map((e) => messages.add(e)).toList();
+      //scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
       setState(() {});
     }
     else{
@@ -653,6 +679,7 @@ class _ChatState extends State<Chat> {
     if(response['status']=='success'){
       image=response['data'];
       //Navigator.pop(context);
+      //scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
       sendPhoto();
       //showCustomSnackBar(response['data']);
     }
@@ -684,6 +711,7 @@ class _ChatState extends State<Chat> {
       messages.add(message);
       message=ChatMessages();
       image="";
+      //scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
       setState(() {});
       //Navigator.pop(context);
     }
