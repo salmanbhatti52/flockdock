@@ -20,6 +20,8 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../Widgets/edit_field_socials.dart';
+
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
 
@@ -65,6 +67,16 @@ class _EditProfileState extends State<EditProfile> {
       getPredefinedProfileDetail();
       //selectedDate = DateTime.parse(userDetail.birthday.toString());
      // DOB = userDetail.birthday.toString();
+      print(profileDetail.tribes!.length);
+      print("Data");
+      print(profileDetail.tribes![0].tribe!);
+      // for(int i=0;i<profileDetail.tribes!.length;i++)
+      //   {
+      //     print("Length");
+      //     print(profileDetail.tribes!.length);
+      //     print("Data");
+      //     print(profileDetail.tribes![i].tribe!);
+      //   }
     });
   }
   @override
@@ -1098,9 +1110,7 @@ class _EditProfileState extends State<EditProfile> {
 
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => mytribe(
-                            length: profileDetail.tribes!.length,
-                            names: profileDetail.tribes)
+                        builder: (context) => mytribe()
                     )
                     );
                   },
@@ -1126,7 +1136,9 @@ class _EditProfileState extends State<EditProfile> {
                         //   children: [
                         //     for(int i=0;i<profileDetail.tribes!.length;i++)
                         //       InkWell(onTap:(){
+                        //         print('profileDetail.tribes!.length');
                         //         print(profileDetail.tribes!.length);
+                        //         print('profileDetail.tribes![i].tribe!');
                         //         print(profileDetail.tribes![i].tribe!);
                         //         if(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)){
                         //           userDetail.userTribes?.remove(profileDetail.tribes![i].tribeId);
@@ -1134,10 +1146,11 @@ class _EditProfileState extends State<EditProfile> {
                         //         else{
                         //           userDetail.userTribes?.add(profileDetail.tribes![i].tribeId!);
                         //         }
+                        //         print('userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)');
                         //         print(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId));
                         //         setState(() {});
                         //       },
-                        // child: ValueContainer(value: profileDetail.tribes![i].tribe!,isSelected: userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId))
+                        //         child: ValueContainer(value: profileDetail.tribes![i].tribe!,isSelected: userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId))
                         //       ),
                         //   ],
                         // ),
@@ -1394,9 +1407,9 @@ class _EditProfileState extends State<EditProfile> {
                   ],
                 )
             ),
-            EditField(title: "Instagram",value: userDetail.instagramLink??'',onChanged: (val) => userDetail.instagramLink=val,controller: TextEditingController(text: userDetail.instagramLink),),
-            EditField(title: "Twitter",value: userDetail.twitterLink??'',onChanged: (val) => userDetail.twitterLink=val,controller: TextEditingController(text: userDetail.twitterLink),),
-            EditField(title: "Facebook",value: userDetail.facebookLink??'',onChanged: (val) => userDetail.facebookLink=val,controller: TextEditingController(text: userDetail.facebookLink),),
+            EditFieldSocials(title: "Instagram",value: userDetail.instagramLink??'',onChanged: (val) => userDetail.instagramLink=val,controller: TextEditingController(text: userDetail.instagramLink),hinttxt: 'Enter your Instagram username', img: 'assets/images/instagram.png',),
+            EditFieldSocials(title: "Twitter",value: userDetail.twitterLink??'',onChanged: (val) => userDetail.twitterLink=val,controller: TextEditingController(text: userDetail.twitterLink),hinttxt: 'Enter your Twitter handle', img: 'assets/images/twitter.png',),
+            EditFieldSocials(title: "Facebook",value: userDetail.facebookLink??'',onChanged: (val) => userDetail.facebookLink=val,controller: TextEditingController(text: userDetail.facebookLink),hinttxt: 'Enter your Facebook username', img: 'assets/images/facebook.png',),
 
           ],
         ),

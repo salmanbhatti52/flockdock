@@ -7,11 +7,12 @@ class EditField extends StatefulWidget {
   String title;
   String value;
   bool isEnabled;
+  String? hinttxt;
   TextEditingController? controller=TextEditingController();
   TextInputType inputType;
   void Function(String)? onChanged;
   bool isPassword;
-  EditField({Key? key,this.title="",this.value="",this.inputType=TextInputType.text,this.isEnabled=true,this.onChanged,this.controller,this.isPassword=false}) : super(key: key);
+  EditField({Key? key,this.title="",this.value="",this.inputType=TextInputType.text,this.isEnabled=true,this.onChanged,this.controller,this.isPassword=false,this.hinttxt}) : super(key: key);
 
   @override
   State<EditField> createState() => _EditFieldState();
@@ -45,9 +46,10 @@ class _EditFieldState extends State<EditField> {
                     color: KWhite,
                     fontFamily: "Proxima"
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintStyle: TextStyle(color: KWhite,fontFamily: "Proxima"),
+                  hintStyle: TextStyle(color: KWhite.withOpacity(0.5),fontFamily: "Proxima",fontSize: 14),
+                  hintText: widget.hinttxt,
                 )
             ),
           ),

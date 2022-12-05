@@ -1,19 +1,21 @@
 import 'package:flocdock/models/groupModel/category_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../Models/event_details/event_deatil.dart';
 import '../../../../constants/constants.dart';
+import '../../../../mixin/data.dart';
 import '../../../../models/user_model/profile_model.dart';
 import '../../../../models/user_model/signup_model.dart';
+import '../../../../services/dio_service.dart';
+import '../../../base/custom_snackbar.dart';
+import '../../../base/loading_dialog.dart';
 import '../../create_event/widget/value_container.dart';
 
 class mytribe extends StatefulWidget {
-
-  int length;
-  final List<Tribe>? names;
   //var names;
   mytribe(
-
-      {Key? key, required this.length, required this.names}
+      {Key? key,}
       ) : super(key: key);
 
   @override
@@ -21,22 +23,13 @@ class mytribe extends StatefulWidget {
 }
 
 class _mytribeState extends State<mytribe> {
-  ProfileDetail profileDetail=ProfileDetail(ethnicities: [],bodyTypes: [],positions: [],relationships: [],seeking: [],tribes: []);
-  UserDetail userDetail=UserDetail(userSeeking: [],userTribes: []);
-
+  TextEditingController descriptionController=TextEditingController();
+  List<String> trib =['Leather','Bears','Otters','Muscle','Ribbed','GuysNextDoor','Jocks (Sportler)','Geeks (Nerds)','Daddies','Military (Soldaten)','Twinks','Poz','Chubs Chubbies','Uniform','Clean-Cut','Uncut','BB','Pathan','Santa','Punjabi'];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-     // getUserProfileDetail();
-      print("lengthhgjgj:");
-      print(widget.length);
-      print('value');
-      print(widget.names);
-      //getPredefinedProfileDetail();
-      //selectedDate = DateTime.parse(userDetail.birthday.toString());
-      // DOB = userDetail.birthday.toString();
     });
   }
   @override
@@ -52,17 +45,12 @@ class _mytribeState extends State<mytribe> {
         backgroundColor: Colors.black54,
       ),
       body: ListView.builder(
-          itemCount: widget.length,
+          itemCount: trib.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-
                 trailing: Icon(Icons.check,color: Colors.white,),
-                title: Text(widget.names![0].toString(),style: TextStyle(color: Colors.white),));
+                title: Text(trib[index],style: TextStyle(color: Colors.white),));
           }),
-
     );
-
   }
-
-
 }
