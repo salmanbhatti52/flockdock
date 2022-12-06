@@ -303,7 +303,7 @@ class _EditProfileState extends State<EditProfile> {
                     builder: (BuildContext context) {
                       return Container(
                         color: KWhite,
-                        height: 200,
+                        height: 400,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[

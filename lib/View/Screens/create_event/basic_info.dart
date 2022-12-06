@@ -203,7 +203,7 @@ class _BasicInfoState extends State<BasicInfo> {
                               builder: (BuildContext context) {
                                 return Container(
                                   color: KWhite,
-                                  height: 200,
+                                  height: 400,
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
@@ -299,7 +299,7 @@ class _BasicInfoState extends State<BasicInfo> {
                               builder: (BuildContext context) {
                                 return Container(
                                   color: KWhite,
-                                  height: 200,
+                                  height: 400,
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[

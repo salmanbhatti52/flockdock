@@ -169,7 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         builder: (BuildContext context) {
                                           return Container(
                                             color: KWhite,
-                                            height: 200,
+                                            height: 400,
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: <Widget>[
@@ -304,7 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         builder: (BuildContext context){
                                           return Container (
                                             color:KWhite,
-                                            height: 200,
+                                            height: 400,
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: <Widget>[
@@ -324,7 +324,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                       onSelectedItemChanged: (int index) {
                                                         value = genders[index];
                                                       },
-                                                      children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack)),),).toList()
+                                                      children:  genders.map((e) => Center(child: Text(e,style: proximaBold.copyWith(color: KPureBlack,fontSize: 24),),),).toList()
                                                   ),
                                                 ),
                                                 CupertinoButton(

@@ -40,6 +40,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
   double maxPrice = 100;
   double value = 76;
   double _upperValue = 100;
+  int ind = 0;
   bool isActive=false;
   TabController? _tabController;
   @override
@@ -66,10 +67,34 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
         maxHeight: userDetail.attendedGroups!.length == 0?MediaQuery.of(context).size.height*0.7:MediaQuery.of(context).size.height*0.89,
         body: Stack(
           children: [
-            Image.network(
-              url.isNotEmpty?url:"https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
-              height: MediaQuery.of(context).size.height,
-              fit: BoxFit.fill,
+            GestureDetector(
+              onTap: (){
+                if(userDetail.otherUserStories![ind].pictureType=="Visible"){
+                  print('here it is pressed');
+                  print('url');
+                  print(url);
+                  print('new');
+                  url=userDetail.otherUserStories![ind].picture??'';
+                  print(url);
+                  print(userDetail.otherUserStories![ind].pictureType);
+                  print(userDetail.otherUserStories![ind]);
+                  print(userDetail.otherUserStories!.length);
+                  print(ind);
+                }
+                else if(userDetail.otherUserStories![ind].pictureType=="Private"){
+                  Get.dialog(PrivatPicturePermission(onTapRequestPermission: requestPrivateGallery,));
+
+                }
+                ind = ind+1;
+                setState(() {});
+              },
+              child: Image.network(
+                //url=
+                  url.isNotEmpty?url:userDetail.profilePicture??AppConstants.placeholder,
+                //url.isNotEmpty?url:"https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
+                height: MediaQuery.of(context).size.height,
+                fit: BoxFit.fill,
+              ),
             ),
             Align(
               alignment: Alignment.topCenter,
@@ -144,7 +169,7 @@ class _ProfileViewState extends State<ProfileView> with TickerProviderStateMixin
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        GestureDetector(onTap: () => Get.back(),child: Icon(Icons.arrow_back_ios_sharp,color: KWhite,)),
+                        GestureDetector(onTap: () => Get.back(),child: Icon(Icons.arrow_circle_left,color: KBlue,size: 30,)),
                         Expanded(child: Container()),
                         Column(
                           children: [
