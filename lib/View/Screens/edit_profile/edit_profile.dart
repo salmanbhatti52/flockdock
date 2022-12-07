@@ -16,11 +16,15 @@ import 'package:flocdock/models/user_model/signup_model.dart';
 import 'package:flocdock/services/dio_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../Widgets/edit_field_socials.dart';
+import '../../Widgets/my_button.dart';
+import '../../Widgets/my_spacing.dart';
+import '../../Widgets/my_text.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -37,6 +41,7 @@ class _EditProfileState extends State<EditProfile> {
   List<String> genders=['Male','Female','Other','Unspecified'];
   List<String> hiv_status=['Do not show','Negative','Negative - on PrEP','Positive','Positive-Undetectable'];
   String val="";
+  List<String> tribetxt =[];
   DateTime? selectedDate; //=DateTime.now();
   DateTime vaccinationDate=DateTime.now();
   String vaccination=DateFormat("dd MMM, yyyy").format(DateTime.now());
@@ -1109,13 +1114,116 @@ class _EditProfileState extends State<EditProfile> {
                 GestureDetector(
 
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => mytribe()
-                    )
+                    print('dilof opening');
+
+                    Dialog tribeDialog = Dialog(
+                      backgroundColor: KfilterDialog,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                      ), //this right here
+                      child: Container(
+                        width: MediaQuery.of(context).size.width*0.8,
+                        height: MediaQuery.of(context).size.height*0.6,
+                       // color: ,
+
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT,horizontal: Dimensions.PADDING_SIZE_DEFAULT),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                          child: MyText(
+                                            text: "MY TRIBES",
+                                            color: KWhite,
+                                            fontFamily: "Proxima",
+                                            size: 20,
+                                            weight: FontWeight.w700,
+                                          )),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: SvgPicture.asset(Images.Cancel),
+                                    )
+                                  ],
+                                ),
+                                spaceVertical(20),
+                                Text("Select My Tribes",style: proximaExtraBold.copyWith(color: KWhite,),),
+
+                                  Wrap(
+                                      spacing: 5,
+                                      runSpacing: 8,
+                                      children: [
+                                      for(int i=0;i<profileDetail.tribes!.length;i++)
+                                        InkWell(onTap:(
+
+                                            ){
+
+                                          print('profileDetail.tribes!.length');
+                                          print(profileDetail.tribes!.length);
+                                          print('profileDetail.tribes![i].tribe!');
+                                          print(profileDetail.tribes![i].tribe!);
+                                          if(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)){
+                                              userDetail.userTribes?.remove(profileDetail.tribes![i].tribeId);
+                                          }
+                                          else{
+                                            userDetail.userTribes?.add(profileDetail.tribes![i].tribeId!);
+                                          }
+                                          print('userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)');
+                                          print(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId));
+                                          tribetxt[i] = profileDetail.tribes![i].tribe!;
+                                          setState(() {});
+                                          },
+                                          child: ValueContainer(value: profileDetail.tribes![i].tribe!,isSelected: userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId))
+                                        ),
+                                      ],
+                                  ),
+
+
+                                SizedBox(height: 30,),
+                                Center(
+                                  child: Container(
+                                    height: 35,
+                                    width: MediaQuery.of(context).size.width/3.5,
+                                    child: MyButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        print('list');
+                                        print(tribetxt);
+                                        //tribetxt =
+
+                                        setState(() {
+
+                                        });
+                                      },
+                                      buttonColor: KMediumBlue,
+                                      text: "OK",
+                                      textColor: KWhite,
+                                      textWeight: FontWeight.w700,
+                                      fontFamily: "Proxima",
+                                      size: 16,
+                                    ),
+
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     );
+                    showDialog(context: context, builder: (BuildContext context) => tribeDialog);
                   },
                   child: Container(
-                    height: 45,
+                   // height: 45,
                     width: MediaQuery.of(context).size.width*0.8,
                     padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: 8),
                     margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
@@ -1123,23 +1231,19 @@ class _EditProfileState extends State<EditProfile> {
                         borderRadius: BorderRadius.circular(20),
                         color: KDullBlack
                     ),
-                    child: Row(
-                      //crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("My Tribes",style: proximaBold.copyWith(color: KBlue)),
-                        SizedBox(width: 5,),
-                        Icon(Icons.arrow_forward_ios_rounded,color: KWhite,size: 15,),
+                        SizedBox(height: 5,),
+                        //Text(tribetxt[i]),
                         // Wrap(
                         //   spacing: 5,
                         //   runSpacing: 8,
                         //   children: [
                         //     for(int i=0;i<profileDetail.tribes!.length;i++)
                         //       InkWell(onTap:(){
-                        //         print('profileDetail.tribes!.length');
-                        //         print(profileDetail.tribes!.length);
-                        //         print('profileDetail.tribes![i].tribe!');
-                        //         print(profileDetail.tribes![i].tribe!);
                         //         if(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)){
                         //           userDetail.userTribes?.remove(profileDetail.tribes![i].tribeId);
                         //         }
