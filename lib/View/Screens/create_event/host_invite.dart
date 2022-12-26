@@ -249,7 +249,7 @@ class _HostInviteState extends State<HostInvite> {
     else{
       Navigator.pop(context);
       print(response['message']);
-      showCustomSnackBar(response['message']);
+     // showCustomSnackBar(response['message']);
     }
 
   }
@@ -271,7 +271,7 @@ class _HostInviteState extends State<HostInvite> {
     else{
       Navigator.pop(context);
       print(response['message']);
-      showCustomSnackBar(response['message']);
+      //showCustomSnackBar(response['message']);
     }
 
   }

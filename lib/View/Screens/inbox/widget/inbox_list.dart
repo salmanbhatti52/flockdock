@@ -23,57 +23,57 @@ class InboxList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return inboxDetail!.itemType=="ChatItem"?
-    Center(
-      child: Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width*0.2,
-                height: MediaQuery.of(context).size.width*0.2,
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          inboxDetail!.profilePicture==null||inboxDetail!.profilePicture!.isEmpty?AppConstants.placeholder:inboxDetail!.profilePicture!,
-                          height: 75,
-                          width: 80,
-                          fit: BoxFit.cover,
-                        )
-                    ),
-                    inboxDetail!.isOnline?Positioned(
-                      right: 0,bottom: 4,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 5,top: 5,right: 5),
-                        height: 8,
-                        width: 8,
-                        decoration: BoxDecoration(
-                          color: Colors.lightGreenAccent.shade400,
-                          shape: BoxShape.circle,
+    GestureDetector(
+      onTap: () => Get.to(Chat(name: inboxDetail!.userName??'',id: inboxDetail!.senderId!,)),
+      child: Center(
+        child: Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width*0.2,
+                  height: MediaQuery.of(context).size.width*0.2,
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            inboxDetail!.profilePicture==null||inboxDetail!.profilePicture!.isEmpty?AppConstants.placeholder:inboxDetail!.profilePicture!,
+                            height: 75,
+                            width: 80,
+                            fit: BoxFit.cover,
+                          )
+                      ),
+                      inboxDetail!.isOnline?Positioned(
+                        right: 0,bottom: 4,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 5,top: 5,right: 5),
+                          height: 8,
+                          width: 8,
+                          decoration: BoxDecoration(
+                            color: Colors.lightGreenAccent.shade400,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ):SizedBox(),
+                      Positioned(
+                        top: 0,right: 0,
+                        child: Container(
+                          margin: EdgeInsets.only(left: 5,top: 5,right: 5),
+                          height: 10,
+                          width: 10,
+                          decoration: const BoxDecoration(
+                            color: KOrange,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Align(alignment:Alignment.center,child: Text(inboxDetail!.badgeCount.toString(),style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeExtraSmall),)),
                         ),
                       ),
-                    ):SizedBox(),
-                    Positioned(
-                      top: 0,right: 0,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 5,top: 5,right: 5),
-                        height: 10,
-                        width: 10,
-                        decoration: const BoxDecoration(
-                          color: KOrange,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(alignment:Alignment.center,child: Text(inboxDetail!.badgeCount.toString(),style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeExtraSmall),)),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () => Get.to(Chat(name: inboxDetail!.userName??'',id: inboxDetail!.senderId!,)),
-                child: Container(
+                Container(
                   width: MediaQuery.of(context).size.width*0.70,
                   padding: EdgeInsets.only(left:Dimensions.PADDING_SIZE_SMALL,top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   child: Column(
@@ -93,9 +93,9 @@ class InboxList extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            ],
-          )
+              ],
+            )
+        ),
       ),
     ):
     Center(

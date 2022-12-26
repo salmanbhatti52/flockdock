@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:flocdock/View/Screens/chat/pictures_page.dart';
+import 'package:flocdock/View/Screens/chat/pictures_view.dart';
 import 'package:flocdock/View/Screens/chat/saved_phrase.dart';
 import 'package:flocdock/View/Screens/profile/widget/report_dialog.dart';
 import 'package:flocdock/View/Widgets/my_text_field.dart';
@@ -22,6 +23,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../models/message/picture_model.dart';
+import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
+
+
+
 class Chat extends StatefulWidget {
   String name;
   int id;
@@ -40,6 +46,7 @@ class _ChatState extends State<Chat> {
   PickedFile pickedFile=PickedFile("");
   String image="";
   ScrollController _scrollController=ScrollController();
+  Pictures pictures=Pictures(recentImages: [],lastWeekImages: [],lastMonthImages: []);
 
 
   @override
@@ -231,21 +238,23 @@ class _ChatState extends State<Chat> {
                             width: MediaQuery.of(context).size.width*0.8,
                             child: Column(
                               children: [
-                                messages[index].msgType=="attachment"?Container(
-                                  width: MediaQuery.of(context).size.width*0.8,
-                                  height: MediaQuery.of(context).size.height*0.4
+                                messages[index].msgType=="attachment"?FullScreenWidget(
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width*0.8,
+                                    height: MediaQuery.of(context).size.height*0.25
 
-                                  ,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(messages[index].message??'',),
-                                      fit: BoxFit.fill
+                                    ,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(messages[index].message??'',),
+                                        fit: BoxFit.fill
+                                      ),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: KDullBlack
                                     ),
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: KDullBlack
+                                    padding: EdgeInsets.all(15),
+                                    margin: EdgeInsets.only(top: 10,right: 20),
                                   ),
-                                  padding: EdgeInsets.all(15),
-                                  margin: EdgeInsets.only(top: 10,right: 20),
                                 ):
                                 messages[index].msgType=="location"?
                                 Container(
@@ -295,19 +304,21 @@ class _ChatState extends State<Chat> {
                             width: MediaQuery.of(context).size.width*0.8,
                             child: Column(
                               children: [
-                                messages[index].msgType=="attachment"?Container(
-                                  width: MediaQuery.of(context).size.width*0.8,
-                                  height: MediaQuery.of(context).size.height*0.4,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(messages[index].message??'',),
-                                          fit: BoxFit.fill
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: KDullBlack
+                                messages[index].msgType=="attachment"?FullScreenWidget(
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width*0.8,
+                                    height: MediaQuery.of(context).size.height*0.25,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(messages[index].message??'',),
+                                            fit: BoxFit.fill
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: KDullBlack
+                                    ),
+                                    padding: EdgeInsets.all(15),
+                                    margin: EdgeInsets.only(top: 10,left: 20),
                                   ),
-                                  padding: EdgeInsets.all(15),
-                                  margin: EdgeInsets.only(top: 10,left: 20),
                                 ):
                                 messages[index].msgType=="location"?
                                 Container(
@@ -423,7 +434,7 @@ class _ChatState extends State<Chat> {
                         insetPadding: EdgeInsets.only(left:15,bottom: 70,right: MediaQuery.of(context).size.width*0.22),
                         alignment: Alignment.bottomLeft,
                         child: Container(
-                          height: 135,
+                          height: 200,
                           padding: EdgeInsets.symmetric(horizontal: 25),
                           decoration: BoxDecoration(
                             color: KDullBlack,
@@ -442,10 +453,10 @@ class _ChatState extends State<Chat> {
                                   },
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(Images.photo,
+                                      SvgPicture.asset(Images.photo,height: 30,width: 30,
                                       ),
                                       SizedBox(width: 10,),
-                                      Text('Send Photos', style: proximaBold.copyWith(color: KWhite),),
+                                      Text('Send Photos', style: proximaBold.copyWith(color: KWhite,fontSize: 20),),
                                     ],
                                   ),
                               ),
@@ -457,9 +468,9 @@ class _ChatState extends State<Chat> {
                                   },
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(Images.address,color: KBlue,height: 20,width: 20,),
+                                      SvgPicture.asset(Images.address,color: KBlue,height:30,width: 30,),
                                       SizedBox(width: 13,),
-                                      Text('Send Location', style: proximaBold.copyWith(color: KWhite),),
+                                      Text('Send Location', style: proximaBold.copyWith(color: KWhite,fontSize: 20),),
                                     ],
                                   ),
                               ),
@@ -474,9 +485,9 @@ class _ChatState extends State<Chat> {
                                     ));                              },
                                   child: Row(
                                     children: [
-                                      SvgPicture.asset(Images.chat,color: KBlue,),
+                                      SvgPicture.asset(Images.chat,color: KBlue,height: 30,width: 30,),
                                       SizedBox(width: 10,),
-                                      Text('Saved Phrases', style: proximaBold.copyWith(color: KWhite),),
+                                      Text('Saved Phrases', style: proximaBold.copyWith(color: KWhite,fontSize: 20),),
                                     ],
                                   ),
                               ),
@@ -499,7 +510,7 @@ class _ChatState extends State<Chat> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   height: 50,
-                  width: MediaQuery.of(context).size.width*0.77,
+                  width: MediaQuery.of(context).size.width*0.75,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: KDullBlack

@@ -43,8 +43,8 @@ class _BasicInfoState extends State<BasicInfo> {
   DateTime endDatePicked=DateTime.now();
   final TextEditingController _addressController=TextEditingController();
   final TextEditingController _additionalController=TextEditingController();
-  String start_date=DateFormat("dd MMM, yyyy").format(DateTime.now());
-  String end_date=DateFormat("dd MMM, yyyy").format(DateTime.now());
+  String start_date=DateFormat("dd MMM, yyyy HH:mm").format(DateTime.now());
+  String end_date=DateFormat("dd MMM, yyyy HH:mm").format(DateTime.now());
   DateTime selectedDate=DateTime.now();
   PickedFile pickedFile=PickedFile("");
   UserDetail userDetail=UserDetail(userSeeking: [],userTribes: []);
@@ -177,24 +177,21 @@ class _BasicInfoState extends State<BasicInfo> {
               ),
             ),
             SizedBox(height: 20,),
-            Row(
-
-              children: [Text("Starting Date",style: proximaBold.copyWith(color: KWhite.withOpacity(0.7)),),
-              SizedBox(width: MediaQuery.of(context).size.width*0.25,),
-              Text("Ending Date",style: proximaBold.copyWith(color: KWhite.withOpacity(0.7)),),
-            ],),
-            SizedBox(height: 5,),
-            Row(
-
-              children: [
-                Expanded(child: Container(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text("Starting Date",style: proximaBold.copyWith(color: KWhite),),
+                SizedBox(height: 5,),
+              //SizedBox(width: MediaQuery.of(context).size.width*0.25,),
+                Container(
                   height: 50,
                   decoration: BoxDecoration(color: KDullBlack,
-                  borderRadius: BorderRadius.circular(30)),
+                      borderRadius: BorderRadius.circular(30)),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                              horizontal: Dimensions.PADDING_SIZE_SMALL+1),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+                        horizontal: Dimensions.PADDING_SIZE_SMALL+1),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                       GestureDetector(
                         onTap: () async{
                           DateTime? selected;
@@ -225,7 +222,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                           if (selected!=null && selected != selectedDate) {
                                             print(selected);
                                             selectedDate = selected!;
-                                            start_date=DateFormat("dd MMM, yyyy").format(selectedDate);
+                                            start_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate);
                                             //List<String> datetime=dateTime.toString().split(" ");
                                             String start_time = DateFormat("HH:mm:ss").format(DateTime.now());
                                             eventDetail.startingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
@@ -246,7 +243,7 @@ class _BasicInfoState extends State<BasicInfo> {
                         },
                         child: Container(
                           height: 25,
-                          width: 125,
+                          width: MediaQuery.of(context).size.width*0.8,
                           //color: Colors.white,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
@@ -281,9 +278,16 @@ class _BasicInfoState extends State<BasicInfo> {
                       ),
                     ],),
                   ),
-                )),
-                SizedBox(width: 10,),
-                Expanded(child: Container(
+                ),
+
+            ],),
+            SizedBox(height: 20,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Ending Date",style: proximaBold.copyWith(color: KWhite),),
+                SizedBox(height: 5,),
+                Container(
                   height: 50,
                   decoration: BoxDecoration(color: KDullBlack,
                       borderRadius: BorderRadius.circular(30)),
@@ -321,8 +325,8 @@ class _BasicInfoState extends State<BasicInfo> {
                                           if (selected!=null && selected != selectedDate) {
                                             print(selected);
                                             selectedDate = selected!;
-                                            String end_time = DateFormat("HH:mm:ss").format(selectedDate);
-                                            end_date=DateFormat("dd MMM, yyyy").format(selectedDate);
+                                            String end_time = DateFormat("HH:mm:ss ").format(selectedDate);
+                                            end_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate);
                                             eventDetail.endingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
                                             eventDetail.endingTime= end_time;
 
@@ -342,7 +346,7 @@ class _BasicInfoState extends State<BasicInfo> {
                         },
                         child: Container(
                           height: 25,
-                          width: 125,
+                          width: MediaQuery.of(context).size.width*0.8,
                           //color: Colors.white,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
@@ -377,7 +381,7 @@ class _BasicInfoState extends State<BasicInfo> {
                       ),
                     ],),
                   ),
-                )),
+                ),
 
               ],
             ),

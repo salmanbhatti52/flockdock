@@ -41,8 +41,6 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
       getAllTaps();
     });
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

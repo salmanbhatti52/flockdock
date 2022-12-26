@@ -48,6 +48,7 @@ dependencies:
   location: ^4.2.0
   the_apple_sign_in: ^1.1.1
   provider:
+  full_screen_image_null_safe: ^2.0.0
   http: ^0.13.5
 #  google_maps_place_picker: ^2.0.0-nullsafety.3
 

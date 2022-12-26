@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flocdock/View/Screens/edit_profile/widget/update_dialog.dart';
 import 'package:flocdock/View/base/custom_snackbar.dart';
@@ -12,10 +14,12 @@ import 'package:flocdock/mixin/data.dart';
 import 'package:flocdock/models/user_model/picture_model.dart';
 import 'package:flocdock/services/dio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:image_picker/image_picker.dart';
+//import 'package:image_cropper/image_cropper.dart';
 
 class EditProfilePicture extends StatefulWidget {
   const EditProfilePicture({Key? key}) : super(key: key);
@@ -25,6 +29,28 @@ class EditProfilePicture extends StatefulWidget {
 }
 
 class _EditProfilePictureState extends State<EditProfilePicture> {
+
+
+  File? _image;
+
+  Future _pickedImage(ImageSource source) async{
+
+    try{
+      final image = await ImagePicker().pickImage(source: source);
+      if(image == null) return;
+      File? img = File(image.path);
+      setState(() {
+        _image = img;
+      });
+    }
+    on PlatformException catch (e){
+      print(e);
+    }
+  }
+
+
+
+
 
   PickedFile pickedFile=PickedFile("");
   String image="";
@@ -37,6 +63,10 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
       getUserPictures();
     });
   }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +105,9 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
                   child: InkWell(
                     onTap: () => Get.dialog(EditDelete(
                       onEditTap: () async {
-                        pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
+                        _pickedImage(ImageSource.gallery);
+                        //pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
+                        //image = await _cropImage(pickedFile);
                         Navigator.pop(context);
                         uploadProfilePicture();
                       },

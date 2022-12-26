@@ -333,15 +333,18 @@ class _GroupViewState extends State<GroupView> {
                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                 color: KDullBlack.withOpacity(0.5),
                 child: MyButton(
-                  text: "Join",
+                  text: isJoined?"Join":"Joined",
                   textColor: KWhite,
                   size: Dimensions.fontSizeExtraLarge,
-                  buttonColor: KMediumBlue,
+                 buttonColor: KMediumBlue,
+                 // buttonColor: Colors.pink,
                   buttonHight: 53.0,
                   buttonWidth: MediaQuery.of(context).size.width*0.8,
                   onPressed: () => Get.dialog(JoinDialog(onConfirmPressed: (){
                     Get.back();
                     joinGroup();
+                    print('thsi is presses');
+                    print(isJoined);
                   },)),
                 ),
               ),
@@ -572,6 +575,9 @@ class _GroupViewState extends State<GroupView> {
       setState(() {});
     }
     else{
+
+      print('specific group details function');
+      print(isJoined);
       Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
