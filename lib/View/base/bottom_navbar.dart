@@ -71,7 +71,23 @@ class _BottomBarState extends State<BottomBar> {
               },
               child: Column(
                 children: [
-                  SvgPicture.asset(Images.inbox,color: pageIndex == 1?KWhite:Kunactive,),
+                  Stack(children: [
+                    SvgPicture.asset(Images.inbox,color: pageIndex == 1?KWhite:Kunactive,),
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                          color: Colors.green,
+                        ),
+
+                      ),
+                    )
+                   ],
+                  ),
+
                   spaceVertical(5),
                   MyText(
                     text: "INBOX",

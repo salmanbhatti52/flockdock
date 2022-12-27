@@ -1,6 +1,5 @@
 
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flocdock/View/Screens/edit_profile/widget/update_dialog.dart';
 import 'package:flocdock/View/base/custom_snackbar.dart';
@@ -31,26 +30,31 @@ class EditProfilePicture extends StatefulWidget {
 class _EditProfilePictureState extends State<EditProfilePicture> {
 
 
-  File? _image;
+  // File? _image;
+  //
+  // Future _pickedImage(ImageSource source) async{
+  //
+  //   try{
+  //     final image = await ImagePicker().pickImage(source: source);
+  //     if(image == null) return;
+  //     File? img = File(image.path);
+  //    // img = await _cropImage(imageFile: img);
+  //     setState(() {
+  //       _image = img;
+  //     });
+  //   }
+  //   on PlatformException catch (e){
+  //     print(e);
+  //   }
+  // }
 
-  Future _pickedImage(ImageSource source) async{
 
-    try{
-      final image = await ImagePicker().pickImage(source: source);
-      if(image == null) return;
-      File? img = File(image.path);
-      setState(() {
-        _image = img;
-      });
-    }
-    on PlatformException catch (e){
-      print(e);
-    }
-  }
-
-
-
-
+  // Future<File?> _cropImage({required File imageFile}) async{
+  //   CroppedFile? croppedImage =
+  //       await ImageCropper().cropImage(sourcePath:imageFile.path);
+  //   if(croppedImage ==null) return null;
+  //   return File(croppedImage.path);
+  // }
 
   PickedFile pickedFile=PickedFile("");
   String image="";
@@ -105,8 +109,8 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
                   child: InkWell(
                     onTap: () => Get.dialog(EditDelete(
                       onEditTap: () async {
-                        _pickedImage(ImageSource.gallery);
-                        //pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
+                       // _pickedImage(ImageSource.gallery);
+                        pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
                         //image = await _cropImage(pickedFile);
                         Navigator.pop(context);
                         uploadProfilePicture();

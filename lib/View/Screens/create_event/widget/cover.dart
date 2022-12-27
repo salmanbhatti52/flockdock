@@ -16,6 +16,18 @@ class Cover extends StatefulWidget {
 }
 
 class _CoverState extends State<Cover> {
+
+  String dropdownvalue = 'USD';
+
+  // List of items in our dropdown menu
+  var items = [
+    'USD',
+    'EUR',
+    'DIRHAM',
+    'PKR',
+  ];
+
+
   TextEditingController costController=TextEditingController();
   bool isSelected=true;
   @override
@@ -95,14 +107,50 @@ class _CoverState extends State<Cover> {
           ],
         ),
         SizedBox(height: 10,),
-        if(!isSelected)MyTextField(
-          textInputType: TextInputType.number,
-          verticalPadding: 0.0,
-          hight: 50.0,
-          width: 120.0,
-          controller: costController,
-          onChanged: (val) => eventDetail.cost=int.tryParse(costController.text),
-        ),
+        Row(
+          children: [
+            if(!isSelected)MyTextField(
+              textInputType: TextInputType.number,
+              verticalPadding: 0.0,
+              hight: 50.0,
+              width: 120.0,
+              controller: costController,
+              onChanged: (val) => eventDetail.cost=int.tryParse(costController.text),
+            ),
+            SizedBox(width: 5,),
+
+            if(!isSelected)Container(
+              height: 50,
+                width: 100,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: KDullBlack,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: DropdownButton(
+                  underline: SizedBox(),
+                  value: dropdownvalue,
+                  icon: const Icon(Icons.keyboard_arrow_down,color: KWhite,),
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items,style: TextStyle(color: KbgBlack,fontFamily: "Proxima"),),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue!;
+                    });
+                  },
+                ),
+              ),
+            )
+
+          ],
+        )
+
+
       ],
     );
   }

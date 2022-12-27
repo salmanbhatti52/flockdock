@@ -57,9 +57,12 @@ class _EventSuccessState extends State<EventSuccess> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: KBlue,width: 3),
-                      image: DecorationImage(image: NetworkImage(eventDetail.groupCategoryImage??''),fit: BoxFit.cover)
+                     image: DecorationImage(image: NetworkImage(eventDetail.groupCategoryImage??''),fit: BoxFit.cover)
                   ),
-                  child: Center(
+                  child:
+                  //Image.network(eventDetail.groupCategoryImage??''),
+                    //Image.asset('assets/images/dummyDataGroup.png')
+                  Center(
                     child: MyText(
                       text: eventDetail.groupCategoryName??'',
                       fontFamily: "Proxima",

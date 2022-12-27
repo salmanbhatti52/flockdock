@@ -272,7 +272,7 @@ class _ChatState extends State<Chat> {
                                         await launch(messages[index].message!,);
                                       }
                                       else{
-                                        showCustomSnackBar("message");
+                                        //showCustomSnackBar("message");
                                       }
                                     },
                                   )
@@ -336,7 +336,7 @@ class _ChatState extends State<Chat> {
                                       await launch(messages[index].message!,);
                                       }
                                       else{
-                                        showCustomSnackBar("message");
+                                       // showCustomSnackBar("message");
                                       }
                                     },
                                   ),
@@ -656,7 +656,7 @@ class _ChatState extends State<Chat> {
       else{
         Navigator.pop(context);
         print(response['message']);
-        showCustomSnackBar(response['message']);
+        //showCustomSnackBar(response['message']);
       }
   }
   void updateMessages() async {

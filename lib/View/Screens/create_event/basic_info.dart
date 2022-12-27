@@ -122,417 +122,422 @@ class _BasicInfoState extends State<BasicInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: KbgBlack,
-      appBar: SimpleAppbar(description: "Gather a Group", pageName: 'HOST',pageTrailing: Images.close,isEvent: true,),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        padding:EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("CHILL OUT GROUP",style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge),),
-            SizedBox(height: 5,),
-            Text("BASIC INFO",style: proximaBold.copyWith(color: KdullWhite),),
-            SizedBox(height: 20,),
-            Text("Upload a cover photo",style: proximaBold.copyWith(color: KWhite),),
-            SizedBox(height: 3,),
-            GestureDetector(
-              onTap: () async {
-                pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
-                setState(() {});
-                uploadPicture();
-                print("eventDetail.toJson()");
-                print(eventDetail.toJson());
-                print("groupDetail.toJson()");
-                print(groupDetail.toJson());
-              },
-              child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height*0.2,
-                decoration: pickedFile.path.isNotEmpty?BoxDecoration(
-                  image: DecorationImage(image: FileImage(File(pickedFile.path)),fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.2)
-                ):
-                    eventDetail.fromEdit?
-                    BoxDecoration(
-                        image: DecorationImage(image: NetworkImage(eventDetail.coverPhoto??''),fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.withOpacity(0.2)
-                    ):
-                BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.2)
-                ),
-                child: Center(
-                    child: pickedFile.path.isNotEmpty||eventDetail.fromEdit?
-                    SizedBox():
-                    SvgPicture.asset(
-                      Images.add,
-                      height: 40,
-                      width: 40,
-                    )
-                ),
-              ),
-            ),
-            SizedBox(height: 20,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text("Starting Date",style: proximaBold.copyWith(color: KWhite),),
-                SizedBox(height: 5,),
-              //SizedBox(width: MediaQuery.of(context).size.width*0.25,),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(color: KDullBlack,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_SMALL+1),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      GestureDetector(
-                        onTap: () async{
-                          DateTime? selected;
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  color: KWhite,
-                                  height: 400,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: CupertinoDatePicker(
-                                          onDateTimeChanged: (DateTime date) {
-                                            selected=date;
-                                          },
-                                          mode: CupertinoDatePickerMode.dateAndTime,
-                                          use24hFormat: true,
-                                          initialDateTime: selectedDate,
-                                          minimumDate: DateTime(1970),
-                                          maximumDate: DateTime(2050),
-                                        ),
-                                      ),
-                                      CupertinoButton(
-                                        child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
-                                        onPressed: () {
-                                          if (selected!=null && selected != selectedDate) {
-                                            print(selected);
-                                            selectedDate = selected!;
-                                            start_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate);
-                                            //List<String> datetime=dateTime.toString().split(" ");
-                                            String start_time = DateFormat("HH:mm:ss").format(DateTime.now());
-                                            eventDetail.startingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
-                                            eventDetail.startingTime= start_time;
-
-                                            print(eventDetail.startingDate.toString());
-                                            print(start_time);
-
-                                            setState(() {});
-                                          }
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                        child: Container(
-                          height: 25,
-                          width: MediaQuery.of(context).size.width*0.8,
-                          //color: Colors.white,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: KDullBlack,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left:5.0),
-                                child: Text(start_date,
-
-                                  style: TextStyle(
-                                      color: KWhite.withOpacity(0.5),
-                                      fontFamily: "Proxima",
-                                      fontSize: 16
-                                  ),
-                                ),
-                              ),
-                              spaceHorizontal(10),
-                              Container(
-                                height: 30,
-                                width: 13,
-                                child:SvgPicture.asset(
-                                  Images.calendar,
-                                  color: KWhite.withOpacity(0.5),
-                                ),),
-                            ],
-                          ),
-                        ),
-                        //child: EditField(isEnabled: false,controller: TextEditingController(text: DOB),),
-                      ),
-                    ],),
-                  ),
-                ),
-
-            ],),
-            SizedBox(height: 20,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Ending Date",style: proximaBold.copyWith(color: KWhite),),
-                SizedBox(height: 5,),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(color: KDullBlack,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: Dimensions.PADDING_SIZE_SMALL+1),
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                      GestureDetector(
-                        onTap: () async{
-                          DateTime? selected;
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  color: KWhite,
-                                  height: 400,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: CupertinoDatePicker(
-                                          onDateTimeChanged: (DateTime date) {
-                                            selected=date;
-                                          },
-                                          mode: CupertinoDatePickerMode.dateAndTime,
-                                          use24hFormat: true,
-                                          initialDateTime: selectedDate,
-                                          minimumDate: DateTime(1970),
-                                          maximumDate: DateTime(2050),
-                                        ),
-                                      ),
-                                      CupertinoButton(
-                                        child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
-                                        onPressed: () {
-                                          if (selected!=null && selected != selectedDate) {
-                                            print(selected);
-                                            selectedDate = selected!;
-                                            String end_time = DateFormat("HH:mm:ss ").format(selectedDate);
-                                            end_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate);
-                                            eventDetail.endingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
-                                            eventDetail.endingTime= end_time;
-
-                                            print(eventDetail.endingDate.toString());
-                                            //userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
-
-                                            print(end_time);
-                                            setState(() {});
-                                          }
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                        child: Container(
-                          height: 25,
-                          width: MediaQuery.of(context).size.width*0.8,
-                          //color: Colors.white,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: KDullBlack,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left:5.0),
-                                child: Text(end_date,
-
-                                  style: TextStyle(
-                                      color: KWhite.withOpacity(0.5),
-                                      fontFamily: "Proxima",
-                                      fontSize: 16
-                                  ),
-                                ),
-                              ),
-                              spaceHorizontal(10),
-                              Container(
-                                height: 30,
-                                width: 13,
-                                child:SvgPicture.asset(
-                                  Images.calendar,
-                                  color: KWhite.withOpacity(0.5),
-                                ),),
-                            ],
-                          ),
-                        ),
-                        //child: EditField(isEnabled: false,controller: TextEditingController(text: DOB),),
-                      ),
-                    ],),
-                  ),
-                ),
-
-              ],
-            ),
-            SizedBox(height: 20,),
-            Text("Address",style: proximaBold.copyWith(color: KWhite),),
-            SizedBox(height: 5,),
-            MyTextField(
-              verticalPadding: 0.0,
-
-              hight: 50.0, controller: _addressController,
-              onChanged: (value) async {
-                if(value==""){
-                  setState(() {
-                    _autoCompleteResult.clear();
-                  });
-                }
-                else{
-                  print(value);
-                  print(_addressController.text);
-                  final autoCompleteSuggestions = await placesService.getAutoComplete(value);
-                  _autoCompleteResult = autoCompleteSuggestions;
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: KbgBlack,
+        appBar: SimpleAppbar(description: "Gather a Group", pageName: 'HOST',pageTrailing: Images.close,isEvent: true,),
+        body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          padding:EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("CHILL OUT GROUP",style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge),),
+              SizedBox(height: 5,),
+              Text("BASIC INFO",style: proximaBold.copyWith(color: KdullWhite),),
+              SizedBox(height: 20,),
+              Text("Upload a cover photo",style: proximaBold.copyWith(color: KWhite),),
+              SizedBox(height: 3,),
+              GestureDetector(
+                onTap: () async {
+                  pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
                   setState(() {});
-                }
-              },
-            ),
-            if (_autoCompleteResult.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
+                  uploadPicture();
+                  print("eventDetail.toJson()");
+                  print(eventDetail.toJson());
+                  print("groupDetail.toJson()");
+                  print(groupDetail.toJson());
+                },
                 child: Container(
-                  width: MediaQuery.of(context).size.width*0.9,
-                  decoration: const BoxDecoration(
-                    color: KDullBlack,
-                    //: Border.all(color: Colors.black)
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height*0.2,
+                  decoration: pickedFile.path.isNotEmpty?BoxDecoration(
+                    image: DecorationImage(image: FileImage(File(pickedFile.path)),fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey.withOpacity(0.2)
+                  ):
+                      eventDetail.fromEdit?
+                      BoxDecoration(
+                          image: DecorationImage(image: NetworkImage(eventDetail.coverPhoto??''),fit: BoxFit.cover),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey.withOpacity(0.2)
+                      ):
+                  BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey.withOpacity(0.2)
                   ),
-                  height: 140,
-                  child: ListView.builder(
-                    itemCount: _autoCompleteResult.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(_autoCompleteResult[index].mainText ?? "",style: proximaBold.copyWith(color: KWhite),),
-                        //subtitle: Text(_autoCompleteResult[index].description ?? ""),
-                        onTap: () async {
-                          var id = _autoCompleteResult[index].placeId;
-                          final placeDetails = await placesService.getPlaceDetails(id!);
-                          print(placeDetails);
-                          _addressController.text="${_autoCompleteResult[index].mainText??''}, ${_autoCompleteResult[index].secondaryText??''}";
-                          eventDetail.address=_addressController.text;
-                          eventDetail.groupLat=placeDetails.lat;
-                          eventDetail.groupLong=placeDetails.lng;
-                          googleMapController!.animateCamera(
-                              CameraUpdate.newCameraPosition(
-                                CameraPosition(
-                                  target: LatLng(eventDetail.groupLat??0,eventDetail.groupLong??0),
-                                  zoom: 10,
-                                ),
-                              )
-                          );
-                          setMarker();
-                          _autoCompleteResult.clear();
-                          setState(() {});
-                        },
-                      );
-                    },
+                  child: Center(
+                      child: pickedFile.path.isNotEmpty||eventDetail.fromEdit?
+                      SizedBox():
+                      SvgPicture.asset(
+                        Images.add,
+                        height: 40,
+                        width: 40,
+                      )
                   ),
                 ),
               ),
-            SizedBox(height: 20,),
-            Text("Map view",style: proximaBold.copyWith(color: KWhite),),
-            SizedBox(height: 5,),
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 100,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: GoogleMap(
-                      markers: markers,
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(eventDetail.groupLat??0,eventDetail.groupLong??0),
-                        zoom: 10,
-                      ),
-                      onMapCreated: (GoogleMapController mapController) {
-                        googleMapController=mapController;
-                      },
-                      zoomControlsEnabled: false,
-                      onCameraMove: (CameraPosition cameraPosition) async {
-                        this.cameraPosition=cameraPosition;
-                        eventDetail.groupLat=cameraPosition.target.latitude;
-                        eventDetail.groupLong=cameraPosition.target.longitude;
-                        await setMarker();
-                      },
-                      onCameraMoveStarted: () {
+              SizedBox(height: 20,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Text("Starting Date",style: proximaBold.copyWith(color: KWhite),),
+                  SizedBox(height: 5,),
+                //SizedBox(width: MediaQuery.of(context).size.width*0.25,),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(color: KDullBlack,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL+1),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        GestureDetector(
+                          onTap: () async{
+                            DateTime? selected;
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    color: KWhite,
+                                    height: 400,
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: CupertinoDatePicker(
+                                            onDateTimeChanged: (DateTime date) {
+                                              selected=date;
+                                            },
+                                            mode: CupertinoDatePickerMode.dateAndTime,
+                                            use24hFormat: true,
+                                            initialDateTime: selectedDate,
+                                            minimumDate: DateTime(1970),
+                                            maximumDate: DateTime(2050),
+                                          ),
+                                        ),
+                                        CupertinoButton(
+                                          child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
+                                          onPressed: () {
+                                            if (selected!=null && selected != selectedDate) {
+                                              print(selected);
+                                              selectedDate = selected!;
+                                              start_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate);
+                                              //List<String> datetime=dateTime.toString().split(" ");
+                                              String start_time = DateFormat("HH:mm:ss").format(DateTime.now());
+                                              eventDetail.startingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
+                                              eventDetail.startingTime= start_time;
 
-                      },
-                      onCameraIdle: () async {
-                        //await convertToAddress(eventDetail.groupLat??0, eventDetail.groupLong??0, AppConstants.apiKey);
+                                              print(eventDetail.startingDate.toString());
+                                              print(start_time);
+
+                                              setState(() {});
+                                            }
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                          child: Container(
+                            height: 25,
+                            width: MediaQuery.of(context).size.width*0.8,
+                            //color: Colors.white,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: KDullBlack,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left:5.0),
+                                  child: Text(start_date,
+
+                                    style: TextStyle(
+                                        color: KWhite.withOpacity(0.5),
+                                        fontFamily: "Proxima",
+                                        fontSize: 16
+                                    ),
+                                  ),
+                                ),
+                                spaceHorizontal(10),
+                                Container(
+                                  height: 30,
+                                  width: 13,
+                                  child:SvgPicture.asset(
+                                    Images.calendar,
+                                    color: KWhite.withOpacity(0.5),
+                                  ),),
+                              ],
+                            ),
+                          ),
+                          //child: EditField(isEnabled: false,controller: TextEditingController(text: DOB),),
+                        ),
+                      ],),
+                    ),
+                  ),
+
+              ],),
+              SizedBox(height: 20,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Ending Date",style: proximaBold.copyWith(color: KWhite),),
+                  SizedBox(height: 5,),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(color: KDullBlack,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimensions.PADDING_SIZE_SMALL+1),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+                        GestureDetector(
+                          onTap: () async{
+                            DateTime? selected;
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    color: KWhite,
+                                    height: 400,
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: CupertinoDatePicker(
+                                            onDateTimeChanged: (DateTime date) {
+                                              selected=date;
+                                            },
+                                            mode: CupertinoDatePickerMode.dateAndTime,
+                                            use24hFormat: true,
+                                            initialDateTime: selectedDate,
+                                            minimumDate: DateTime(1970),
+                                            maximumDate: DateTime(2050),
+                                          ),
+                                        ),
+                                        CupertinoButton(
+                                          child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
+                                          onPressed: () {
+                                            if (selected!=null && selected != selectedDate) {
+                                              print(selected);
+                                              selectedDate = selected!;
+                                              String end_time = DateFormat("HH:mm:ss ").format(selectedDate);
+                                              end_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate);
+                                              eventDetail.endingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
+                                              eventDetail.endingTime= end_time;
+
+                                              print(eventDetail.endingDate.toString());
+                                              //userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
+
+                                              print(end_time);
+                                              setState(() {});
+                                            }
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                          child: Container(
+                            height: 25,
+                            width: MediaQuery.of(context).size.width*0.8,
+                            //color: Colors.white,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: KDullBlack,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left:5.0),
+                                  child: Text(end_date,
+
+                                    style: TextStyle(
+                                        color: KWhite.withOpacity(0.5),
+                                        fontFamily: "Proxima",
+                                        fontSize: 16
+                                    ),
+                                  ),
+                                ),
+                                spaceHorizontal(10),
+                                Container(
+                                  height: 30,
+                                  width: 13,
+                                  child:SvgPicture.asset(
+                                    Images.calendar,
+                                    color: KWhite.withOpacity(0.5),
+                                  ),),
+                              ],
+                            ),
+                          ),
+                          //child: EditField(isEnabled: false,controller: TextEditingController(text: DOB),),
+                        ),
+                      ],),
+                    ),
+                  ),
+
+                ],
+              ),
+              SizedBox(height: 20,),
+              Text("Address",style: proximaBold.copyWith(color: KWhite),),
+              SizedBox(height: 5,),
+              MyTextField(
+                verticalPadding: 0.0,
+
+                hight: 50.0, controller: _addressController,
+                onChanged: (value) async {
+                  if(value==""){
+                    setState(() {
+                      _autoCompleteResult.clear();
+                    });
+                  }
+                  else{
+                    print(value);
+                    print(_addressController.text);
+                    final autoCompleteSuggestions = await placesService.getAutoComplete(value);
+                    _autoCompleteResult = autoCompleteSuggestions;
+                    setState(() {});
+                  }
+                },
+              ),
+              if (_autoCompleteResult.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width*0.9,
+                    decoration: const BoxDecoration(
+                      color: KDullBlack,
+                      //: Border.all(color: Colors.black)
+                    ),
+                    height: 140,
+                    child: ListView.builder(
+                      itemCount: _autoCompleteResult.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(_autoCompleteResult[index].mainText ?? "",style: proximaBold.copyWith(color: KWhite),),
+                          //subtitle: Text(_autoCompleteResult[index].description ?? ""),
+                          onTap: () async {
+                            var id = _autoCompleteResult[index].placeId;
+                            final placeDetails = await placesService.getPlaceDetails(id!);
+                            print(placeDetails);
+                            _addressController.text="${_autoCompleteResult[index].mainText??''}, ${_autoCompleteResult[index].secondaryText??''}";
+                            eventDetail.address=_addressController.text;
+                            eventDetail.groupLat=placeDetails.lat;
+                            eventDetail.groupLong=placeDetails.lng;
+                            googleMapController!.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                    target: LatLng(eventDetail.groupLat??0,eventDetail.groupLong??0),
+                                    zoom: 10,
+                                  ),
+                                )
+                            );
+                            setMarker();
+                            _autoCompleteResult.clear();
+                            setState(() {});
+                          },
+                        );
                       },
                     ),
-                  )
-                ),
-                Container(
-                    width: double.infinity,
-                    height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            Text("Additional Instructions",style: proximaBold.copyWith(color: KWhite),),
-            SizedBox(height: 5,),
-            MyTextField(
-              radius: 5.0,
-                minLines: 3,
-                maxLines: 3,
-                verticalPadding: 0.0,
-                hight: 80.0,
-                controller: _additionalController,
-              onChanged: (val) => eventDetail.additionalInstructions=_additionalController.text,
-            ),
-            SizedBox(height: 20,),
+              SizedBox(height: 20,),
+              Text("Map view",style: proximaBold.copyWith(color: KWhite),),
+              SizedBox(height: 5,),
+              Stack(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 100,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: GoogleMap(
+                        markers: markers,
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(eventDetail.groupLat??0,eventDetail.groupLong??0),
+                          zoom: 10,
+                        ),
+                        onMapCreated: (GoogleMapController mapController) {
+                          googleMapController=mapController;
+                        },
+                        zoomControlsEnabled: false,
+                        onCameraMove: (CameraPosition cameraPosition) async {
+                          this.cameraPosition=cameraPosition;
+                          eventDetail.groupLat=cameraPosition.target.latitude;
+                          eventDetail.groupLong=cameraPosition.target.longitude;
+                          await setMarker();
+                        },
+                        onCameraMoveStarted: () {
+
+                        },
+                        onCameraIdle: () async {
+                          //await convertToAddress(eventDetail.groupLat??0, eventDetail.groupLong??0, AppConstants.apiKey);
+                        },
+                      ),
+                    )
+                  ),
+                  Container(
+                      width: double.infinity,
+                      height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20,),
+              Text("Additional Instructions",style: proximaBold.copyWith(color: KWhite),),
+              SizedBox(height: 5,),
+              MyTextField(
+                radius: 5.0,
+                  minLines: 3,
+                  maxLines: 3,
+                  verticalPadding: 0.0,
+                  hight: 80.0,
+                  controller: _additionalController,
+                onChanged: (val) => eventDetail.additionalInstructions=_additionalController.text,
+              ),
+              SizedBox(height: 20,),
 
 
-            BottomNavigator(selected: 2, onTapLeading: () => Get.back(), onTapTrailing: basicInfoCheck),
-            // ListView.builder(
-            //     physics: NeverScrollableScrollPhysics(),
-            //     shrinkWrap: true,
-            //     //padding: EdgeInsetsGeometry.infinity,
-            //     itemCount: 3,
-            //     itemBuilder: (context,index){
-            //       return Column(
-            //         children: [
-            //           InboxList(isInvite: index==1,isLive: index==0,),
-            //           Padding(
-            //             padding: const EdgeInsets.symmetric(vertical: 5.0),
-            //             child: Container(
-            //               color: Colors.white.withOpacity(0.2),
-            //               width: MediaQuery.of(context).size.width*0.85,
-            //               height: 1,
-            //             ),
-            //           ),
-            //         ],
-            //
-            //       );
-            //
-            //     }
-            // )
+              BottomNavigator(selected: 2, onTapLeading: () => Get.back(), onTapTrailing: basicInfoCheck),
+              // ListView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     shrinkWrap: true,
+              //     //padding: EdgeInsetsGeometry.infinity,
+              //     itemCount: 3,
+              //     itemBuilder: (context,index){
+              //       return Column(
+              //         children: [
+              //           InboxList(isInvite: index==1,isLive: index==0,),
+              //           Padding(
+              //             padding: const EdgeInsets.symmetric(vertical: 5.0),
+              //             child: Container(
+              //               color: Colors.white.withOpacity(0.2),
+              //               width: MediaQuery.of(context).size.width*0.85,
+              //               height: 1,
+              //             ),
+              //           ),
+              //         ],
+              //
+              //       );
+              //
+              //     }
+              // )
 
-          ],
+            ],
+          ),
         ),
       ),
     );
