@@ -18,7 +18,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:image_picker/image_picker.dart';
-//import 'package:image_cropper/image_cropper.dart';
 
 class EditProfilePicture extends StatefulWidget {
   const EditProfilePicture({Key? key}) : super(key: key);
@@ -29,7 +28,7 @@ class EditProfilePicture extends StatefulWidget {
 
 class _EditProfilePictureState extends State<EditProfilePicture> {
 
-
+  //
   // File? _image;
   //
   // Future _pickedImage(ImageSource source) async{
@@ -56,6 +55,8 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
   //   return File(croppedImage.path);
   // }
 
+  final picker = ImagePicker();
+  String imagePath = "";
   PickedFile pickedFile=PickedFile("");
   String image="";
   PictureData pictureData=PictureData(visiblePictures: [],privatePictures: []);
@@ -98,8 +99,6 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
                   child: ClipOval(
                       child: Image.network(
                         AppData().userdetail!.profilePicture??AppConstants.placeholder,
-                        height: 90,
-                        width: 90,
                         fit: BoxFit.cover,
                       )
                   ),
@@ -109,9 +108,38 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
                   child: InkWell(
                     onTap: () => Get.dialog(EditDelete(
                       onEditTap: () async {
-                       // _pickedImage(ImageSource.gallery);
+                        // _pickedImage(ImageSource.gallery);
                         pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
-                        //image = await _cropImage(pickedFile);
+                        // image = await _cropImage(pickedFile);
+                        CroppedFile? croppedFile = await ImageCropper().cropImage(
+                          sourcePath: pickedFile.path,
+                          aspectRatioPresets: [
+                            CropAspectRatioPreset.square,
+                            CropAspectRatioPreset.ratio3x2,
+                            CropAspectRatioPreset.original,
+                            CropAspectRatioPreset.ratio4x3,
+                            CropAspectRatioPreset.ratio16x9
+                          ],
+                          uiSettings: [
+                            AndroidUiSettings(
+                                toolbarTitle: 'Cropper',
+                                toolbarColor: Colors.deepOrange,
+                                toolbarWidgetColor: Colors.white,
+                                initAspectRatio: CropAspectRatioPreset.original,
+                                lockAspectRatio: false),
+                            IOSUiSettings(
+                              title: 'Cropper',
+                            ),
+                            WebUiSettings(
+                              context: context,
+                            ),
+                          ],
+                        );
+                        if (croppedFile != null) {
+                          setState(() {
+                            imagePath = croppedFile.path;
+                          });
+                        }
                         Navigator.pop(context);
                         uploadProfilePicture();
                       },
@@ -121,12 +149,12 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
                       },
                     )),
                     child: Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: KBlue
-                      ),
-                      child: SvgPicture.asset(Images.edit,height: 12,width: 12,color: KPureBlack,)
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: KBlue
+                        ),
+                        child: SvgPicture.asset(Images.edit,height: 12,width: 12,color: KPureBlack,)
                     ),
                   ),
                 )

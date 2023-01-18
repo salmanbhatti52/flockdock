@@ -10,6 +10,7 @@ import 'package:flocdock/View/base/custom_snackbar.dart';
 import 'package:flocdock/View/base/loading_dialog.dart';
 import 'package:flocdock/View/base/simple_appbar.dart';
 import 'package:flocdock/constants/constants.dart';
+import 'package:flocdock/constants/dimensions.dart';
 import 'package:flocdock/constants/images.dart';
 import 'package:flocdock/constants/styles.dart';
 import 'package:flocdock/mixin/data.dart';
@@ -45,6 +46,8 @@ class _ChatState extends State<Chat> {
   Timer? timer;
   PickedFile pickedFile=PickedFile("");
   String image="";
+  bool isSearch =false;
+  TextEditingController searchController=TextEditingController();
   ScrollController _scrollController=ScrollController();
   Pictures pictures=Pictures(recentImages: [],lastWeekImages: [],lastMonthImages: []);
 
@@ -78,9 +81,8 @@ class _ChatState extends State<Chat> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
             child: Align(
-              alignment: Alignment.topLeft,
+              // alignment: Alignment.center,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
                     onTap: () => Get.back(),
@@ -91,7 +93,99 @@ class _ChatState extends State<Chat> {
                       ],
                     ),
                   ),
-                  Text(widget.name,style: proximaBold.copyWith(color: KWhite)),
+                  SizedBox(width: 100,),
+                  Text(widget.name,style: proximaBold.copyWith(color: KWhite),),
+                  SizedBox(width: 80,),
+                  isSearch?Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 30,
+                          // margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_DEFAULT),
+                          // width: MediaQuery.of(context).size.width*0.3,
+                          width: 22,
+                          padding: EdgeInsets.only(right: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                          child: TextField(
+                            controller: searchController,
+                            keyboardType: TextInputType.text,
+                            // onChanged: (value) async {
+                            //   // if(value!=""){
+                            //   //   searchUserGroups();
+                            //   // }
+                            //   //print(_autoCompleteResult.first.mainText);
+                            // },
+                            cursorColor: KWhite,
+                            style: proximaBold.copyWith(color: KWhite),
+                            autofocus: false,
+                            decoration: InputDecoration(
+                              focusColor: Color.fromARGB(1,65, 68, 82,).withOpacity(0.9),
+                              hoverColor: Color.fromARGB(1,65, 68, 82,).withOpacity(0.9),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+                              ),
+                              isDense: true,
+                              hintText: "Search...",
+                               hintStyle: proximaBold.copyWith(color: KWhite.withOpacity(0.5),
+                               ),
+                              fillColor: Color.fromARGB(1,65, 68, 82,).withOpacity(0.9),
+                              filled: true,
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.only(bottom: 6.0),
+                                child: Icon(Icons.search,size: 15,color: KWhite.withOpacity(0.5)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            // print("AppLifecycleState.paused");
+                            // print(AppLifecycleState.paused.index);
+                            // print(AppLifecycleState.paused.name);
+                            // print("AppLifecycleState.detached");
+                            // print(AppLifecycleState.detached.index);
+                            // print(AppLifecycleState.detached.name);
+                            // print("AppLifecycleState.inactive");
+                            // print(AppLifecycleState.inactive.index);
+                            // print(AppLifecycleState.inactive.name);
+                            // print("AppLifecycleState.resumed");
+                            // print(AppLifecycleState.resumed.index);
+                            // print(AppLifecycleState.resumed.name);
+
+                            setState(() {
+                              searchController.clear();
+                              isSearch=!isSearch;
+                            });
+                          },
+                          child: Align(
+                              // alignment: Alignment.center,
+                              child: Container(
+                                  padding: EdgeInsets.only(right: 20.0),
+                                  child: Icon(Icons.close,color: KWhite, size: 20,)
+                              )
+                          ),
+                        )
+                      ],
+                    ),
+                  ):SizedBox(),
+                  isSearch?SizedBox():Expanded(
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          isSearch=!isSearch;
+                        });
+                      },
+                      child: Align(
+                          // alignment: Alignment.centerRight,
+                          child: SvgPicture.asset(Images.search, width: 15,)
+                      ),
+                    ),
+                  ),
                   InkWell(
                     onTap: () => Get.dialog(
                         Dialog(
@@ -247,7 +341,7 @@ class _ChatState extends State<Chat> {
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                         image: NetworkImage(messages[index].message??'',),
-                                        fit: BoxFit.fill
+                                        fit: BoxFit.scaleDown,
                                       ),
                                         borderRadius: BorderRadius.circular(10),
                                         color: KDullBlack

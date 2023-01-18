@@ -33,12 +33,13 @@ dependencies:
   google_sign_in: ^5.2.1
   firebase_auth: ^3.3.4
   firebase_core: ^1.12.0
+  firebase_core_platform_interface: 4.5.1
   retrofit: ^3.0.1
   pretty_dio_logger: ^1.1.1
   shared_preferences: ^2.0.6
   geolocator: ^7.7.1
   omni_datetime_picker: ^0.0.7
-  image_picker: ^0.8.5
+  image_picker: ^0.8.6
   google_maps_flutter: ^2.1.3
   places_service: ^0.1.1
   any_link_preview: ^2.0.7
@@ -50,6 +51,7 @@ dependencies:
   provider:
   full_screen_image_null_safe: ^2.0.0
   http: ^0.13.5
+  image_cropper: ^3.0.1
 #  google_maps_place_picker: ^2.0.0-nullsafety.3
 
 dev_dependencies:
