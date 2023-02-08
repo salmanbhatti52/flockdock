@@ -1,3 +1,8 @@
+import 'dart:core';
+import 'dart:core';
+import 'dart:core';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flocdock/View/Screens/Auth/SignUp/enter_code.dart';
 import 'package:flocdock/View/Widgets/my_button.dart';
 import 'package:flocdock/View/Widgets/my_spacing.dart';
@@ -23,6 +28,9 @@ class EnterMobileNumber extends StatefulWidget {
 class _EnterMobileNumberState extends State<EnterMobileNumber> {
 
   TextEditingController _mobileNumberController = TextEditingController();
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +95,8 @@ class _EnterMobileNumberState extends State<EnterMobileNumber> {
                     onPressed: () {
                       widget.profile?.phoneNumber=_mobileNumberController.text;
                       print(widget.profile!.phoneNumber);
-                      Get.to(EnterCode(profile: widget.profile,));
+                      print(_mobileNumberController.text);
+                   Get.to(EnterCode(profile: widget.profile,));
                     },
                     fontFamily: "Proxima",
                     size: 17,
