@@ -1,5 +1,3 @@
-import 'package:flocdock/Models/groupModel/group_model.dart';
-import 'package:flocdock/Models/profileModel/profile_model.dart';
 import 'package:flocdock/View/Screens/Home/home_page.dart';
 import 'package:flocdock/View/Screens/create_event/choose_category.dart';
 import 'package:flocdock/View/Screens/create_event/widget/bottom_navigator.dart';
@@ -31,40 +29,58 @@ class EventSuccess extends StatefulWidget {
 }
 
 class _EventSuccessState extends State<EventSuccess> {
-  bool isSwitch=false;
+  bool isSwitch = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KbgBlack,
-      appBar: SimpleAppbar(description: "Gather a Group", pageName: 'HOST',pageTrailing: "",),
+      appBar: SimpleAppbar(
+        description: "Gather a Group",
+        pageName: 'HOST',
+        pageTrailing: "",
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-        const  SizedBox(),
+          const SizedBox(),
           Align(
             alignment: Alignment.center,
             child: Column(
               children: [
-                Text("SUCCESS",style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge),),
-                SizedBox(height: 10,),
-                Text("Your entry has been submitted!",style: proximaBold.copyWith(color: KdullWhite,fontSize: Dimensions.fontSizeLarge),),
-                SizedBox(height: 20,),
+                Text(
+                  "SUCCESS",
+                  style: proximaBold.copyWith(
+                      color: KWhite, fontSize: Dimensions.fontSizeLarge),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Your entry has been submitted!",
+                  style: proximaBold.copyWith(
+                      color: KdullWhite, fontSize: Dimensions.fontSizeLarge),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
-                  width: MediaQuery.of(context).size.width*0.8,
-                  height: MediaQuery.of(context).size.height*0.2,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: KBlue,width: 3),
-                     image: DecorationImage(image: NetworkImage(eventDetail.groupCategoryImage??''),fit: BoxFit.cover)
-                  ),
+                      border: Border.all(color: KBlue, width: 3),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              eventDetail.groupCategoryImage ?? ''),
+                          fit: BoxFit.cover)),
                   child:
-                  //Image.network(eventDetail.groupCategoryImage??''),
-                    //Image.asset('assets/images/dummyDataGroup.png')
-                  Center(
+                      //Image.network(eventDetail.groupCategoryImage??''),
+                      //Image.asset('assets/images/dummyDataGroup.png')
+                      Center(
                     child: MyText(
-                      text: eventDetail.groupCategoryName??'',
+                      text: eventDetail.groupCategoryName ?? '',
                       fontFamily: "Proxima",
                       color: KWhite,
                       weight: FontWeight.w800,
@@ -72,30 +88,32 @@ class _EventSuccessState extends State<EventSuccess> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
-      Padding(
-        padding:  EdgeInsets.only(bottom: GetPlatform.isIOS?16.0:8.0),
-        child: Container(
-          height: 35,
-          width: 80,
-          child: MyButton(
-            onPressed: () {
-              eventDetail=EventDetail(features: [],tribes: [],importantRules: [],guests: [],userGuests: []);
-              Get.offAll(HomePage());
-            },
-            buttonColor: KMediumBlue,
-            text: "Done",
-            textColor: KWhite,
-            textWeight: FontWeight.w700,
-            fontFamily: "Proxima",
-            size: 16,
-          ),
-
-      )
-      )
+          Padding(
+              padding: EdgeInsets.only(bottom: GetPlatform.isIOS ? 16.0 : 8.0),
+              child: Container(
+                height: 35,
+                width: 80,
+                child: MyButton(
+                  onPressed: () {
+                    eventDetail = EventDetail(
+                        features: [],
+                        tribes: [],
+                        importantRules: [],
+                        guests: [],
+                        userGuests: []);
+                    Get.offAll(HomePage());
+                  },
+                  buttonColor: KMediumBlue,
+                  text: "Done",
+                  textColor: KWhite,
+                  textWeight: FontWeight.w700,
+                  fontFamily: "Proxima",
+                  size: 16,
+                ),
+              ))
         ],
       ),
     );
