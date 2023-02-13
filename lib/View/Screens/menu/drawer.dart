@@ -34,7 +34,7 @@ class _MyDrawerState extends State<MyDrawer> {
         color: KPureBlack,
         child: Column(
           children: [
-            SizedBox(height: 40,),
+            const SizedBox(height: 40,),
              Align(
               alignment: Alignment.topLeft,
               child: GestureDetector(
@@ -50,12 +50,12 @@ class _MyDrawerState extends State<MyDrawer> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () => Get.to(EditProfilePicture()),
+                  onTap: () => Get.to(const EditProfilePicture()),
                   child: Container(
                     padding: EdgeInsets.all(1),
                     height: 100,
                     width: 100,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: KBlue,
                       shape: BoxShape.circle
                     ),
@@ -70,7 +70,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                   ),
                 ),
-                SizedBox(height: 18),
+                const SizedBox(height: 18),
                 InkWell(
                   onTap: () => Get.to(EditProfile()),
                     child: Text("Edit Profile", style: proximaBold.copyWith(color: KBlue),),

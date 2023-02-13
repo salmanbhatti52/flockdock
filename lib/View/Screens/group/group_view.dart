@@ -321,13 +321,15 @@ class _GroupViewState extends State<GroupView> {
               ),
               SizedBox(height: 12,),
 
-              isJoined?Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
-                  child: Text("GROUP MESSAGES",style: proximaExtraBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge)),
-                ),
-              ):Container(
+              // isJoined==true?Align(
+              //   alignment: Alignment.topLeft,
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
+              //     child: Text("GROUP MESSAGES",style: proximaExtraBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge)),
+              //   ),
+              // ):
+              isJoined?
+              Container(
                 width: MediaQuery.of(context).size.width,
                 height: 73,
                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
@@ -347,8 +349,14 @@ class _GroupViewState extends State<GroupView> {
                     print(isJoined);
                   },)),
                 ),
+              ):Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
+                  child: Text("GROUP MESSAGES",style: proximaExtraBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge)),
+                ),
               ),
-              if(isJoined)SizedBox(
+              SizedBox(
                 height: message.isEmpty?0:message.length==1?hight*0.1:message.length==2?hight*0.2:hight*0.3,
                 child: ListView.builder(
                   reverse: true,
@@ -361,7 +369,7 @@ class _GroupViewState extends State<GroupView> {
                     }
                 ),
               ),
-              if(isJoined)Container(
+              Container(
                 decoration: BoxDecoration(
                   color: KDullBlack,
                   borderRadius: BorderRadius.circular(40)

@@ -32,6 +32,7 @@ class EventSuccess extends StatefulWidget {
 
 class _EventSuccessState extends State<EventSuccess> {
   bool isSwitch=false;
+  static const String imageUrl1 = 'https://flockdock.eigix.net/public/uploads/group_cover_photos/';
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class _EventSuccessState extends State<EventSuccess> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: KBlue,width: 3),
-                     image: DecorationImage(image: NetworkImage(eventDetail.groupCategoryImage??''),fit: BoxFit.cover)
+                     image: DecorationImage(image: NetworkImage("$imageUrl1${eventDetail.coverPhoto}"??''),fit: BoxFit.cover)
                   ),
                   child:
                   //Image.network(eventDetail.groupCategoryImage??''),

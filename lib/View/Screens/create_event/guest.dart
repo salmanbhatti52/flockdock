@@ -18,6 +18,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 
 class Guest extends StatefulWidget {
+
   const Guest({Key? key}) : super(key: key);
 
   @override

@@ -23,7 +23,7 @@ class ReportBlockDialog extends StatelessWidget {
       child: Container(
         height: 170,
           width: 250,
-          padding: EdgeInsets.only(top: 20,right: 20,left: 20),
+          padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -45,7 +45,7 @@ class ReportBlockDialog extends StatelessWidget {
                 children: [
     Container(
     height: 35,
-    width: MediaQuery.of(context).size.width/3.5,
+    width: MediaQuery.of(context).size.width/3.7,
     child: MyButton(
     onPressed: onReport,
     buttonColor: KMediumBlue,
@@ -61,7 +61,7 @@ class ReportBlockDialog extends StatelessWidget {
 
                   Container(
                     height: 35,
-                    width: MediaQuery.of(context).size.width/3.5,
+                    width: MediaQuery.of(context).size.width/3.7,
                     child: MyButton(
                       onPressed: onBlock,
                       buttonColor: KMediumBlue,

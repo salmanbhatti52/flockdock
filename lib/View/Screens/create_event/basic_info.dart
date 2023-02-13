@@ -575,6 +575,7 @@ class _BasicInfoState extends State<BasicInfo> {
     response = await DioService.post('upload_group_cover', data);
     if(response['status']=='success'){
       eventDetail.coverPhoto=response["data"];
+      print("imgae: ${response}");
       Navigator.pop(context);
       //showCustomSnackBar(response['data']);
     }
