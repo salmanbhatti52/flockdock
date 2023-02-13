@@ -1,4 +1,3 @@
-import 'package:flocdock/Models/profileModel/profile_model.dart';
 import 'package:flocdock/View/Widgets/my_button.dart';
 import 'package:flocdock/View/Widgets/my_spacing.dart';
 import 'package:flocdock/View/Widgets/my_text.dart';
@@ -23,13 +22,13 @@ class GalleryPermission extends StatefulWidget {
   State<GalleryPermission> createState() => _GalleryPermissionState();
 }
 
-class _GalleryPermissionState extends State<GalleryPermission> with TickerProviderStateMixin {
-
+class _GalleryPermissionState extends State<GalleryPermission>
+    with TickerProviderStateMixin {
   TabController? _tabController;
-  List<UserDetail> allowedUserDetail=[];
-  List<UserDetail> deniedUserDetail=[];
-  List<int> denyList=[];
-  List<int> allowList=[];
+  List<UserDetail> allowedUserDetail = [];
+  List<UserDetail> deniedUserDetail = [];
+  List<int> denyList = [];
+  List<int> allowList = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -40,23 +39,29 @@ class _GalleryPermissionState extends State<GalleryPermission> with TickerProvid
       getAllowedMembers();
     });
   }
-  void handle(){
+
+  void handle() {
     allowList.clear();
     denyList.clear();
-    _tabController!.index==0?getAllowedMembers():getDeniedMembers();
+    _tabController!.index == 0 ? getAllowedMembers() : getDeniedMembers();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KbgBlack,
-      appBar: SimpleAppbar(description: "", pageName: "Gallery Permission",pageTrailing: "",),
+      appBar: SimpleAppbar(
+        description: "",
+        pageName: "Gallery Permission",
+        pageTrailing: "",
+      ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.only(left: 20,right: 10),
+              padding: EdgeInsets.only(left: 20, right: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -64,38 +69,45 @@ class _GalleryPermissionState extends State<GalleryPermission> with TickerProvid
                     onTap: () => Get.back(),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text("Cancel",style: proximaBold.copyWith(color: KWhite)),
+                      child: Text("Cancel",
+                          style: proximaBold.copyWith(color: KWhite)),
                     ),
                   ),
                   Expanded(child: Container()),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: MyButton(
-                      text: _tabController!.index==1?"Allow":"Deny",
+                      text: _tabController!.index == 1 ? "Allow" : "Deny",
                       textColor: KWhite,
                       buttonColor: KDullBlack,
                       buttonHight: 40.0,
                       buttonWidth: 100.0,
-                      onPressed: () => _tabController!.index==1?allowPermissionToUsers():denyPermissionToUsers(),
+                      onPressed: () => _tabController!.index == 1
+                          ? allowPermissionToUsers()
+                          : denyPermissionToUsers(),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: MyButton(
-                      text: _tabController!.index==1?"Allow All":"Deny All",
+                      text:
+                          _tabController!.index == 1 ? "Allow All" : "Deny All",
                       textColor: KWhite,
                       buttonColor: KBlue,
                       buttonHight: 40.0,
                       buttonWidth: 100.0,
-                      onPressed: (){
-                        if(_tabController!.index==1){
+                      onPressed: () {
+                        if (_tabController!.index == 1) {
                           allowList.clear();
-                          deniedUserDetail.map((e) => allowList.add(e.usersId!)).toList();
+                          deniedUserDetail
+                              .map((e) => allowList.add(e.usersId!))
+                              .toList();
                           allowPermissionToUsers();
-                        }
-                        else{
+                        } else {
                           denyList.clear();
-                          allowedUserDetail.map((e) => denyList.add(e.usersId!)).toList();
+                          allowedUserDetail
+                              .map((e) => denyList.add(e.usersId!))
+                              .toList();
                           denyPermissionToUsers();
                         }
                       },
@@ -111,7 +123,7 @@ class _GalleryPermissionState extends State<GalleryPermission> with TickerProvid
                 indicatorColor: KBlue,
                 indicatorWeight: 5,
                 labelColor: KWhite,
-                unselectedLabelColor:KdullWhite,
+                unselectedLabelColor: KdullWhite,
                 tabs: [
                   Tab(text: 'Allowed'),
                   Tab(text: 'Denied'),
@@ -119,7 +131,7 @@ class _GalleryPermissionState extends State<GalleryPermission> with TickerProvid
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width*0.9,
+              width: MediaQuery.of(context).size.width * 0.9,
               height: 300,
               padding: EdgeInsets.only(top: 10),
               child: TabBarView(
@@ -127,100 +139,99 @@ class _GalleryPermissionState extends State<GalleryPermission> with TickerProvid
                 children: [
                   GridView.builder(
                       gridDelegate:
-                      const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 120,
-                          crossAxisSpacing: 13,
-                          mainAxisSpacing: 13
-                      ),
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 120,
+                              crossAxisSpacing: 13,
+                              mainAxisSpacing: 13),
                       itemCount: allowedUserDetail.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return InkWell(
-                          onTap: (){
-                            if(denyList.contains(allowedUserDetail[index].usersId))
+                          onTap: () {
+                            if (denyList
+                                .contains(allowedUserDetail[index].usersId))
                               denyList.remove(allowedUserDetail[index].usersId);
                             else
                               denyList.add(allowedUserDetail[index].usersId!);
                             setState(() {});
                           },
                           child: ProfileContainer(
-                              img: allowedUserDetail[index].profilePicture??AppConstants.placeholder,
-                              profileName: allowedUserDetail[index].userName??'',
-                              isSelected: denyList.contains(allowedUserDetail[index].usersId)
-                          ),
+                              img: allowedUserDetail[index].profilePicture ??
+                                  AppConstants.placeholder,
+                              profileName:
+                                  allowedUserDetail[index].userName ?? '',
+                              isSelected: denyList
+                                  .contains(allowedUserDetail[index].usersId)),
                         );
                       }),
                   GridView.builder(
                       gridDelegate:
-                      const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 120,
-                          crossAxisSpacing: 13,
-                          mainAxisSpacing: 13
-                      ),
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 120,
+                              crossAxisSpacing: 13,
+                              mainAxisSpacing: 13),
                       itemCount: deniedUserDetail.length,
                       itemBuilder: (BuildContext ctx, index) {
                         return InkWell(
-                          onTap: (){
-                            if(allowList.contains(deniedUserDetail[index].usersId))
+                          onTap: () {
+                            if (allowList
+                                .contains(deniedUserDetail[index].usersId))
                               allowList.remove(deniedUserDetail[index].usersId);
                             else
                               allowList.add(deniedUserDetail[index].usersId!);
                             setState(() {});
                           },
                           child: ProfileContainer(
-                              img: deniedUserDetail[index].profilePicture??AppConstants.placeholder,
-                              profileName: deniedUserDetail[index].userName??'',
-                              isSelected: allowList.contains(deniedUserDetail[index].usersId)
-                          ),
+                              img: deniedUserDetail[index].profilePicture ??
+                                  AppConstants.placeholder,
+                              profileName:
+                                  deniedUserDetail[index].userName ?? '',
+                              isSelected: allowList
+                                  .contains(deniedUserDetail[index].usersId)),
                         );
                       }),
                 ],
               ),
             ),
-
           ],
         ),
       ),
     );
   }
+
   void getAllowedMembers() async {
     openLoadingDialog(context, "Loading");
     var response;
     response = await DioService.post('get_gallery_permission_members', {
-      "usersId" : AppData().userdetail!.usersId,
-      "permissionType" : "Allowed"
+      "usersId": AppData().userdetail!.usersId,
+      "permissionType": "Allowed"
     });
-    if(response['status']=='success'){
-      var jsonData= response['data'] as List;
-      allowedUserDetail=jsonData.map((e) => UserDetail.fromJson(e)).toList();
+    if (response['status'] == 'success') {
+      var jsonData = response['data'] as List;
+      allowedUserDetail = jsonData.map((e) => UserDetail.fromJson(e)).toList();
       Navigator.pop(context);
       setState(() {});
-    }
-    else{
+    } else {
       Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
     }
-
   }
+
   void getDeniedMembers() async {
     openLoadingDialog(context, "Loading");
     var response;
-    response = await DioService.post('get_gallery_permission_members', {
-      "usersId" : AppData().userdetail!.usersId,
-      "permissionType" : "Denied"
-    });
-    if(response['status']=='success'){
-      var jsonData= response['data'] as List;
-      deniedUserDetail=jsonData.map((e) => UserDetail.fromJson(e)).toList();
+    response = await DioService.post('get_gallery_permission_members',
+        {"usersId": AppData().userdetail!.usersId, "permissionType": "Denied"});
+    if (response['status'] == 'success') {
+      var jsonData = response['data'] as List;
+      deniedUserDetail = jsonData.map((e) => UserDetail.fromJson(e)).toList();
       Navigator.pop(context);
       setState(() {});
-    }
-    else{
+    } else {
       Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
     }
-
   }
 
   void allowPermissionToUsers() async {
@@ -229,49 +240,50 @@ class _GalleryPermissionState extends State<GalleryPermission> with TickerProvid
     openLoadingDialog(context, "Loading");
     var response;
     response = await DioService.post('allow_permission_to_users', {
-      "usersId" : AppData().userdetail!.usersId,
-      "allowingUserIds" : allowList
+      "usersId": AppData().userdetail!.usersId,
+      "allowingUserIds": allowList
     });
-    if(response['status']=='success'){
+    if (response['status'] == 'success') {
       showCustomSnackBar(response['data']);
       Navigator.pop(context);
-      deniedUserDetail.removeWhere((element) => allowList.contains(element.usersId));
+      deniedUserDetail
+          .removeWhere((element) => allowList.contains(element.usersId));
       allowList.clear();
       setState(() {});
-    }
-    else{
+    } else {
       Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
     }
-
   }
+
   void denyPermissionToUsers() async {
     print("Deny");
     print(denyList.toList());
     openLoadingDialog(context, "Loading");
     var response;
-    response = await DioService.post('deny_permission_to_users', {
-      "usersId" : AppData().userdetail!.usersId,
-      "denyingUserIds" : denyList
-    });
-    if(response['status']=='success'){
+    response = await DioService.post('deny_permission_to_users',
+        {"usersId": AppData().userdetail!.usersId, "denyingUserIds": denyList});
+    if (response['status'] == 'success') {
       showCustomSnackBar(response['data']);
       Navigator.pop(context);
-      allowedUserDetail.removeWhere((element) => denyList.contains(element.usersId));
+      allowedUserDetail
+          .removeWhere((element) => denyList.contains(element.usersId));
       denyList.clear();
       setState(() {});
-    }
-    else{
+    } else {
       Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
     }
-
   }
 }
-Widget ProfileContainer({required String img,required String profileName,
-   required bool isSelected,}){
+
+Widget ProfileContainer({
+  required String img,
+  required String profileName,
+  required bool isSelected,
+}) {
   return Stack(children: <Widget>[
     Container(
       decoration: BoxDecoration(
@@ -279,7 +291,9 @@ Widget ProfileContainer({required String img,required String profileName,
         image: DecorationImage(
           fit: BoxFit.cover,
           image: NetworkImage(
-            img.isNotEmpty?img:"https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
+            img.isNotEmpty
+                ? img
+                : "https://th.bing.com/th/id/R.3e77a1db6bb25f0feb27c95e05a7bc57?rik=DswMYVRRQEHbjQ&riu=http%3a%2f%2fwww.coalitionrc.com%2fwp-content%2fuploads%2f2017%2f01%2fplaceholder.jpg&ehk=AbGRPPcgHhziWn1sygs8UIL6XIb1HLfHjgPyljdQrDY%3d&risl=&pid=ImgRaw&r=0",
           ),
         ),
       ),
@@ -301,10 +315,8 @@ Widget ProfileContainer({required String img,required String profileName,
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: Column(
-          crossAxisAlignment:
-          CrossAxisAlignment.center,
-          mainAxisAlignment:
-          MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             MyText(
               text: profileName,
@@ -315,8 +327,7 @@ Widget ProfileContainer({required String img,required String profileName,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(),
                 Container(
@@ -324,10 +335,16 @@ Widget ProfileContainer({required String img,required String profileName,
                   width: 18,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isSelected?KBlue:null,
-                      border: Border.all(width:2,color: KWhite)
-                  ),
-                  child: Center(child: isSelected?Icon(Icons.check,color: KWhite,size: 12,):SizedBox()),
+                      color: isSelected ? KBlue : null,
+                      border: Border.all(width: 2, color: KWhite)),
+                  child: Center(
+                      child: isSelected
+                          ? Icon(
+                              Icons.check,
+                              color: KWhite,
+                              size: 12,
+                            )
+                          : SizedBox()),
                 )
               ],
             )
@@ -337,4 +354,3 @@ Widget ProfileContainer({required String img,required String profileName,
     )
   ]);
 }
-

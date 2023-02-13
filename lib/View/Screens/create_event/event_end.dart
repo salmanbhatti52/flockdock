@@ -1,4 +1,3 @@
-import 'package:flocdock/Models/profileModel/profile_model.dart';
 import 'package:flocdock/View/Screens/Home/home_page.dart';
 import 'package:flocdock/View/Screens/create_event/widget/bottom_navigator.dart';
 import 'package:flocdock/View/Screens/create_event/widget/features.dart';
@@ -26,65 +25,96 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class EventEnd extends StatefulWidget {
-  List<UserDetail>? endedGroupMembers=[];
-  EventEnd({Key? key,this.endedGroupMembers}) : super(key: key);
+  List<UserDetail>? endedGroupMembers = [];
+  EventEnd({Key? key, this.endedGroupMembers}) : super(key: key);
 
   @override
   State<EventEnd> createState() => _EventEndState();
 }
 
 class _EventEndState extends State<EventEnd> {
-  bool isSwitch=false;
-  List<int> reliableMembers=[];
+  bool isSwitch = false;
+  List<int> reliableMembers = [];
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         return true;
       },
       child: Scaffold(
         backgroundColor: KbgBlack,
-        appBar: SimpleAppbar(description: "", pageName: 'BEACH PARTY',pageTrailing: "",),
+        appBar: SimpleAppbar(
+          description: "",
+          pageName: 'BEACH PARTY',
+          pageTrailing: "",
+        ),
         body: Padding(
-          padding:EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+          padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(height: 10,),
-              Text("Group has Ended",style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge),),
-              SizedBox(height: 15,),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Group has Ended",
+                style: proximaBold.copyWith(
+                    color: KWhite, fontSize: Dimensions.fontSizeLarge),
+              ),
+              SizedBox(
+                height: 15,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("We hope you have fun! Please specify which of the users attended the groupby ticking their profile image.",textAlign: TextAlign.center,style: proximaBold.copyWith(color: KdullWhite,fontSize: Dimensions.fontSizeLarge),),
+                child: Text(
+                  "We hope you have fun! Please specify which of the users attended the groupby ticking their profile image.",
+                  textAlign: TextAlign.center,
+                  style: proximaBold.copyWith(
+                      color: KdullWhite, fontSize: Dimensions.fontSizeLarge),
+                ),
               ),
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               Expanded(
                 child: GridView.builder(
                     gridDelegate:
-                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 120,
-                        crossAxisSpacing: 13,
-                        mainAxisSpacing: 13
-                    ),
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 120,
+                            crossAxisSpacing: 13,
+                            mainAxisSpacing: 13),
                     itemCount: widget.endedGroupMembers!.length,
                     itemBuilder: (BuildContext ctx, index) {
                       return InkWell(
-                        onTap: (){
-                          if(reliableMembers.contains(widget.endedGroupMembers![index].usersId))
-                            reliableMembers.remove(widget.endedGroupMembers![index].usersId);
+                        onTap: () {
+                          if (reliableMembers.contains(
+                              widget.endedGroupMembers![index].usersId))
+                            reliableMembers.remove(
+                                widget.endedGroupMembers![index].usersId);
                           else
-                            reliableMembers.add(widget.endedGroupMembers![index].usersId!);
+                            reliableMembers
+                                .add(widget.endedGroupMembers![index].usersId!);
                           setState(() {});
                         },
                         child: ProfileContainer(
-                            img: widget.endedGroupMembers![index].profilePicture==null||
-                                widget.endedGroupMembers![index].profilePicture!.isEmpty?
-                            AppConstants.placeholder:widget.endedGroupMembers![index].profilePicture!,
-                            profileName:  widget.endedGroupMembers![index].userName??'',
-                            distance: widget.endedGroupMembers![index].distanceAway.toPrecision(2).toString(),
-                          isSelected: reliableMembers.contains(widget.endedGroupMembers![index].usersId),
+                          img:
+                              widget.endedGroupMembers![index].profilePicture ==
+                                          null ||
+                                      widget.endedGroupMembers![index]
+                                          .profilePicture!.isEmpty
+                                  ? AppConstants.placeholder
+                                  : widget.endedGroupMembers![index]
+                                      .profilePicture!,
+                          profileName:
+                              widget.endedGroupMembers![index].userName ?? '',
+                          distance: widget
+                              .endedGroupMembers![index].distanceAway
+                              .toPrecision(2)
+                              .toString(),
+                          isSelected: reliableMembers.contains(
+                              widget.endedGroupMembers![index].usersId),
                         ),
                       );
                     }),
@@ -111,17 +141,22 @@ class _EventEndState extends State<EventEnd> {
                   ),
                 ],
               ),
-              if(GetPlatform.isIOS)SizedBox(height: 8,)
+              if (GetPlatform.isIOS)
+                SizedBox(
+                  height: 8,
+                )
             ],
           ),
         ),
       ),
     );
   }
-  void storeReliabilityMembers() async {
 
+  void storeReliabilityMembers() async {
     print("store_reliability_members");
-    print(widget.endedGroupMembers?.first.groupId,);
+    print(
+      widget.endedGroupMembers?.first.groupId,
+    );
     print(reliableMembers.toList());
     print(AppData().userdetail!.usersId);
     openLoadingDialog(context, "Loading");
@@ -131,12 +166,11 @@ class _EventEndState extends State<EventEnd> {
       "memberId": reliableMembers,
       "usersId": AppData().userdetail!.usersId
     });
-    if(response['status']=='success'){
+    if (response['status'] == 'success') {
       showCustomSnackBar(response['data']);
       Navigator.pop(context);
       Get.to(HomePage());
-    }
-    else{
+    } else {
       Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
