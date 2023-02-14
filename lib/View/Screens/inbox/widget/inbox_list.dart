@@ -59,38 +59,50 @@ class InboxList extends StatelessWidget {
                       ):SizedBox(),
                       Positioned(
                         top: 0,right: 0,
-                        child: Container(
-                          margin: EdgeInsets.only(left: 5,top: 5,right: 5),
-                          height: 10,
-                          width: 10,
-                          decoration: const BoxDecoration(
-                            color: KOrange,
-                            shape: BoxShape.circle,
+                        child: InkWell(
+                          onTap: () => Get.to(Chat(name: inboxDetail!.userName??'',id: inboxDetail!.senderId!,)),
+
+                          child: Container(
+                            margin: EdgeInsets.only(left: 5,top: 5,right: 5),
+                            height: 10,
+                            width: 10,
+                            decoration: const BoxDecoration(
+                              color: KOrange,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Align(alignment:Alignment.center,child: Text(inboxDetail!.badgeCount.toString(),style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeExtraSmall),)),
                           ),
-                          child: Align(alignment:Alignment.center,child: Text(inboxDetail!.badgeCount.toString(),style: proximaBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeExtraSmall),)),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width*0.70,
-                  padding: EdgeInsets.only(left:Dimensions.PADDING_SIZE_SMALL,top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width*0.67,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(inboxDetail!.userName??'',style: proximaBold.copyWith(color: KBlue,)),
-                            Text(inboxDetail!.formattedTime??'',style: proximaRegular.copyWith(color: KDullBlack,),),
-                          ],
+                InkWell(
+                  onTap: () => Get.to(Chat(name: inboxDetail!.userName??'',id: inboxDetail!.senderId!,)),
+
+                  child: Container(
+                    width: MediaQuery.of(context).size.width*0.70,
+                    padding: EdgeInsets.only(left:Dimensions.PADDING_SIZE_SMALL,top: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width*0.67,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(inboxDetail!.userName??'',style: proximaBold.copyWith(color: KBlue,)),
+                              Text(inboxDetail!.formattedTime??'',style: proximaRegular.copyWith(color: KDullBlack,),),
+                            ],
+                          ),
                         ),
-                      ),
-                      Text(inboxDetail!.message??'',style: proximaRegular.copyWith(color: KWhite.withOpacity(0.5),),),
-                    ],
+                        Text(inboxDetail!.message??'',style: proximaRegular.copyWith(color: KWhite.withOpacity(0.5),),),
+                        InkWell(
+                            onTap: () => Get.to(Chat(name: inboxDetail!.userName??'',id: inboxDetail!.senderId!,)),
+
+                            child: SizedBox(height: 40,)),
+                      ],
+                    ),
                   ),
                 ),
               ],

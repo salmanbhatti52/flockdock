@@ -334,7 +334,7 @@ class _ChatState extends State<Chat> {
                               children: [
                                 messages[index].msgType=="attachment"?FullScreenWidget(
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width*0.8,
+                                    // width: MediaQuery.of(context).size.width*0.8,
                                     height: MediaQuery.of(context).size.height*0.25
 
                                     ,
@@ -400,7 +400,7 @@ class _ChatState extends State<Chat> {
                               children: [
                                 messages[index].msgType=="attachment"?FullScreenWidget(
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width*0.8,
+                                     // width: MediaQuery.of(context).size.width*0.8,
                                     height: MediaQuery.of(context).size.height*0.25,
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
