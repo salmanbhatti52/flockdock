@@ -14,10 +14,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 
+import '../../models/inbox/inbox_model.dart';
+import '../../services/dio_service.dart';
+import 'loading_dialog.dart';
+
 
 class BottomBar extends StatefulWidget {
   int pageIndex;
-  BottomBar({Key? key,this.pageIndex=0}) : super(key: key);
+  int? inboxIndex;
+  BottomBar({Key? key,this.pageIndex=0,this.inboxIndex}) : super(key: key);
 
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -25,10 +30,16 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int pageIndex=0;
+  List<InboxDetail> inboxMessages=[];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    // print(widget.pageIndex);
+    // print(widget.inboxIndex);
+    getInboxList();
+    print("inbox${inboxMessages.length}");
     pageIndex=widget.pageIndex;
   }
 
@@ -78,11 +89,11 @@ class _BottomBarState extends State<BottomBar> {
                       child: Container(
                         height: 10,
                         width: 10,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                          color: Colors.green,
-                        ),
-
+                        // decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(25),
+                        //   color: Colors.green,
+                        // ),
+                   child: Text(inboxMessages.length.toString(),style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,),),
                       ),
                     )
                    ],
@@ -148,6 +159,28 @@ class _BottomBarState extends State<BottomBar> {
         ),
       ),
     );
+  }
+
+
+  void getInboxList() async {
+    openLoadingDialog(context, "Loading");
+    var response;
+    response = await DioService.post('get_inbox_list', {
+      "userId":AppData().userdetail!.usersId.toString()
+    });
+    print(response);
+    if(response['status']=='success'){
+      var jsonData= response['data'] as List;
+      inboxMessages=jsonData.map((e) => InboxDetail.fromJson(e)).toList();
+      Navigator.pop(context);
+      setState(() {});
+    }
+    else{
+      Navigator.pop(context);
+      print(response['message']);
+      //showCustomSnackBar(response['message']);
+    }
+
   }
 
 }

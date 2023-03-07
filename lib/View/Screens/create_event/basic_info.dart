@@ -46,6 +46,7 @@ class _BasicInfoState extends State<BasicInfo> {
   String start_date=DateFormat("dd MMM, yyyy HH:mm").format(DateTime.now());
   String end_date=DateFormat("dd MMM, yyyy HH:mm").format(DateTime.now());
   DateTime selectedDate=DateTime.now();
+  DateTime selectedDate1=DateTime.now();
   PickedFile pickedFile=PickedFile("");
   UserDetail userDetail=UserDetail(userSeeking: [],userTribes: []);
   Position? position;
@@ -231,6 +232,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                               String start_time = DateFormat("HH:mm:ss").format(DateTime.now());
                                               eventDetail.startingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
                                               eventDetail.startingTime= start_time;
+                                              print("start date ${selectedDate.toString()}");
 
                                               print(eventDetail.startingDate.toString());
                                               print(start_time);
@@ -318,7 +320,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                             },
                                             mode: CupertinoDatePickerMode.dateAndTime,
                                             use24hFormat: true,
-                                            initialDateTime: selectedDate,
+                                            initialDateTime: selectedDate1,
                                             minimumDate: DateTime(1970),
                                             maximumDate: DateTime(2050),
                                           ),
@@ -326,14 +328,15 @@ class _BasicInfoState extends State<BasicInfo> {
                                         CupertinoButton(
                                           child: Text("OK",style: proximaBold.copyWith(color: KBlue)),
                                           onPressed: () {
-                                            if (selected!=null && selected != selectedDate) {
+                                            if (selected!=null && selected != selectedDate1) {
                                               print(selected);
-                                              selectedDate = selected!;
-                                              String end_time = DateFormat("HH:mm:ss ").format(selectedDate);
-                                              end_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate);
-                                              eventDetail.endingDate=DateFormat("yyyy-MM-dd").format(selectedDate);
+                                              selectedDate1 = selected!;
+                                              String end_time = DateFormat("HH:mm:ss ").format(selectedDate1);
+                                              end_date=DateFormat("dd MMM, yyyy HH:mm").format(selectedDate1);
+                                              eventDetail.endingDate=DateFormat("yyyy-MM-dd").format(selectedDate1);
                                               eventDetail.endingTime= end_time;
 
+                                              print("end date ${selectedDate1.toString()}");
                                               print(eventDetail.endingDate.toString());
                                               //userDetail.birthday=DateFormat("yyyy-MM-dd").format(selectedDate);
 
@@ -511,7 +514,8 @@ class _BasicInfoState extends State<BasicInfo> {
               SizedBox(height: 20,),
 
 
-              BottomNavigator(selected: 2, onTapLeading: () => Get.back(), onTapTrailing: basicInfoCheck),
+              BottomNavigator(selected: 2, onTapLeading: () => Get.back(), onTapTrailing: selectedDate1.compareTo(selectedDate)> 0?basicInfoCheck:_showSnackbar),
+
               // ListView.builder(
               //     physics: NeverScrollableScrollPhysics(),
               //     shrinkWrap: true,
@@ -595,4 +599,13 @@ class _BasicInfoState extends State<BasicInfo> {
     ));
     setState(() {});
   }
+  void _showSnackbar() {
+    final snack = SnackBar(
+      content: Text("Ending Date will greater then Starting Date"),
+      duration: Duration(seconds: 15),
+      backgroundColor: Colors.black,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snack);
+  }
+
 }

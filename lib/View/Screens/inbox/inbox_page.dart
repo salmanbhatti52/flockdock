@@ -29,6 +29,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
   List<InboxDetail> inboxMessages=[];
   TabController? _tabController;
   Dio dio=Dio();
+  int? lengthMessage;
   // void Function()? onTapAccept;
   // void Function()? onTapIgnore;
   @override
@@ -38,6 +39,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       getInboxList();
+
       getAllTaps();
     });
   }
@@ -47,7 +49,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
       backgroundColor: KbgBlack,
       drawer: MyDrawer(),
       appBar: CustomAppbar(pageName: 'INBOX', description: "Messages & Notifications",pageTrailing: "",),
-      bottomNavigationBar: BottomBar(pageIndex: 1,),
+      bottomNavigationBar: BottomBar(pageIndex: 1,inboxIndex: inboxMessages.length),
       body: Column(
         children: [
           Container(
@@ -90,6 +92,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
                         //padding: EdgeInsetsGeometry.infinity,
                         itemCount: inboxMessages.length,
                         itemBuilder: (context,index){
+                          lengthMessage=inboxMessages.length;
                           return Column(
                             children: [
                               Slidable(
