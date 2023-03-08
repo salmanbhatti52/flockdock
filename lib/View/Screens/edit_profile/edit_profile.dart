@@ -42,6 +42,7 @@ class _EditProfileState extends State<EditProfile> {
       seeking: [],
       tribes: []);
   UserDetail userDetail = UserDetail(userSeeking: [], userTribes: []);
+  bool isChecked = true;
   TextEditingController descriptionController = TextEditingController();
   List<String> genders = ['Male', 'Female', 'Other', 'Unspecified'];
   List<String> hiv_status = [
@@ -157,7 +158,7 @@ class _EditProfileState extends State<EditProfile> {
           padding:
               EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
                 onTap: updateProfileDetail,
@@ -218,6 +219,17 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: Text(
+                  "PERSONAL INFORMATION",
+                  style: proximaBold.copyWith(color: KBlue, fontSize: 25),
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
               Container(
                 height: 100,
                 padding: const EdgeInsets.symmetric(
@@ -253,42 +265,7 @@ class _EditProfileState extends State<EditProfile> {
                   ],
                 ),
               ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              //   margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(40),
-              //       color: KDullBlack
-              //   ),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text("Gender",style: proximaBold.copyWith(color: KBlue)),
-              //       SizedBox(
-              //         height: 25,
-              //         child: DropdownButton<String>(
-              //           underline: const SizedBox(),
-              //           isExpanded: true,
-              //           dropdownColor: KDullBlack,
-              //           icon: const Icon(Icons.arrow_drop_down_rounded,color: KWhite,),
-              //           items: genders.map((value) {
-              //             return DropdownMenuItem<String>(
-              //               value: value,
-              //               child: Text(value,style: proximaBold.copyWith(color: KWhite)),
-              //             );
-              //           }).toList(),
-              //           onChanged: (String? newValue){
-              //             print(newValue);
-              //             //gender=newValue!;
-              //             userDetail.gender=newValue;
-              //             setState(() {});
-              //           },
-              //           value: userDetail.gender,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -471,6 +448,20 @@ class _EditProfileState extends State<EditProfile> {
                   isEnabled: false,
                   controller: TextEditingController(text: DOB),
                 ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: Text(
+                  "STATS",
+                  style: proximaBold.copyWith(color: KBlue, fontSize: 25),
+                ),
+              ),
+              SizedBox(
+                height: 8,
               ),
               Container(
                   padding: EdgeInsets.symmetric(
@@ -798,8 +789,6 @@ class _EditProfileState extends State<EditProfile> {
                   ],
                 ),
               ),
-              //EditField(title: "Hight",value: userDetail.height??'',onChanged: (val) => userDetail.height=val,controller: TextEditingController(text: userDetail.height??''),),
-              //EditField(title: "Weight",value: userDetail.weight??'',onChanged: (val) => userDetail.weight=val,controller: TextEditingController(text: userDetail.weight??''),),
               isLoading
                   ? const SizedBox()
                   : Column(
@@ -925,43 +914,7 @@ class _EditProfileState extends State<EditProfile> {
                             ],
                           ),
                         ),
-                        // Container(
-                        //   padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        //   margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(40),
-                        //       color: KDullBlack
-                        //   ),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text("Ethnicity",style: proximaBold.copyWith(color: KBlue)),
-                        //       SizedBox(
-                        //         height: 25,
-                        //         child: DropdownButton<Ethnicity>(
-                        //           underline: const SizedBox(),
-                        //           isExpanded: true,
-                        //           dropdownColor: KDullBlack,
-                        //           iconEnabledColor: Colors.red,
-                        //           focusColor: Colors.green,
-                        //           icon: const Icon(Icons.arrow_drop_down_rounded,color: KWhite,size: 20,),
-                        //           items: profileDetail.ethnicities!.map((value) {
-                        //             return DropdownMenuItem<Ethnicity>(
-                        //               value: value,
-                        //               child: Text(value.ethnicity??'',style: proximaBold.copyWith(color: KWhite)),
-                        //             );
-                        //           }).toList(),
-                        //           onChanged: (newValue){
-                        //             print(newValue);
-                        //             userDetail.ethnicityId=newValue!.ethnicityId;
-                        //             setState(() {});
-                        //           },
-                        //           value: profileDetail.ethnicities!.where((element) => element.ethnicityId==userDetail.ethnicityId).first,
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
+
                         Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -1084,41 +1037,7 @@ class _EditProfileState extends State<EditProfile> {
                             ],
                           ),
                         ),
-                        // Container(
-                        //   padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        //   margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(40),
-                        //       color: KDullBlack
-                        //   ),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text("Body Type",style: proximaBold.copyWith(color: KBlue)),
-                        //       SizedBox(
-                        //         height: 25,
-                        //         child: DropdownButton<BodyType>(
-                        //           underline: const SizedBox(),
-                        //           isExpanded: true,
-                        //           dropdownColor: KDullBlack,
-                        //           icon: const Icon(Icons.arrow_drop_down_rounded,color: KWhite,size: 20,),
-                        //           items: profileDetail.bodyTypes!.map((value) {
-                        //             return DropdownMenuItem<BodyType>(
-                        //               value: value,
-                        //               child: Text(value.bodyType??'',style: proximaBold.copyWith(color: KWhite)),
-                        //             );
-                        //           }).toList(),
-                        //           onChanged: (value){
-                        //             print(value);
-                        //             userDetail.bodyTypeId=value!.bodyTypeId;
-                        //             setState(() {});
-                        //           },
-                        //           value: profileDetail.bodyTypes!.where((element) => element.bodyTypeId==userDetail.bodyTypeId).first,
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
+
                         Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -1438,86 +1357,115 @@ class _EditProfileState extends State<EditProfile> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    titlePadding: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.width *
-                                                0.25,
-                                        top: 10),
-                                    backgroundColor: KfilterDialog,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    title: Text(
-                                      'Looking For',
-                                      style: TextStyle(color: KWhite),
-                                    ),
-                                    content: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width * 1,
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.7, // Change as per your requirement
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount:
-                                            profileDetail.seeking!.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                if (userDetail.userSeeking!
-                                                    .contains(profileDetail
-                                                        .seeking![index]
-                                                        .seekingId)) {
-                                                  userDetail.userSeeking
-                                                      ?.remove(profileDetail
-                                                          .seeking![index]
-                                                          .seekingId);
-                                                } else {
-                                                  userDetail.userSeeking?.add(
-                                                      profileDetail
-                                                          .seeking![index]
-                                                          .seekingId!);
-                                                }
-                                              });
-                                              print('result');
-                                              print(userDetail.userSeeking!
-                                                  .toString());
-                                            },
-                                            child: ListTile(
-                                                title: Text(
-                                                  profileDetail
-                                                      .seeking![index].seeking!,
-                                                  style: TextStyle(
-                                                      color: userDetail
-                                                              .userSeeking!
-                                                              .contains(
-                                                                  profileDetail
-                                                                      .seeking![
-                                                                          index]
-                                                                      .seekingId)
-                                                          ? KBlue
-                                                          : KWhite),
-                                                ),
-                                                trailing: Icon(
-                                                  userDetail.userSeeking!
-                                                          .contains(
-                                                              profileDetail
-                                                                  .seeking![
-                                                                      index]
-                                                                  .seekingId)
-                                                      ? Icons.check
-                                                      : null,
-                                                  color: KBlue,
-                                                )),
-                                          );
-                                        },
+                                  return StatefulBuilder(
+                                      builder: (context, setState) {
+                                    return AlertDialog(
+                                      insetPadding: EdgeInsets.zero,
+                                      contentPadding: EdgeInsets.zero,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      //
+                                      backgroundColor: KfilterDialog,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
-                                    ),
-                                  );
+                                      title: Row(
+                                        children: [
+                                          IconButton(onPressed: (){
+                                            Navigator.pop(context);
+
+                                          }, icon: Icon(Icons.arrow_back_outlined,size: 25,color: Colors.white,)),
+                                          SizedBox(width: 15,),
+                                          Text(
+                                            'Looking For',
+                                            style: TextStyle(color: KWhite),
+                                          ),
+                                          Spacer(),
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "Save",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                        ],
+                                      ),
+                                      content: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                1,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                1,
+                                        margin: EdgeInsets.only(
+                                            top:
+                                                20), // Change as per your requirement
+// Change as per your requirement
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              profileDetail.seeking!.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (userDetail.userSeeking!
+                                                      .contains(profileDetail
+                                                          .seeking![index]
+                                                          .seekingId)) {
+                                                    userDetail.userSeeking
+                                                        ?.remove(profileDetail
+                                                            .seeking![index]
+                                                            .seekingId);
+                                                  } else {
+                                                    userDetail.userSeeking?.add(
+                                                        profileDetail
+                                                            .seeking![index]
+                                                            .seekingId!);
+                                                  }
+                                                });
+                                                print('result');
+                                                print(userDetail.userSeeking!
+                                                    .toString());
+                                              },
+                                              child: ListTile(
+                                                  title: Text(
+                                                    profileDetail
+                                                        .seeking![index]
+                                                        .seeking!,
+                                                    style: TextStyle(
+                                                        color: userDetail
+                                                                .userSeeking!
+                                                                .contains(profileDetail
+                                                                    .seeking![
+                                                                        index]
+                                                                    .seekingId)
+                                                            ? KBlue
+                                                            : KWhite),
+                                                  ),
+                                                  trailing: Icon(
+                                                    userDetail.userSeeking!
+                                                            .contains(
+                                                                profileDetail
+                                                                    .seeking![
+                                                                        index]
+                                                                    .seekingId)
+                                                        ? Icons.check
+                                                        : null,
+                                                    color: KBlue,
+                                                  )),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  });
                                 });
                           },
                           child: Container(
@@ -1545,225 +1493,126 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                         ),
 
-                        // Container(
-                        //   width: MediaQuery.of(context).size.width*0.8,
-                        //   padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE,vertical: 8),
-                        //   margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                        //   decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(20),
-                        //       color: KDullBlack
-                        //   ),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text("Looking For",style: proximaBold.copyWith(color: KBlue)),
-                        //       SizedBox(height: 5,),
-                        //       Wrap(
-                        //         spacing: 5,
-                        //         runSpacing: 8,
-                        //         children: [
-                        //           for(int i=0;i<profileDetail.seeking!.length;i++)
-                        //             InkWell(onTap:(){
-                        //               if(userDetail.userSeeking!.contains(profileDetail.seeking![i].seekingId)){
-                        //                 userDetail.userSeeking?.remove(profileDetail.seeking![i].seekingId);
-                        //               }
-                        //               else{
-                        //                 userDetail.userSeeking?.add(profileDetail.seeking![i].seekingId!);
-                        //               }
-                        //               setState(() {});
-                        //             },
-                        //                 child: ValueContainer(value: profileDetail.seeking![i].seeking!,isSelected: userDetail.userSeeking!.contains(profileDetail.seeking![i].seekingId))
-                        //             ),
-                        //         ],
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-
                         GestureDetector(
                           onTap: () {
                             print('dilog opening');
+
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    titlePadding: EdgeInsets.only(
-                                        left:
-                                            MediaQuery.of(context).size.width *
-                                                0.25,
-                                        top: 10),
-                                    backgroundColor: KfilterDialog,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    title: Text(
-                                      'My Tribes',
-                                      style: TextStyle(color: KWhite),
-                                    ),
-                                    content: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width * 1,
-                                      height: MediaQuery.of(context)
-                                              .size
-                                              .height *
-                                          0.7, // Change as per your requirement
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: profileDetail.tribes!.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                if (userDetail.userTribes!
-                                                    .contains(profileDetail
-                                                        .tribes![index]
-                                                        .tribeId)) {
-                                                  userDetail.userTribes?.remove(
-                                                      profileDetail
-                                                          .tribes![index]
-                                                          .tribeId);
-                                                } else {
-                                                  userDetail.userTribes?.add(
-                                                      profileDetail
-                                                          .tribes![index]
-                                                          .tribeId!);
-                                                }
-                                              });
-                                              print('result');
-                                              print(userDetail.userTribes!
-                                                  .toString());
-                                            },
-                                            child: ListTile(
-                                                title: Text(
-                                                  profileDetail
-                                                      .tribes![index].tribe!,
-                                                  style: TextStyle(
-                                                      color: userDetail
-                                                              .userTribes!
-                                                              .contains(
-                                                                  profileDetail
-                                                                      .tribes![
-                                                                          index]
-                                                                      .tribeId)
-                                                          ? KBlue
-                                                          : KWhite),
-                                                ),
-                                                trailing: Icon(
-                                                  userDetail.userTribes!
-                                                          .contains(
-                                                              profileDetail
-                                                                  .tribes![
-                                                                      index]
-                                                                  .tribeId)
-                                                      ? Icons.check
-                                                      : null,
-                                                  color: KBlue,
-                                                )),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                });
+                                  return StatefulBuilder(
+                                      builder: (context, setState) {
+                                    return AlertDialog(
+                                      insetPadding: EdgeInsets.zero,
+                                      contentPadding: EdgeInsets.zero,
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                            // Dialog tribeDialog = Dialog(
-                            //   backgroundColor: KfilterDialog,
-                            //   shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(12.0),
-                            //   ), //this right here
-                            //   child: Container(
-                            //     width: MediaQuery.of(context).size.width*1,
-                            //     height: MediaQuery.of(context).size.height*1,
-                            //    // color: ,
-                            //
-                            //     child: SingleChildScrollView(
-                            //       physics: BouncingScrollPhysics(),
-                            //       child: Padding(
-                            //         padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_DEFAULT,horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-                            //         child: Column(
-                            //           mainAxisAlignment: MainAxisAlignment.start,
-                            //           crossAxisAlignment: CrossAxisAlignment.start,
-                            //           children: <Widget>[
-                            //             Row(
-                            //               children: [
-                            //                 Expanded(
-                            //                   child: Center(
-                            //                       child: MyText(
-                            //                         text: "MY TRIBES",
-                            //                         color: KWhite,
-                            //                         fontFamily: "Proxima",
-                            //                         size: 20,
-                            //                         weight: FontWeight.w700,
-                            //                       )),
-                            //                 ),
-                            //                 InkWell(
-                            //                   onTap: () {
-                            //                     Navigator.pop(context);
-                            //                   },
-                            //                   child: SvgPicture.asset(Images.Cancel),
-                            //                 )
-                            //               ],
-                            //             ),
-                            //             spaceVertical(20),
-                            //             Text("Select My Tribes",style: proximaExtraBold.copyWith(color: KWhite,),),
-                            //
-                            //               Wrap(
-                            //                   spacing: 5,
-                            //                   runSpacing: 8,
-                            //                   children: [
-                            //                   for(int i=0;i<profileDetail.tribes!.length;i++)
-                            //                     InkWell(onTap:(){
-                            //                       print('profileDetail.tribes!.length');
-                            //                       print(profileDetail.tribes!.length);
-                            //                       print('profileDetail.tribes![i].tribe!');
-                            //                       print(profileDetail.tribes![i].tribe!);
-                            //                       if(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)){
-                            //                           userDetail.userTribes?.remove(profileDetail.tribes![i].tribeId);
-                            //                       }
-                            //                       else{
-                            //                         userDetail.userTribes?.add(profileDetail.tribes![i].tribeId!);
-                            //                       }
-                            //                       print('userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId)');
-                            //                       print(userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId));
-                            //                       tribetxt[i] = profileDetail.tribes![i].tribe!;
-                            //                       setState(() {});
-                            //                       },
-                            //                       child: ValueContainer(value: profileDetail.tribes![i].tribe!,isSelected: userDetail.userTribes!.contains(profileDetail.tribes![i].tribeId))
-                            //                     ),
-                            //                   ],
-                            //               ),
-                            //             SizedBox(height: 30,),
-                            //             Center(
-                            //               child: Container(
-                            //                 height: 35,
-                            //                 width: MediaQuery.of(context).size.width/3.5,
-                            //                 child: MyButton(
-                            //                   onPressed: () {
-                            //                     Navigator.of(context).pop();
-                            //                     print('list');
-                            //                     print(tribetxt);
-                            //                     //tribetxt =
-                            //                     setState(() {});
-                            //                   },
-                            //                   buttonColor: KMediumBlue,
-                            //                   text: "OK",
-                            //                   textColor: KWhite,
-                            //                   textWeight: FontWeight.w700,
-                            //                   fontFamily: "Proxima",
-                            //                   size: 16,
-                            //                 ),
-                            //
-                            //               ),
-                            //             ),
-                            //
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // );
-                            // showDialog(context: context, builder: (BuildContext context) => tribeDialog);
+                                      backgroundColor: KfilterDialog,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      title: Row(
+                                        children: [
+                                          IconButton(onPressed: (){
+                                            Navigator.pop(context);
+
+                                          }, icon: Icon(Icons.arrow_back_outlined,size: 25,color: Colors.white,)),
+                                          SizedBox(width: 15,),
+                                          Text(
+                                            'My Tribes',
+                                            style: TextStyle(color: KWhite),
+                                          ),
+                                          Spacer(),
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "Save",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                        ],
+                                      ),
+                                      content: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                1,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                1,
+                                        margin: EdgeInsets.only(
+                                            top:
+                                                20), // Change as per your requirement
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount:
+                                              profileDetail.tribes!.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  if (userDetail.userTribes!
+                                                      .contains(profileDetail
+                                                          .tribes![index]
+                                                          .tribeId)) {
+                                                    userDetail.userTribes
+                                                        ?.remove(profileDetail
+                                                            .tribes![index]
+                                                            .tribeId);
+                                                    isChecked = false;
+                                                    setState(() {});
+                                                  } else {
+                                                    userDetail.userTribes?.add(
+                                                        profileDetail
+                                                            .tribes![index]
+                                                            .tribeId!);
+                                                    isChecked = true;
+                                                    setState(() {});
+                                                  }
+                                                });
+                                                print('result');
+                                                print(userDetail.userTribes!
+                                                    .toString());
+                                              },
+                                              child: ListTile(
+                                                  title: Text(
+                                                    profileDetail
+                                                        .tribes![index].tribe!,
+                                                    style: TextStyle(
+                                                        color: userDetail
+                                                                .userTribes!
+                                                                .contains(
+                                                                    profileDetail
+                                                                        .tribes![
+                                                                            index]
+                                                                        .tribeId)
+                                                            ? KBlue
+                                                            : KWhite),
+                                                  ),
+                                                  trailing: Icon(
+                                                    userDetail.userTribes!
+                                                            .contains(
+                                                                profileDetail
+                                                                    .tribes![
+                                                                        index]
+                                                                    .tribeId)
+                                                        ? Icons.check
+                                                        : null,
+                                                    color: KBlue,
+                                                  )),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                });
                           },
                           child: Container(
                             height: 50,
@@ -1812,7 +1661,20 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ],
                     ),
+              SizedBox(
+                height: 15,
+              ),
 
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: Text(
+                  "HEALTH",
+                  style: proximaBold.copyWith(color: KBlue, fontSize: 25),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dimensions.PADDING_SIZE_LARGE,
@@ -2106,6 +1968,20 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ],
                   )),
+              SizedBox(
+                height: 15,
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: Text(
+                  "SOCIAL NETWORKS",
+                  style: proximaBold.copyWith(color: KBlue, fontSize: 25),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
               EditField(
                 title: "Instagram",
                 value: userDetail.instagramLink ?? '',

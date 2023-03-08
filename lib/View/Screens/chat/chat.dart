@@ -620,6 +620,10 @@ class _ChatState extends State<Chat> {
 
                             _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
                             sendTextMessage();
+                            Timer(Duration(milliseconds:300 ), () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+
+                            });
                             },
                           child: Container(
                               padding: EdgeInsets.only(left: 10,top: 10,bottom: 10),

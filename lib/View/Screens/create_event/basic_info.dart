@@ -516,29 +516,7 @@ class _BasicInfoState extends State<BasicInfo> {
 
               BottomNavigator(selected: 2, onTapLeading: () => Get.back(), onTapTrailing: selectedDate1.compareTo(selectedDate)> 0?basicInfoCheck:_showSnackbar),
 
-              // ListView.builder(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     shrinkWrap: true,
-              //     //padding: EdgeInsetsGeometry.infinity,
-              //     itemCount: 3,
-              //     itemBuilder: (context,index){
-              //       return Column(
-              //         children: [
-              //           InboxList(isInvite: index==1,isLive: index==0,),
-              //           Padding(
-              //             padding: const EdgeInsets.symmetric(vertical: 5.0),
-              //             child: Container(
-              //               color: Colors.white.withOpacity(0.2),
-              //               width: MediaQuery.of(context).size.width*0.85,
-              //               height: 1,
-              //             ),
-              //           ),
-              //         ],
-              //
-              //       );
-              //
-              //     }
-              // )
+
 
             ],
           ),

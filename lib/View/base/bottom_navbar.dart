@@ -42,7 +42,28 @@ class _BottomBarState extends State<BottomBar> {
     print("inbox${inboxMessages.length}");
     pageIndex=widget.pageIndex;
   }
+  void getInboxList() async {
+    // openLoadingDialog(context, "Loading");
+    print("husdhbcsucb");
+    var response;
+    response = await DioService.post('get_inbox_list', {
+      "userId":AppData().userdetail!.usersId.toString()
+    });
+    print(response);
+    if(response['status']=='success'){
+      var jsonData= response['data'] as List;
+      inboxMessages=jsonData.map((e) => InboxDetail.fromJson(e)).toList();
+      print("inbox${inboxMessages.length}");
 
+      setState(() {});
+    }
+    else{
+      Navigator.pop(context);
+      print(response['message']);
+      //showCustomSnackBar(response['message']);
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +108,13 @@ class _BottomBarState extends State<BottomBar> {
                     Positioned(
                       right: 0,
                       child: Container(
-                        height: 10,
-                        width: 10,
-                        // decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(25),
-                        //   color: Colors.green,
-                        // ),
-                   child: Text(inboxMessages.length.toString(),style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,),),
+                        height: 15,
+                        width: 15,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                          color: Colors.green,
+                        ),
+                   child: Text(inboxMessages.length.toString()?? "0",style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,),
                       ),
                     )
                    ],
@@ -162,26 +183,6 @@ class _BottomBarState extends State<BottomBar> {
   }
 
 
-  void getInboxList() async {
-    openLoadingDialog(context, "Loading");
-    var response;
-    response = await DioService.post('get_inbox_list', {
-      "userId":AppData().userdetail!.usersId.toString()
-    });
-    print(response);
-    if(response['status']=='success'){
-      var jsonData= response['data'] as List;
-      inboxMessages=jsonData.map((e) => InboxDetail.fromJson(e)).toList();
-      Navigator.pop(context);
-      setState(() {});
-    }
-    else{
-      Navigator.pop(context);
-      print(response['message']);
-      //showCustomSnackBar(response['message']);
-    }
-
-  }
 
 }
 
