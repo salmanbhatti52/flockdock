@@ -53,6 +53,9 @@ class _BasicInfoState extends State<BasicInfo> {
   Set<Marker> markers = Set.of([]);
   CameraPosition? cameraPosition;
   PlacesService  placesService = PlacesService();
+  PlacesService _placesService = PlacesService();
+  PlacesDetails? placeDetails;
+
   List<PlacesAutoCompleteResult>  _autoCompleteResult=[];
   GoogleMapController? googleMapController;
   @override
@@ -60,6 +63,7 @@ class _BasicInfoState extends State<BasicInfo> {
     // TODO: implement initState
     super.initState();
     placesService.initialize(apiKey: AppConstants.apiKey);
+    _placesService.initialize(apiKey: AppConstants.apiKey);
     if(eventDetail.address!=null)
       _addressController.text=eventDetail.address!;
     if(eventDetail.additionalInstructions!=null)
@@ -408,7 +412,7 @@ class _BasicInfoState extends State<BasicInfo> {
                   else{
                     print(value);
                     print(_addressController.text);
-                    final autoCompleteSuggestions = await placesService.getAutoComplete(value);
+                    final autoCompleteSuggestions = await _placesService.getAutoComplete(value);
                     _autoCompleteResult = autoCompleteSuggestions;
                     setState(() {});
                   }
@@ -429,10 +433,14 @@ class _BasicInfoState extends State<BasicInfo> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           title: Text(_autoCompleteResult[index].mainText ?? "",style: proximaBold.copyWith(color: KWhite),),
-                          //subtitle: Text(_autoCompleteResult[index].description ?? ""),
-                          onTap: () async {
+                          subtitle: Text(
+                            _autoCompleteResult[index]
+                                .description ??
+                                "",
+                           style: proximaBold.copyWith(color: KWhite),
+                          ),                          onTap: () async {
                             var id = _autoCompleteResult[index].placeId;
-                            final placeDetails = await placesService.getPlaceDetails(id!);
+                            final placeDetails = await _placesService.getPlaceDetails(id!);
                             print(placeDetails);
                             _addressController.text="${_autoCompleteResult[index].mainText??''}, ${_autoCompleteResult[index].secondaryText??''}";
                             eventDetail.address=_addressController.text;

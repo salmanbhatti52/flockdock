@@ -13,7 +13,7 @@
         android:label="FlockDock"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyBqdGZNfHhamM_6gbqPCDpJ7H44xEst37A"/>
+           android:value="AIzaSyCabuXEjXibCoxdTGTYs7knEbxBRYjpVpE"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

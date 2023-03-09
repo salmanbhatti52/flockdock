@@ -23,8 +23,7 @@ class _CoverState extends State<Cover> {
   var items = [
     'USD',
     'EUR',
-    'DIRHAM',
-    'PKR',
+
   ];
 
 
@@ -110,10 +109,11 @@ class _CoverState extends State<Cover> {
         Row(
           children: [
             if(!isSelected)MyTextField(
+              icon: dropdownvalue=="USD"?Image.asset("assets/images/dollar.png",width: 5,height: 5,):Image.asset("assets/images/euro.png",width: 5,height: 5,color: Colors.green,),
               textInputType: TextInputType.number,
               verticalPadding: 0.0,
               hight: 50.0,
-              width: 120.0,
+              width: 160.0,
               controller: costController,
               onChanged: (val) => eventDetail.cost=int.tryParse(costController.text),
             ),
@@ -130,12 +130,15 @@ class _CoverState extends State<Cover> {
                 padding: const EdgeInsets.only(left:10.0),
                 child: DropdownButton(
                   underline: SizedBox(),
+                  style: TextStyle(
+                    color: Colors.black
+                  ),
                   value: dropdownvalue,
                   icon: const Icon(Icons.keyboard_arrow_down,color: KWhite,),
                   items: items.map((String items) {
                     return DropdownMenuItem(
                       value: items,
-                      child: Text(items,style: TextStyle(color: KbgBlack,fontFamily: "Proxima"),),
+                      child: Text(items,style: TextStyle(color: Colors.black,fontFamily: "Proxima"),),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {

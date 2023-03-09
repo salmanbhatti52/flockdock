@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
   bool isObSecure;
+  Widget? icon;
 
   var hintText,bgColor,width,hight,radius,minLines,maxLines,verticalPadding;
 
@@ -13,6 +14,7 @@ class MyTextField extends StatelessWidget {
   TextInputType textInputType;
 
   MyTextField({
+    this.icon,
     this.textInputType=TextInputType.text,
     required this.controller,
     this.hintText,
@@ -30,7 +32,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT,vertical: verticalPadding),
+      // padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT,vertical: verticalPadding),
       height: hight,
       width: width,
       decoration: BoxDecoration(
@@ -47,11 +49,21 @@ class MyTextField extends StatelessWidget {
           obscureText: isObSecure,
           cursorColor: KWhite,
           autofocus: false,
+
           style: TextStyle(
             color: KWhite,
             fontFamily: "Proxima"
           ),
           decoration: InputDecoration(
+            prefixIcon: Padding(
+              padding: const EdgeInsets.only(left: 20,right: 7),
+              child: icon,
+            ),
+            prefixIconConstraints: BoxConstraints(
+
+              minHeight: 40,
+              minWidth: 40
+            ),
             border: InputBorder.none,
             hintText: hintText,
             hintStyle: TextStyle(color: KWhite.withOpacity(0.5),fontFamily: "Proxima"),
