@@ -24,6 +24,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../profile/profile_view.dart';
+
 class GroupView extends StatefulWidget {
   int? groupId;
   GroupView({Key? key,this.groupId}) : super(key: key);
@@ -65,14 +67,14 @@ class _GroupViewState extends State<GroupView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               groupData?.coverPhoto==null?
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height*0.3,
-                  ):
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.3,
+              ):
               Stack(
                 children: [
                   Image.network(
-                      groupData?.coverPhoto??'',
+                    groupData?.coverPhoto??'',
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height*0.23,
                     fit: BoxFit.cover,
@@ -185,31 +187,31 @@ class _GroupViewState extends State<GroupView> {
               Stack(
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width*0.9,
-                    height: 80,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: GoogleMap(
-                        markers: markers,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(groupData!.groupLat??0,groupData!.groupLong??0),
-                          zoom: 10,
+                      width: MediaQuery.of(context).size.width*0.9,
+                      height: 80,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: GoogleMap(
+                          markers: markers,
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(groupData!.groupLat??0,groupData!.groupLong??0),
+                            zoom: 10,
+                          ),
+                          onMapCreated: (GoogleMapController mapController) {
+
+                          },
+                          zoomControlsEnabled: false,
+                          onCameraMove: (CameraPosition cameraPosition) async {
+
+                          },
+                          onCameraMoveStarted: () {
+
+                          },
+                          onCameraIdle: () async {
+
+                          },
                         ),
-                        onMapCreated: (GoogleMapController mapController) {
-
-                        },
-                        zoomControlsEnabled: false,
-                        onCameraMove: (CameraPosition cameraPosition) async {
-
-                        },
-                        onCameraMoveStarted: () {
-
-                        },
-                        onCameraIdle: () async {
-
-                        },
-                      ),
-                    )
+                      )
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width*0.9,
@@ -245,10 +247,10 @@ class _GroupViewState extends State<GroupView> {
                         width: MediaQuery.of(context).size.width*0.16,
                         height: MediaQuery.of(context).size.width*0.16,
                         child: InkWell(
-                          //onTap: () => Get.to(ProfileView(userId: groupData!.members![index].usersId,)),
+                          onTap: () => Get.to(ProfileView(userId: groupData!.members![index].usersId,)),
                           child: ProfileContainer(
-                              img: groupData!.members![index].profilePicture??AppConstants.placeholder,
-                              profileName: groupData!.members![index].userName??'',
+                            img: groupData!.members![index].profilePicture??AppConstants.placeholder,
+                            profileName: groupData!.members![index].userName??'',
                             isHost: groupData!.members![index].usersId==groupData!.usersId,
                           ),
                         ),
@@ -269,15 +271,15 @@ class _GroupViewState extends State<GroupView> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0,),
-                  child: Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      for(int i=0;i<groupData!.features!.length;i++)
-                        FeatureItem(text: groupData!.features![i].feature??''),
-                    ],
-                  )
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0,),
+                    child: Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: [
+                        for(int i=0;i<groupData!.features!.length;i++)
+                          FeatureItem(text: groupData!.features![i].feature??''),
+                      ],
+                    )
                 ),
               ),
               SizedBox(
@@ -321,25 +323,23 @@ class _GroupViewState extends State<GroupView> {
               ),
               SizedBox(height: 12,),
 
-              // isJoined==true?Align(
-              //   alignment: Alignment.topLeft,
-              //   child: Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
-              //     child: Text("GROUP MESSAGES",style: proximaExtraBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge)),
-              //   ),
-              // ):
-              isJoined?
-              Container(
+              isJoined?Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
+                  child: Text("GROUP MESSAGES",style: proximaExtraBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge)),
+                ),
+              ):Container(
                 width: MediaQuery.of(context).size.width,
                 height: 73,
                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                 color: KDullBlack.withOpacity(0.5),
                 child: MyButton(
-                  text: isJoined?"Join":"Joined",
+                  text: isJoined?"Joined":"Join",
                   textColor: KWhite,
                   size: Dimensions.fontSizeExtraLarge,
-                 buttonColor: KMediumBlue,
-                 // buttonColor: Colors.pink,
+                  buttonColor: KMediumBlue,
+                  // buttonColor: Colors.pink,
                   buttonHight: 53.0,
                   buttonWidth: MediaQuery.of(context).size.width*0.8,
                   onPressed: () => Get.dialog(JoinDialog(onConfirmPressed: (){
@@ -349,18 +349,12 @@ class _GroupViewState extends State<GroupView> {
                     print(isJoined);
                   },)),
                 ),
-              ):Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 5),
-                  child: Text("GROUP MESSAGES",style: proximaExtraBold.copyWith(color: KWhite,fontSize: Dimensions.fontSizeLarge)),
-                ),
               ),
-              SizedBox(
+              if(isJoined)SizedBox(
                 height: message.isEmpty?0:message.length==1?hight*0.1:message.length==2?hight*0.2:hight*0.3,
                 child: ListView.builder(
-                  reverse: true,
-                  padding: EdgeInsets.zero,
+                    reverse: true,
+                    padding: EdgeInsets.zero,
                     physics: BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: message.length,
@@ -369,10 +363,10 @@ class _GroupViewState extends State<GroupView> {
                     }
                 ),
               ),
-              Container(
+              if(isJoined)Container(
                 decoration: BoxDecoration(
-                  color: KDullBlack,
-                  borderRadius: BorderRadius.circular(40)
+                    color: KDullBlack,
+                    borderRadius: BorderRadius.circular(40)
                 ),
                 margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -388,9 +382,9 @@ class _GroupViewState extends State<GroupView> {
                           autofocus: false,
                           style: proximaBold.copyWith(color: KWhite),
                           decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Write a message",
-                            hintStyle: proximaBold.copyWith(color: Colors.white.withOpacity(0.7))
+                              border: InputBorder.none,
+                              hintText: "Write a message",
+                              hintStyle: proximaBold.copyWith(color: Colors.white.withOpacity(0.7))
                           )
                       ),
                     ),
@@ -462,25 +456,25 @@ class _GroupViewState extends State<GroupView> {
 
   }
   void joinGroup() async {
-      openLoadingDialog(context, "Loading");
-      var response;
-      response = await DioService.post('join_group_as_attendee', {
-        "usersId":AppData().userdetail!.usersId.toString(),
-        "groupId":groupData!.groupId.toString()
-      });
-      if(response['status']=='success'){
-        var jsonData= response['data'];
-        showCustomSnackBar(response['data'],isError: false);
-        setState(() {});
-        Navigator.pop(context);
-      }
-      else{
-        Navigator.pop(context);
-        print(response['message']);
-        showCustomSnackBar(response['message']);
-      }
-
+    openLoadingDialog(context, "Loading");
+    var response;
+    response = await DioService.post('join_group_as_attendee', {
+      "usersId":AppData().userdetail!.usersId.toString(),
+      "groupId":groupData!.groupId.toString()
+    });
+    if(response['status']=='success'){
+      var jsonData= response['data'];
+      showCustomSnackBar(response['data'],isError: false);
+      setState(() {});
+      Navigator.pop(context);
     }
+    else{
+      Navigator.pop(context);
+      print(response['message']);
+      showCustomSnackBar(response['message']);
+    }
+
+  }
   void interestGroup() async {
     openLoadingDialog(context, "Loading");
     var response;
@@ -591,7 +585,7 @@ class _GroupViewState extends State<GroupView> {
       showCustomSnackBar(response['message']);
     }
   }
-   setMarker() async {
+  setMarker() async {
     markers.clear();
     print("groupData!.groupLat");
     print(groupData!.groupLat);
