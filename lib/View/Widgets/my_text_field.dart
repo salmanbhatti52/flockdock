@@ -39,6 +39,7 @@ class MyTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius),
           color: bgColor
       ),
+      padding: EdgeInsets.only(left: 16),
       child: TextField(
 
         onChanged: onChanged,
@@ -55,10 +56,10 @@ class MyTextField extends StatelessWidget {
             fontFamily: "Proxima"
           ),
           decoration: InputDecoration(
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(left: 20,right: 7),
-              child: icon,
-            ),
+            // prefixIcon: Padding(
+            //   padding: const EdgeInsets.only(left: 20,right: 7),
+            //   child: icon,
+            // ),
             prefixIconConstraints: BoxConstraints(
 
               minHeight: 40,
