@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 
+import '../../../models/groupModel/event_model.dart';
+
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
 
@@ -29,14 +31,78 @@ class _FavoritePageState extends State<FavoritePage> {
   bool isSearch =false;
   TextEditingController searchController=TextEditingController();
   List<ProfileGroupDetail>? profileGroup=[];
+
+
+  String selectedSegment = 'Favorite';
+  bool isToday = false;
+  List<GroupData>? groupData=[];
+  List<GroupData>? groupData1=[];
+  void getGroups() async {
+    print("AppData().userdetail!.latitude");
+    print(AppData().userdetail!.latitude);
+    print(AppData().userdetail!.longitude);
+    // openLoadingDialog(context, "Loading");
+    print("my id: ${AppData().userdetail!.usersId}");
+
+    var response;
+    response = await DioService.post('get_all_groups', {
+      "usersId":AppData().userdetail!.usersId,
+      "userLat":AppData().userdetail!.latitude.toString(),
+      "userLong":AppData().userdetail!.longitude.toString(),
+    });
+
+
+    if(response['status']=='success'){
+
+      print("data11: ${response["data"]}");
+      var jsonData= response['data'] as List;
+
+      groupData=jsonData.map((e) => GroupData.fromJson(e)).toList();
+      print("id: ${AppData().userdetail!.usersId}");
+      print("id1: ${groupData![0].usersId}");
+
+      setState(() {});
+    }
+    else{
+      Navigator.pop(context);
+      print(response['message']);
+      showCustomSnackBar(response['message']);
+    }
+
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+     getGroups();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       getFavouriteUsersGroups();
     });
   }
+
+  bool isAll = false;
+
+  void isSelectedEvents() async {
+    openLoadingDialog(context, "loading");
+    selectedSegment = "Favorite";
+    isAll = true;
+    setState(() {});
+    Navigator.of(context).pop();
+  }
+
+
+  void isSelectedBusiness() async {
+    openLoadingDialog(context, "loading");
+    isToday = true;
+    selectedSegment = 'My Groups';
+    setState(() {});
+    // await getNearbyBusiness(isReFresh: true);
+    Navigator.of(context).pop();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +118,65 @@ class _FavoritePageState extends State<FavoritePage> {
               child: SingleChildScrollView(
                 child: Wrap(
                   children: [
+
+                    Container(
+                      margin: EdgeInsets.only(bottom: 30),
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFE5E8EF),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: (selectedSegment == 'Favorite')
+                                  ? BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: KBlue),
+                                  borderRadius: BorderRadius.circular(30))
+                                  : BoxDecoration(),
+                              child: TextButton(
+                                onPressed: () => isSelectedEvents(),
+                                child: Text(
+                                  'Favorite',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: (selectedSegment == 'My Groups')
+                                  ? BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: KBlue),
+                                  borderRadius: BorderRadius.circular(30))
+                                  : BoxDecoration(),
+                              child: TextButton(
+                                  onPressed: () => isSelectedBusiness(),
+                                  child: Text(
+                                    "My Groups",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+
+
+                    selectedSegment=="Favorite"?
                     StaggeredGrid.count(
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
@@ -189,6 +314,33 @@ class _FavoritePageState extends State<FavoritePage> {
                         //   ),
                         // ),
                       ],
+                    ):
+                    Container(
+                      height: MediaQuery.of(context).size.height/1.2,
+                      child: ListView.builder(
+
+                              // physics: BouncingScrollPhysics(),
+                              // gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                              //   maxCrossAxisExtent: 200,
+                              //   childAspectRatio: 4 / 2,
+                              //   crossAxisSpacing: 13,
+                              //   mainAxisSpacing: 13,
+                              // ),
+                              itemCount: groupData!.length,
+                              itemBuilder: (BuildContext ctx, index){
+                                print("idddddd ${groupData![index].usersId}");
+
+                                return GestureDetector(
+                                  onTap: () => Get.to(GroupView(groupId: groupData![index].groupId,)),
+                                  child: AppData().userdetail!.usersId==groupData![index].usersId? GroupWidget(
+                                    img: groupData![index].coverPhoto!,
+                                    groupName: groupData![index].category!.category!,
+                                    distance: groupData![index].distanceAway!.toPrecision(2).toString(),
+                                    groupMembers: groupData![index].totalAttendees.toString(),
+                                  ): SizedBox(),
+                                );
+                              }
+                          ),
                     ),
                     //             StaggeredGrid.count(
                     //               mainAxisSpacing: 4,

@@ -383,6 +383,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         itemCount: groupData!.length,
                         itemBuilder: (BuildContext ctx, index){
+                        print("idddddddd ${groupData![index].usersId}");
                           return GestureDetector(
                             onTap: () => Get.to(GroupView(groupId: groupData![index].groupId,)),
                             child: GroupWidget(
@@ -518,6 +519,7 @@ class _HomePageState extends State<HomePage> {
         "userLong":AppData().userdetail!.longitude.toString(),
       });
       if(response['status']=='success'){
+        print("data: ${response["data"]}");
         var jsonData= response['data'] as List;
         groupData=jsonData.map((e) => GroupData.fromJson(e)).toList();
         Navigator.pop(context);
