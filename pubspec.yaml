@@ -31,8 +31,8 @@ dependencies:
   json_annotation: ^4.4.0
   dio: ^4.0.4
   google_sign_in: ^5.2.1
-  firebase_auth:
-  firebase_core: ^1.12.0
+  firebase_auth: ^4.6.1
+  firebase_core: ^2.13.0
   firebase_core_platform_interface:
   retrofit: ^3.0.1
   pretty_dio_logger: ^1.1.1
