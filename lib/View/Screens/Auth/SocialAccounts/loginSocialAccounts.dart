@@ -44,8 +44,6 @@ class _LoginWithSocialState extends State<LoginWithSocial> {
 
   @override
   Widget build(BuildContext context) {
-    // final appleSignInAvailable =
-    // Provider.of<AppleSignInAvailable>(context, listen: false);
     return Scaffold(
       backgroundColor: KbgBlack,
       body: Container(
