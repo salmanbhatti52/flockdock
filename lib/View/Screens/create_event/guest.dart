@@ -279,7 +279,9 @@ class _GuestState extends State<Guest> {
       eventDetail.title="test";
       eventDetail.usersId=AppData().userdetail!.usersId;
       print(eventDetail.toJson());
+      print("image1: ${eventDetail.coverPhoto}");
       openLoadingDialog(context, "Loading");
+
       var response;
       response = await DioService.post('create_group', {
         "usersId": eventDetail.usersId.toString(),
@@ -332,7 +334,7 @@ class _GuestState extends State<Guest> {
     print(eventDetail.tribes);
 
       if(response['status']=='success'){
-        print(response['data']);
+        print(" dataaaaaaa: ${response['data']}");
         Navigator.pop(context);
         Get.offAll(EventSuccess());
         showCustomSnackBar(response['data']);
@@ -383,7 +385,7 @@ class _GuestState extends State<Guest> {
         "features": eventDetail.features
       });
       if(response['status']=='success'){
-        print(response['data']);
+        print("dataaaa: ${response['data']}");
         Navigator.pop(context);
         Get.offAll(EventSuccess());
         showCustomSnackBar(response['data']);

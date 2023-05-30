@@ -21,6 +21,8 @@ import 'package:the_apple_sign_in/scope.dart';
 
 import '../../../../applesigninavailable.dart';
 import '../../../../auth_services.dart';
+import '../../../../social_controller.dart';
+final AuthController authController = Get.put(AuthController());
 
 
 
@@ -64,7 +66,7 @@ class _LoginWithSocialState extends State<LoginWithSocial> {
                 textColor: KPureBlack,
                 buttonColor: KWhite,
                 onPressed: () {
-                  _signInWithApple(context);
+                  authController.signInWithApple();
                 },
                 sizebox: 10,
               ),

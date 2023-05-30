@@ -232,7 +232,15 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
   }
 
   void acceptJoiningRequest(int index) async {
+    print("joiningUserId ${AppData().userdetail!.usersId}");
+    print("groupId ${inboxMessages[index].groupId}");
+    print("notificationId ${inboxMessages[index].notificationId}");
+
+
     openLoadingDialog(context, "Loading");
+
+
+
     var response;
     response = await DioService.post('accept_joining_request', {
         "joiningUserId" : AppData().userdetail!.usersId,
@@ -339,6 +347,11 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
   // void deletemsg( int index)
 
   void acceptInviteRequest(int index) async {
+
+    print("invitedUserId ${AppData().userdetail!.usersId}");
+    print("groupId ${inboxMessages[index].groupId}");
+    print("notificationId ${inboxMessages[index].notificationId}");
+
     print(inboxMessages[index].toJson());
     openLoadingDialog(context, "Loading");
     var response;

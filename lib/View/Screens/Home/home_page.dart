@@ -512,12 +512,20 @@ class _HomePageState extends State<HomePage> {
     print(AppData().userdetail!.latitude);
     print(AppData().userdetail!.longitude);
       openLoadingDialog(context, "Loading");
+
+      print("usersId: ${AppData().userdetail!.usersId}");
+      print("userLat: ${AppData().userdetail!.latitude.toString()}");
+      print("userLong: ${AppData().userdetail!.longitude.toString()}");
+
+
+
       var response;
       response = await DioService.post('get_all_groups', {
         "usersId":AppData().userdetail!.usersId,
         "userLat":AppData().userdetail!.latitude.toString(),
         "userLong":AppData().userdetail!.longitude.toString(),
-      });
+      }
+      );
       if(response['status']=='success'){
         print("data: ${response["data"]}");
         var jsonData= response['data'] as List;
