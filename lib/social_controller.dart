@@ -80,13 +80,13 @@ class AuthController extends GetxController {
         response = await DioService.post('signup_with_social', {
           "userName":user.displayName,
           "userEmail":user.email,
-          "accountType":"apple_login",
+          "accountType":"google",
           "userType":"1",
           "googleAccessToken" : user.uid,
           "oneSignalId": "1234"
         });
         print(response);
-        if(response['status']=='success / Signed in with Apple'){
+        if(response['status']=='success / Signed in with Google'){
           var jsonData= response['data'];
           UserDetail userDetail   =  UserDetail.fromJson(jsonData);
           AppData().userdetail =userDetail;
