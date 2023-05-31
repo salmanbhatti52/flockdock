@@ -53,6 +53,9 @@ class _GroupViewState extends State<GroupView> {
   }
   @override
   Widget build(BuildContext context) {
+    print("imageimage: ${groupData?.coverPhoto}");
+    print("imageid: ${groupData?.groupId}");
+
     double hight=MediaQuery.of(context).size.height;
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.dark,

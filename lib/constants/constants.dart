@@ -12,6 +12,9 @@ const KDullBlack = Color(0xff414452);
 const KOrange = Color(0xffDC4E41);
 const Kunactive = Color(0xff5B6073);
 const KfilterDialog = Color(0xff282930);
+
+ const String imageUrl1 = 'https://flockdock.eigix.net/public/uploads/group_cover_photos/';
+
 class AppConstants {
   static const String APP_NAME = 'FlockDock';
   static const int APP_VERSION = 1;

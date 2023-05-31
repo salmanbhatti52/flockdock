@@ -58,7 +58,7 @@ class _EventSuccessState extends State<EventSuccess> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: KBlue,width: 3),
-                     image: DecorationImage(image: NetworkImage("${eventDetail.coverPhoto}"??''),fit: BoxFit.cover)
+                     image: DecorationImage(image: NetworkImage("$imageUrl1${eventDetail.coverPhoto}"??''),fit: BoxFit.cover)
                   ),
                   child:
                   //Image.network(eventDetail.groupCategoryImage??''),

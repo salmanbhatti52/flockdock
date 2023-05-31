@@ -555,6 +555,7 @@ class _BasicInfoState extends State<BasicInfo> {
   }
   Future<void> uploadPicture() async {
 
+
     FormData data=FormData.fromMap({
       'cover_photo': await MultipartFile.fromFile(pickedFile.path)
     });

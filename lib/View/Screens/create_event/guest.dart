@@ -287,7 +287,7 @@ class _GuestState extends State<Guest> {
         "usersId": eventDetail.usersId.toString(),
         "groupCategoryId": eventDetail.groupCategoryId.toString(),
         "title": eventDetail.title,
-        "coverPhoto": eventDetail.coverPhoto,
+        "coverPhoto": "${eventDetail.coverPhoto}",
         "startingTime": eventDetail.startingTime,
         "startingDate": eventDetail.startingDate,
         "endingDate": eventDetail.endingDate,
@@ -353,13 +353,15 @@ class _GuestState extends State<Guest> {
       eventDetail.title="test";
       eventDetail.usersId=AppData().userdetail!.usersId;
       openLoadingDialog(context, "Loading");
+      print("group id: ${eventDetail.groupId}");
       var response;
       response = await DioService.post('edit_group', {
         "groupId": eventDetail.groupId,
         "usersId": eventDetail.usersId.toString(),
         "groupCategoryId": eventDetail.groupCategoryId.toString(),
         "title": eventDetail.title,
-        if(!eventDetail.coverPhoto!.startsWith("http"))"coverPhoto": eventDetail.coverPhoto,
+        // if(!eventDetail.coverPhoto!.startsWith("http"))"coverPhoto": eventDetail.coverPhoto,
+        "coverPhoto": eventDetail.coverPhoto,
         "startingTime": eventDetail.startingTime,
         "startingDate": eventDetail.startingDate,
         "endingDate": eventDetail.endingDate,
