@@ -52,7 +52,6 @@ dependencies:
   full_screen_image_null_safe: ^2.0.0
   http: ^0.13.5
   image_cropper: ^3.0.1
-  device_preview: ^1.1.0
   sign_in_with_apple: ^4.3.0
 #  google_maps_place_picker: ^2.0.0-nullsafety.3
 
