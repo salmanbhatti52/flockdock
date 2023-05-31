@@ -57,6 +57,7 @@ class _LoginWithSocialState extends State<LoginWithSocial> {
               spaceVertical(200),
               Center(child: SvgPicture.asset(Images.logo,height: 76,width: 161,color: KWhite,)),
               spaceVertical(180),
+              if (GetPlatform.isIOS)
               SocialButton(
                 textWeight: FontWeight.w700,
                 Img: Images.apple,
@@ -66,7 +67,7 @@ class _LoginWithSocialState extends State<LoginWithSocial> {
                 textColor: KPureBlack,
                 buttonColor: KWhite,
                 onPressed: () {
-                  authController.signInWithApple();
+                  authController.signInWithApple(context);
                 },
                 sizebox: 10,
               ),
