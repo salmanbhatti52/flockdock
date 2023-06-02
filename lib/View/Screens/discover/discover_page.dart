@@ -196,7 +196,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                           this.mapController = mapController;
                           //getLocation();
                         },
-                        zoomControlsEnabled: false,
+                        zoomControlsEnabled: true,
                         onCameraMove: (CameraPosition cameraPosition) async {
                           this.cameraPosition=cameraPosition;
                           position=Position(longitude: cameraPosition.target.longitude, latitude: cameraPosition.target.latitude,
@@ -414,11 +414,19 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     padding: EdgeInsets.zero,
                     itemCount: autoCompleteResult.length,
                     itemBuilder: (context, index) {
-                      return SizedBox(
+                      return Container(
+                        margin: EdgeInsets.all(10),
                         height: 30,
                         child: ListTile(
                           minVerticalPadding: 0,
+
                           title: Text(autoCompleteResult[index].mainText ?? "",style: proximaBold.copyWith(color: KWhite),),
+                          subtitle: Text(
+                            autoCompleteResult[index]
+                                .description ??
+                                "",
+                            style: proximaBold.copyWith(color: KWhite),
+                          ),
                           onTap: () async {
                             FocusScope.of(context).unfocus();
                             var id = autoCompleteResult[index].placeId;
@@ -430,6 +438,16 @@ class _DiscoverPageState extends State<DiscoverPage> {
                             isMap=true;
                             autoCompleteResult.clear();
                             isLoading=true;
+
+
+                            mapController!.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                    target: LatLng(position.latitude??0,position.longitude??0),
+                                    zoom: 10,
+                                  ),
+                                )
+                            );
                             setMarker();
                             usersGroupsCountInRadius();
                           },
@@ -440,7 +458,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 ),
               ),
             if(isMap)Positioned(
-              top: 277,
+              top: 200,
               child: Container(
                 height: 100,
                 width: 100,
@@ -540,12 +558,14 @@ class _DiscoverPageState extends State<DiscoverPage> {
   void setMarker() async {
     Uint8List destinationImageData = await convertAssetToUnit8List(
       Images.marker,
+      width: 700
     );
     markers.clear();
     markers.add(Marker(
       markerId: const MarkerId('marker'),
-      position: LatLng(position.latitude-0.035,position.longitude),
-      icon: BitmapDescriptor.fromBytes(destinationImageData),
+      position: LatLng(position.latitude,position.longitude),
+       icon: BitmapDescriptor.fromBytes(destinationImageData),
+
     ));
     setState(() {});
   }
