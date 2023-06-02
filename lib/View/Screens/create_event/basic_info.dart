@@ -22,6 +22,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
@@ -48,6 +49,9 @@ class _BasicInfoState extends State<BasicInfo> {
   DateTime selectedDate=DateTime.now();
   DateTime selectedDate1=DateTime.now();
   PickedFile pickedFile=PickedFile("");
+  PickedFile pickedFile1=PickedFile("");
+  String imagePath = "";
+
   UserDetail userDetail=UserDetail(userSeeking: [],userTribes: []);
   Position? position;
   Set<Marker> markers = Set.of([]);
@@ -149,8 +153,41 @@ class _BasicInfoState extends State<BasicInfo> {
               GestureDetector(
                 onTap: () async {
                   pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
-                  setState(() {});
+                  // image = await _cropImage(pickedFile);
+                  CroppedFile? croppedFile = await ImageCropper().cropImage(
+                    sourcePath: pickedFile.path,
+                    aspectRatioPresets: [
+                      CropAspectRatioPreset.square,
+                      CropAspectRatioPreset.ratio3x2,
+                      CropAspectRatioPreset.original,
+                      CropAspectRatioPreset.ratio4x3,
+                      CropAspectRatioPreset.ratio16x9
+                    ],
+                    uiSettings: [
+                      AndroidUiSettings(
+                          toolbarTitle: 'Cropper',
+                          toolbarColor: Colors.deepOrange,
+                          toolbarWidgetColor: Colors.white,
+                          initAspectRatio: CropAspectRatioPreset.original,
+                          lockAspectRatio: false),
+                      IOSUiSettings(
+                        title: 'Cropper',
+                      ),
+                      WebUiSettings(
+                        context: context,
+                      ),
+                    ],
+                  );
+                  if (croppedFile != null) {
+                    setState(() {
+                      pickedFile1 = PickedFile(croppedFile.path);
+                    });
+                  }
+
                   uploadPicture();
+                  // pickedFile = await ImagePicker().getImage(source: ImageSource.gallery) as PickedFile ;
+                  // setState(() {});
+                  // uploadPicture();
                   print("eventDetail.toJson()");
                   print(eventDetail.toJson());
                   print("groupDetail.toJson()");
@@ -160,7 +197,7 @@ class _BasicInfoState extends State<BasicInfo> {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height*0.2,
                   decoration: pickedFile.path.isNotEmpty?BoxDecoration(
-                    image: DecorationImage(image: FileImage(File(pickedFile.path)),fit: BoxFit.cover),
+                    image: DecorationImage(image: FileImage(File(pickedFile1.path)),fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.grey.withOpacity(0.2)
                   ):
@@ -557,7 +594,7 @@ class _BasicInfoState extends State<BasicInfo> {
 
 
     FormData data=FormData.fromMap({
-      'cover_photo': await MultipartFile.fromFile(pickedFile.path)
+      'cover_photo': await MultipartFile.fromFile(pickedFile1.path)
     });
 
     openLoadingDialog(context, "Loading");

@@ -35,6 +35,7 @@ class _GuestState extends State<Guest> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("image is : ${AppData().userdetail!.profilePicture}");
     groupSizeController.text=eventDetail.maxGroupSize??"";
     inviteSizeController.text=eventDetail.inviteOtherGuests??"";
   }

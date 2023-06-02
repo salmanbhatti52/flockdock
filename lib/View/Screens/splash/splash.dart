@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Timer(
         Duration(seconds: 3),
-            () => AppData().isAuthenticated?Get.offAll(HomePage()):Get.offAll(LandingPage())
+            () => AppData().isAuthenticated?Get.offAll(HomePage(typeSignIn: true,)):Get.offAll(LandingPage())
     );
     super.initState();
   }

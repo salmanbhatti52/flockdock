@@ -30,6 +30,8 @@ import 'package:get/get.dart';
 import 'package:flocdock/View/Widgets/profile_widget.dart';
 
 class HomePage extends StatefulWidget {
+  bool? typeSignIn=false;
+  HomePage({this.typeSignIn});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -267,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                         getGroups();
                       else if(!isProfile) {
                         isProfile=true;
-                        getUsers();
+                        getUsers1();
                       }
                       else
                         setState(() {});
@@ -487,6 +489,7 @@ class _HomePageState extends State<HomePage> {
     print(AppData().userdetail!.usersId);
     print(AppData().userdetail!.latitude);
     print(AppData().userdetail!.longitude);
+    print(AppData().userdetail!.accountType);
     openLoadingDialog(context, "Loading");
     var response;
     response = await DioService.post('nearby_users', {
@@ -497,7 +500,36 @@ class _HomePageState extends State<HomePage> {
     if(response['status']=='success'){
       var jsonData= response['data'] as List;
       userData=jsonData.map((e) => UserDetail.fromJson(e)).toList();
-      // Navigator.pop(context);
+       if(AppData().userdetail!.accountType=="SignupWithApp")
+       Navigator.pop(context);
+      setState(() {});
+    }
+    else{
+      Navigator.pop(context);
+      print(response['message']);
+      showCustomSnackBar(response['message']);
+    }
+
+  }
+  void getUsers1() async {
+
+
+    print("AppData().userdetail!.latitude");
+    print(AppData().userdetail!.usersId);
+    print(AppData().userdetail!.latitude);
+    print(AppData().userdetail!.longitude);
+    openLoadingDialog(context, "Loading");
+    var response;
+    response = await DioService.post('nearby_users', {
+      "usersId":AppData().userdetail!.usersId,
+      "userLat":AppData().userdetail!.latitude.toString(),
+      "userLong":AppData().userdetail!.longitude.toString(),
+    });
+    if(response['status']=='success'){
+      var jsonData= response['data'] as List;
+      userData=jsonData.map((e) => UserDetail.fromJson(e)).toList();
+
+       Navigator.pop(context);
       setState(() {});
     }
     else{

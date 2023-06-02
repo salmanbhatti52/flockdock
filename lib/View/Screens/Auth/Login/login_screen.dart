@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
         AppData().userdetail =userDetail;
         print(AppData().userdetail!.toJson());
         Navigator.pop(context);
-        Get.offAll(HomePage());
+        Get.offAll(HomePage(typeSignIn: false,));
       }
       else{
         Navigator.pop(context);

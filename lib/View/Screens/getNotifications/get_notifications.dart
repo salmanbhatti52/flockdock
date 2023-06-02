@@ -63,7 +63,9 @@ class _RecieveNotificationsState extends State<RecieveNotifications> {
               ),
               spaceVertical(14),
               MyButton(
-                onPressed: () => Get.to(() => HomePage()),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Get.offAll(HomePage(typeSignIn: false,));},
                 fontFamily: "Proxima",
                 text: "Not Now",
                 buttonColor: KDullBlack,

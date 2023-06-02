@@ -59,6 +59,7 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
   final picker = ImagePicker();
   String imagePath = "";
   PickedFile pickedFile=PickedFile("");
+  PickedFile pickedFile1=PickedFile("");
   String image="";
   PictureData pictureData=PictureData(visiblePictures: [],privatePictures: []);
   @override
@@ -138,7 +139,7 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
                         );
                         if (croppedFile != null) {
                           setState(() {
-                            imagePath = croppedFile.path;
+                            pickedFile1 = PickedFile(croppedFile.path);
                           });
                         }
                         Navigator.pop(context);
@@ -475,7 +476,7 @@ class _EditProfilePictureState extends State<EditProfilePicture> {
   Future<void> uploadProfilePicture() async {
 
     FormData data=FormData.fromMap({
-      'user_profile_picture': await MultipartFile.fromFile(pickedFile.path)
+      'user_profile_picture': await MultipartFile.fromFile(pickedFile1.path)
     });
     openLoadingDialog(context, "Loading");
     var response;
