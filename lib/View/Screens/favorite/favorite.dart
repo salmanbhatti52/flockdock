@@ -70,12 +70,44 @@ class _FavoritePageState extends State<FavoritePage> {
     }
 
   }
+  void getMyGroups() async {
+    print("AppData().userdetail!.latitude");
+    print(AppData().userdetail!.latitude);
+    print(AppData().userdetail!.longitude);
+    // openLoadingDialog(context, "Loading");
+    print("my id 1: ${AppData().userdetail!.usersId}");
+
+    var response;
+    response = await DioService.post('get_user_groups', {
+      "usersId":AppData().userdetail!.usersId.toString()
+    });
+
+
+    if(response['status']=='success'){
+     print("hiiiiiiiiii");
+      print("data11: ${response["data"]}");
+      var jsonData= response['data'] as List;
+
+      groupData1=jsonData.map((e) => GroupData.fromJson(e)).toList();
+      print("id: ${AppData().userdetail!.usersId}");
+      print("id1: ${groupData![0].usersId}");
+
+      setState(() {});
+    }
+    else{
+      Navigator.pop(context);
+      print(response['message']);
+      showCustomSnackBar(response['message']);
+    }
+
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-     getGroups();
+
+    getMyGroups();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       getFavouriteUsersGroups();
     });
@@ -317,27 +349,27 @@ class _FavoritePageState extends State<FavoritePage> {
                     ):
                     Container(
                       height: MediaQuery.of(context).size.height/1.2,
-                      child: ListView.builder(
+                      child: GridView.builder(
 
-                              // physics: BouncingScrollPhysics(),
-                              // gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                              //   maxCrossAxisExtent: 200,
-                              //   childAspectRatio: 4 / 2,
-                              //   crossAxisSpacing: 13,
-                              //   mainAxisSpacing: 13,
-                              // ),
-                              itemCount: groupData!.length,
+                              physics: BouncingScrollPhysics(),
+                              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                                childAspectRatio: 4 / 2,
+                                crossAxisSpacing: 13,
+                                mainAxisSpacing: 13,
+                              ),
+                              itemCount: groupData1!.length,
                               itemBuilder: (BuildContext ctx, index){
-                                print("idddddd ${groupData![index].usersId}");
+                                print("groupData1 ${groupData1![index].usersId}");
 
                                 return GestureDetector(
-                                  onTap: () => Get.to(GroupView(groupId: groupData![index].groupId,)),
-                                  child: AppData().userdetail!.usersId==groupData![index].usersId? GroupWidget(
-                                    img: groupData![index].coverPhoto!,
-                                    groupName: groupData![index].category!.category!,
-                                    distance: groupData![index].distanceAway!.toPrecision(2).toString(),
-                                    groupMembers: groupData![index].totalAttendees.toString(),
-                                  ): SizedBox(),
+                                  onTap: () => Get.to(GroupView(groupId: groupData1![index].groupId,)),
+                                  child:  GroupWidget(
+                                    img: groupData1![index].coverPhoto!,
+                                    groupName: groupData1![index].category!.category!,
+                                    distance: groupData1![index].distanceAway!.toPrecision(2).toString(),
+                                    groupMembers: groupData1![index].totalAttendees.toString(),
+                                  )
                                 );
                               }
                           ),
