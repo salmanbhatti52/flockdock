@@ -90,7 +90,6 @@ class _FavoritePageState extends State<FavoritePage> {
 
       groupData1=jsonData.map((e) => GroupData.fromJson(e)).toList();
       print("id: ${AppData().userdetail!.usersId}");
-      print("id1: ${groupData![0].usersId}");
 
       setState(() {});
     }

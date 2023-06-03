@@ -24,6 +24,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../models/inbox/chat_search_model.dart';
 import '../../../models/message/picture_model.dart';
 import 'package:full_screen_image_null_safe/full_screen_image_null_safe.dart';
 
@@ -40,6 +41,8 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   List<ChatMessages> messages=[];
+  List<SearchMessage> searchMessages=[];
+
   ChatMessages message=ChatMessages();
   UpdatedMessages updatedMessages=UpdatedMessages(unreadMessages: []);
   TextEditingController messageController=TextEditingController();
@@ -93,19 +96,27 @@ class _ChatState extends State<Chat> {
                       ],
                     ),
                   ),
-                  SizedBox(width: 100,),
-                  Text(widget.name,style: proximaBold.copyWith(color: KWhite),),
-                  SizedBox(width: 80,),
+                  if(isSearch)
+                  SizedBox(width: 20,),
+
+                  if(isSearch==false)
+                  SizedBox(width: 60,),
+                  if(isSearch==false)
+
+                    Text(widget.name,style: proximaBold.copyWith(color: KWhite),),
+                  if(isSearch==false)
+
+                   Spacer(),
                   isSearch?Flexible(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          height: 30,
+                          height: 40,
                           // margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_DEFAULT),
-                          // width: MediaQuery.of(context).size.width*0.3,
-                          width: 22,
+                           width: MediaQuery.of(context).size.width*0.6,
+                          // width: 50,
                           padding: EdgeInsets.only(right: 20),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5)
@@ -113,12 +124,14 @@ class _ChatState extends State<Chat> {
                           child: TextField(
                             controller: searchController,
                             keyboardType: TextInputType.text,
-                            // onChanged: (value) async {
-                            //   // if(value!=""){
-                            //   //   searchUserGroups();
-                            //   // }
-                            //   //print(_autoCompleteResult.first.mainText);
-                            // },
+                            onChanged: (value) async {
+                            if(value !="" )
+                            getSearchMessages();
+                            else
+                              getMessages();
+
+
+                            },
                             cursorColor: KWhite,
                             style: proximaBold.copyWith(color: KWhite),
                             autofocus: false,
@@ -159,13 +172,14 @@ class _ChatState extends State<Chat> {
 
                             setState(() {
                               searchController.clear();
+                              getMessages();
                               isSearch=!isSearch;
                             });
                           },
                           child: Align(
                               // alignment: Alignment.center,
                               child: Container(
-                                  padding: EdgeInsets.only(right: 20.0),
+
                                   child: Icon(Icons.close,color: KWhite, size: 20,)
                               )
                           ),
@@ -303,6 +317,96 @@ class _ChatState extends State<Chat> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  searchMessages.isNotEmpty && searchController.text.isNotEmpty?
+                  ListView.builder(
+                      controller: _scrollController,
+                      padding: EdgeInsets.zero,
+                      //physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      //padding: EdgeInsetsGeometry.infinity,
+                      itemCount: searchMessages.length+1,
+                      itemBuilder: (context,index){
+
+                        print(index);
+                        if(index == searchMessages.length){
+                          return Container(
+                            height: 70,
+                          );
+                        }
+                        // print('inside builder');
+                        // if(index == 0){
+                        //   print('inside if statement');
+                        //   _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 1), curve: Curves.easeOut);
+                        // }
+                        //if(index == 0){
+                        // scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 1), curve: Curves.easeOut);}
+                        return
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width*0.8,
+                              child: Column(
+                                children: [
+                                  searchMessages[index].message_type=="attachment"?FullScreenWidget(
+                                    child: Container(
+                                      // width: MediaQuery.of(context).size.width*0.8,
+                                      height: MediaQuery.of(context).size.height*0.25,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(searchMessages[index].message??'',),
+                                              fit: BoxFit.fill
+                                          ),
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: KDullBlack
+                                      ),
+                                      padding: EdgeInsets.all(15),
+                                      margin: EdgeInsets.only(top: 10,left: 20),
+                                    ),
+                                  ):
+                                  searchMessages[index].message_type=="location"?
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.8,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: KdullWhite
+                                    ),
+                                    margin: EdgeInsets.only(top: 20,left: 20),
+                                    child: AnyLinkPreview(
+                                      link: searchMessages[index].message!,
+                                      errorBody: searchMessages[index].message!,
+                                      onTap: () async{
+                                        if (await canLaunch(searchMessages[index].message!,)) {
+                                          await launch(searchMessages[index].message!,);
+                                        }
+                                        else{
+                                          // showCustomSnackBar("message");
+                                        }
+                                      },
+                                    ),
+                                  ):
+                                  Container(
+                                    width: MediaQuery.of(context).size.width*0.8,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: KdullWhite
+                                    ),
+                                    padding: EdgeInsets.all(15),
+                                    margin: EdgeInsets.only(top: 20,left: 20),
+                                    child: Text(searchMessages[index].message??'',style: proximaBold.copyWith(color: KWhite)),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 4.0,right: 10),
+                                      child: Text(messages[index].time??'',style: proximaBold.copyWith(color: KWhite.withOpacity(0.5))),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                      }
+                  ):
                   ListView.builder(
                     controller: _scrollController,
                     padding: EdgeInsets.zero,
@@ -312,7 +416,6 @@ class _ChatState extends State<Chat> {
                       itemCount: messages.length+1,
                       itemBuilder: (context,index){
                       print(index);
-
                         if(index == messages.length){
                            return Container(
                             height: 70,
@@ -455,7 +558,9 @@ class _ChatState extends State<Chat> {
                           ),
                         );
                       }
-                  ),
+                  )
+
+                  ,
                 ],
               ),
             ),
@@ -686,6 +791,30 @@ class _ChatState extends State<Chat> {
       showCustomSnackBar(response['message']);
     }
   }
+  void getSearchMessages() async {
+    // openLoadingDialog(context, "Loading");
+    var response;
+    response = await DioService.post('Messages/search', {
+      "requestType": "searchMessage",
+      "userId": AppData().userdetail!.usersId.toString(),
+      "otherUserId": widget.id.toString(),
+      "message": searchController.text
+    });
+    if(response['status']=='success'){
+      var jsonData= response['data'] as List;
+      jsonData.forEach((e) => print(e['userId'].runtimeType));
+      searchMessages=jsonData.map((e) => SearchMessage.fromJson(e)).toList();
+      print("successfull");
+      print("successfull ${searchMessages.length}");
+      setState(() {});
+
+      //scrollController.animateTo(scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+    }
+    else{
+      print(response['message']);
+      showCustomSnackBar(response['message']);
+    }
+  }
   void sendTextMessage({bool fromPhrase=false,String text=""}) async {
     if(!fromPhrase&&messageController.text.trim().isEmpty) {
       showCustomSnackBar("Enter message");
@@ -756,6 +885,8 @@ class _ChatState extends State<Chat> {
       }
   }
   void updateMessages() async {
+    print("userId: ${AppData().userdetail!.usersId.toString()}");
+    print("otherUserId: ${widget.id.toString()}");
     var response;
     response = await DioService.post('chat', {
       "userId": AppData().userdetail!.usersId.toString(),
