@@ -8,7 +8,6 @@ class UpdatedMessages{
   int? chatLength;
   @JsonKey(name: 'unread_messages',)
   List<ChatMessages>? unreadMessages;
-
   UpdatedMessages({this.chatLength,this.unreadMessages});
   Map<String, dynamic> toJson() => _$UpdatedMessagesToJson(this);
   factory UpdatedMessages.fromJson(json) => _$UpdatedMessagesFromJson(json);

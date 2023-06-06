@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1035169561953-m70a7rgl4ksv5k1r64484e4s1fcvaiut.apps.googleusercontent.com</string>
+	<string>1041550274072-2eqje8hpivr49qp1qd3kp2ve88hhahrm.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1035169561953-m70a7rgl4ksv5k1r64484e4s1fcvaiut</string>
+	<string>com.googleusercontent.apps.1041550274072-2eqje8hpivr49qp1qd3kp2ve88hhahrm</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1035169561953-okbs5mevi3mq1l997pp5j1m6ef4o792m.apps.googleusercontent.com</string>
+	<string>1041550274072-1p440ppgq7q293ftnm84gdhqnrsrv52n.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyASriqgO8v4ewmkuRzVEthORWrRDfxU5jU</string>
+	<string>AIzaSyCNCsVLLD-BDrpZRMeFSq9OZIZEv7otM70</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1035169561953</string>
+	<string>1041550274072</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.flockdock.app</string>
 	<key>PROJECT_ID</key>
-	<string>flock-dock</string>
+	<string>flockdock-334c2</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flock-dock.appspot.com</string>
+	<string>flockdock-334c2.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1035169561953:ios:d837930b442059f2f75920</string>
+	<string>1:1041550274072:ios:e883e1c3e50909bee71d6d</string>
 </dict>
 </plist>
