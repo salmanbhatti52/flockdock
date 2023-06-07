@@ -34,6 +34,7 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
   // void Function()? onTapIgnore;
   @override
   void initState() {
+    print("hiiii");
     // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, initialIndex: 0, vsync: this);
@@ -220,11 +221,13 @@ class _InboxPageState extends State<InboxPage> with TickerProviderStateMixin {
     if(response['status']=='success'){
       var jsonData= response['data'] as List;
       inboxMessages=jsonData.map((e) => InboxDetail.fromJson(e)).toList();
-      Navigator.pop(context);
+      if(AppData().userdetail!.accountType=="SignupWithApp")
+        Navigator.pop(context);
       setState(() {});
     }
     else{
-      Navigator.pop(context);
+      if(AppData().userdetail!.accountType=="SignupWithApp")
+        Navigator.pop(context);
       print(response['message']);
       //showCustomSnackBar(response['message']);
     }

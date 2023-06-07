@@ -423,11 +423,13 @@ class _FavoritePageState extends State<FavoritePage> {
     if(response['status']=='success'){
       var jsonData= response['data'] as List;
       profileGroup=jsonData.map((e) => ProfileGroupDetail.fromJson(e)).toList();
-      Navigator.pop(context);
+      if(AppData().userdetail!.accountType=="SignupWithApp")
+        Navigator.pop(context);
       setState(() {});
     }
     else{
-      Navigator.pop(context);
+      if(AppData().userdetail!.accountType=="SignupWithApp")
+        Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
     }

@@ -98,6 +98,7 @@ class _BottomBarState extends State<BottomBar> {
             ),
             InkWell(
               onTap: (){
+                print("chjhdcjdssc");
                   pageIndex = 1;
                   Get.to(InboxPage());
               },
