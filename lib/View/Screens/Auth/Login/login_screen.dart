@@ -144,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
       profile.userPassword=_passwordController.text;
       profile.oneSignalId="";
       openLoadingDialog(context, "Loading");
+      print("data111: ${profile.toJson()}");
       var response;
       response = await DioService.post('login', profile.toJson());
       if(response['status']=='success'){

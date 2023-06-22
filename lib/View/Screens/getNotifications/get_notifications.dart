@@ -22,6 +22,15 @@ class RecieveNotifications extends StatefulWidget {
 }
 
 class _RecieveNotificationsState extends State<RecieveNotifications> {
+
+  @override
+  void initState() {
+    print("AppData().userdetail!.latitude ${AppData().userdetail!.latitude}");
+    print("AppData().userdetail!.longitude ${AppData().userdetail!.longitude}");
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -56,6 +56,8 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      print("AppData().userdetail!.latitude ${AppData().userdetail!.latitude}");
+      print("AppData().userdetail!.longitude ${AppData().userdetail!.longitude}");
       getPosition();
       getUsers();
       getGroups();
@@ -485,7 +487,7 @@ class _HomePageState extends State<HomePage> {
 
   void getUsers() async {
 
-    print("AppData().userdetail!.latitude");
+    print("AppData().userdetail!.latitude ${AppData().userdetail!.accountType}");
     print(AppData().userdetail!.usersId);
     print(AppData().userdetail!.latitude);
     print(AppData().userdetail!.longitude);
@@ -494,18 +496,27 @@ class _HomePageState extends State<HomePage> {
     var response;
     response = await DioService.post('nearby_users', {
       "usersId":AppData().userdetail!.usersId,
-      "userLat":AppData().userdetail!.latitude.toString(),
-      "userLong":AppData().userdetail!.longitude.toString(),
+      "userLat":AppData().userdetail!.latitude !=null ? AppData().userdetail!.latitude.toString(): "30.2398459",
+      "userLong":AppData().userdetail!.longitude !=null ? AppData().userdetail!.longitude.toString(): "71.4854296",
     });
+    print("status1: ${response['status']}");
+    print("data: ${response['data']}");
     if(response['status']=='success'){
       var jsonData= response['data'] as List;
       userData=jsonData.map((e) => UserDetail.fromJson(e)).toList();
-       if(AppData().userdetail!.accountType=="SignupWithApp")
-       Navigator.pop(context);
+      print("Hello2 ${userData}");
+       if(AppData().userdetail!.accountType=="SignInWithUserName"){
+         print("Hello1");
+         Navigator.pop(context);
+
+       }
       setState(() {});
+
+
     }
     else{
-      Navigator.pop(context);
+      print("Hiiii");
+      // Navigator.pop(context);
       print(response['message']);
       showCustomSnackBar(response['message']);
     }
@@ -550,13 +561,15 @@ class _HomePageState extends State<HomePage> {
         "userLat":AppData().userdetail!.latitude.toString(),
         "userLong":AppData().userdetail!.longitude.toString(),
       });
-      if(response['status']=='success'){
+      if(response['status']=='success') {
         print("data: ${response["data"]}");
-        var jsonData= response['data'] as List;
-        groupData=jsonData.map((e) => GroupData.fromJson(e)).toList();
+        var jsonData = response['data'] as List;
+        groupData = jsonData.map((e) => GroupData.fromJson(e)).toList();
+
         Navigator.pop(context);
         setState(() {});
       }
+
       else{
         Navigator.pop(context);
         print(response['message']);

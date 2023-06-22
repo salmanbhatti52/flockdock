@@ -11,6 +11,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
+import '../../../mixin/data.dart';
+
 
 
 class AllowLocation extends StatefulWidget {
@@ -20,7 +22,19 @@ class AllowLocation extends StatefulWidget {
   _AllowLocationState createState() => _AllowLocationState();
 }
 
+
+
 class _AllowLocationState extends State<AllowLocation> {
+
+
+  @override
+  void initState() {
+    print("AppData().userdetail!.latitude ${AppData().userdetail!.latitude}");
+    print("AppData().userdetail!.longitude ${AppData().userdetail!.longitude}");
+
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
